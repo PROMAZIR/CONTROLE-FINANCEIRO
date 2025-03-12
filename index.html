@@ -7,68 +7,80 @@
 
     <!-- Primary Meta Tags -->
     <meta name="title" content="Controle-Financeiro">
-    <meta name="description" content="Venha compartilhar momentos especiais!">
+    <meta name="description" content="Organize suas finanças com facilidade e alcance de seus objetivos com controle e inteligência.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://c.f.starktech.net.br/">
+    <meta property="og:url" content="c.f.24x.starktech.net.br/">
     <meta property="og:title" content="Controle-Financeiro">
-    <meta property="og:description" content="Venha compartilhar momentos especiais!">
-    <meta property="og:image" content="https://i.ibb.co/NnkCqYXY/Aesthetic-Music-Playlist-Ui-Phone-Wallpapers.png">
+    <meta property="og:description" content="Organize suas finanças com facilidade e alcance de seus objetivos com controle e inteligência.">
+    <meta property="og:image" content="https://i.ibb.co/9H4wymr2/c-f.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://c.f.starktech.net.br/">
-    <meta name="twitter:title" content="Controle-Financeiro ">
-    <meta name="twitter:description" content="Venha compartilhar momentos especiais!">
-    <meta name="twitter:image" content="hhttps://i.ibb.co/NnkCqYXY/Aesthetic-Music-Playlist-Ui-Phone-Wallpapers.png">
+    <meta name="twitter:url" content="c.f.24x.starktech.net.br">
+    <meta name="twitter:title" content="Controle-Financeiro">
+    <meta name="twitter:description" content="Organize suas finanças com facilidade e alcance de seus objetivos com controle e inteligência.">
+    <meta name="twitter:image" content="https://i.ibb.co/9H4wymr2/c-f.png">
+    
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
             width: 100%;
-            height: 100%;
+            height: 100vh;
             overflow: hidden;
-            position: fixed;
+            position: relative;
         }
 
         .frame-container {
             width: 100%;
             height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: relative;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            body, html {
+                height: 100vh;
+                height: -webkit-fill-available;
+            }
         }
     </style>
 </head>
 <body>
     <div class="frame-container">
-   <iframe 
-    src="https://script.google.com/macros/s/AKfycbwti8KXb-yTVCZRktd1S9_8KXZ21-hq_2N6S_cxpGGNrxZm0dYJznYKPRHM3WV8a0He/exec"
-    allow="autoplay; camera; microphone; fullscreen"
-    allowfullscreen
-    loading="eager"
-    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation"
-    onerror="this.src='error.html'">
-</iframe>
-</div>
+        <iframe 
+            src="https://script.google.com/macros/s/AKfycbwti8KXb-yTVCZRktd1S9_8KXZ21-hq_2N6S_cxpGGNrxZm0dYJznYKPRHM3WV8a0He/exec"
+            allow="autoplay; camera; microphone; fullscreen"
+            allowfullscreen
+            loading="eager"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation"
+            onerror="this.src='error.html'">
+        </iframe>
+    </div>
 </body>
 </html>
