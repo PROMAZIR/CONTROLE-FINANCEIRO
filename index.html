@@ -3,74 +3,866 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>C.F.RENNER</title>
-
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="Controle-Financeiro">
-    <meta name="description" content="Organize suas finanças com facilidade e alcance de seus objetivos com controle e inteligência.">
-
-    <!-- Open Graph / Facebook -->
+    <title>C.F</title>
+    <!-- Meta tags com emoji para identificação de gênero -->
+    <meta name="title" content="C.F">
+    <meta name="description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="c.f.starktech.net.br/">
-    <meta property="og:title" content="Controle-Financeiro">
-    <meta property="og:description" content="Organize suas finanças com facilidade e alcance de seus objetivos com controle e inteligência.">
-    <meta property="og:image" content="https://i.ibb.co/9H4wymr2/c-f.png">
+    <meta property="og:url" content="https://credi-boti.jd.starktech.net.br">
+    <meta property="og:title" content="C.F">
+    <meta property="og:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
+    <meta property="og:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="c.f.starktech.net.br">
-    <meta name="twitter:title" content="Controle-Financeiro">
-    <meta name="twitter:description" content="Organize suas finanças com facilidade e alcance de seus objetivos com controle e inteligência.">
-    <meta name="twitter:image" content="https://i.ibb.co/9H4wymr2/c-f.png">
-    
-    <!-- Favicon -->
+    <meta name="twitter:url" content="https://credi-boti.jd.starktech.net.br">
+    <meta name="twitter:title" content="C.F.C">
+    <meta name="twitter:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
+    <meta name="twitter:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-
     <style>
-         body, html {
+      body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            position: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
         }
-
-        .frame-container {
+        
+        #app-container {
             width: 100%;
             height: 100%;
+            position: relative;
+        }
+        
+        /* Tela de carregamento com cumprimentos */
+        #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
-
+        
+        .loading-container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 85%;
+        }
+        
+        .greeting {
+            font-size: 22px;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 5px;
+        }
+        
+        .user-name {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            /* Cor será definida dinamicamente pelo JavaScript */
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff69b4; /* Cor padrão, será alterada pelo JS */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Estilos para o iframe */
+        .frame-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+            z-index: 900;
+        }
+        
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            position: absolute;
+            background-color: white;
+        }
+        
+        /* Estilos para o botão de instalação */
+        #install-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* Cor será definida dinamicamente pelo JavaScript */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        /* Estado offline */
+        #offline-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .retry-button {
+            /* Cor será definida dinamicamente pelo JavaScript */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        /* Modal para nome do usuário */
+        #name-modal {
+            position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 85%;
+            width: 300px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+        
+        #user-name-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        /* Seleção de gênero */
+        .gender-selection {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .gender-option {
+            flex: 1;
+            padding: 10px;
+            margin: 0 5px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .gender-option.selected {
+            border-color: #4a4a4a;
+            background-color: #f8f8f8;
+        }
+        
+        .gender-option:first-child.selected {
+            border-color: #4e9af1;
+            background-color: #eef5ff;
+        }
+        
+        .gender-option:last-child.selected {
+            border-color: #ff69b4;
+            background-color: #fff0f7;
+        }
+        
+        #save-name-button {
+            /* Cor será definida dinamicamente pelo JavaScript */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        /* Estilos para o container de logos */
+        .logo-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Estilos base para as logos */
+        .logo {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+        
+        /* Logo ativa */
+        .logo.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Animação de pulsar suave */
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        /* Classe para aplicar a animação de pulsar */
+        .pulse {
+            animation: pulse 4s infinite ease-in-out;
+        }
+        
+        /* Estilo para o botão de atualização */
+        #refresh-button {
+            position: fixed;
+            top: 10px;
+            right: 60px; /* Posicionado mais à esquerda para evitar conflito */
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        #refresh-button svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.5s ease;
+        }
+        
+        #refresh-button:hover {
+            background-color: rgba(245, 245, 245, 0.95);
+        }
+        
+        #refresh-button:hover svg {
+            transform: rotate(180deg);
+        }
+        
+        #refresh-button.refreshing svg {
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Estilo para o indicador de progresso */
+        .refresh-progress {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: spin 1s linear infinite;
+        }
+        
+        #refresh-button.refreshing .refresh-progress {
+            opacity: 1;
+        }
+        
+        /* Toast notification */
+        #toast-notification {
+            position: fixed;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="frame-container">
-        <iframe 
-            src="https://script.google.com/macros/s/AKfycbw7y6XzCAjEVMYMI-WhflFE6eqiDVHWCbHQfr5At7LRuOwQ1-tN6DfRmq1yjIYsMdhuiA/exec"
-            allow="autoplay; camera; microphone; fullscreen"
-            allowfullscreen
-            loading="eager"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation"
-            onerror="this.src='error.html'">
-        </iframe>
+    <div id="app-container">
+        <!-- Botão de atualização -->
+        <button id="refresh-button" title="Atualizar aplicativo">
+            <div class="refresh-progress"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 4v6h-6"></path>
+                <path d="M1 20v-6h6"></path>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+                <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"></path>
+            </svg>
+        </button>
+        
+        <!-- Frame do aplicativo (colocado primeiro para pré-carregar) -->
+        <div class="frame-container" id="frame-container">
+            <iframe 
+                id="app-frame"
+                src="https://script.google.com/macros/s/AKfycbw7y6XzCAjEVMYMI-WhflFE6eqiDVHWCbHQfr5At7LRuOwQ1-tN6DfRmq1yjIYsMdhuiA/exec"
+                allow="autoplay; camera; microphone; fullscreen"
+                allowfullscreen
+                loading="eager"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation">
+            </iframe>
+        </div>
+        
+        <!-- Tela de carregamento com cumprimentos (colocada por cima) -->
+        <div id="loading-screen">
+            <div class="loading-container">
+                <div class="logo-container">
+                    <img src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" alt="Logo 1" class="logo logo-1 active">
+                    <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" alt="Logo 2" class="logo logo-2">
+                </div>
+                <div class="greeting" id="greeting">Olá!</div>
+                <div class="user-name" id="user-name">Bem-vindo(a)!</div>
+                                <div class="loading-spinner" id="loading-spinner"></div>
+            </div>
+        </div>
+        
+        <!-- Mensagem offline -->
+        <div id="offline-message">
+            <p>Você está offline. Verifique sua conexão com a internet.</p>
+            <button class="retry-button" id="retry-button" onclick="window.location.reload()">Tentar Novamente</button>
+        </div>
+        
+        <!-- Modal para inserir nome -->
+        <div id="name-modal">
+            <div class="modal-content">
+                <div class="modal-title">Como você gostaria de ser chamado(a)?</div>
+                <input type="text" id="user-name-input" placeholder="Digite seu nome" maxlength="20">
+                
+                <div class="gender-selection">
+                    <div class="gender-option" id="male-option">
+                        <span>👨 Masculino</span>
+                    </div>
+                    <div class="gender-option" id="female-option">
+                        <span>👩 Feminino</span>
+                    </div>
+                </div>
+                
+                <button id="save-name-button">Salvar</button>
+            </div>
+        </div>
+        
+        <!-- Botão de instalação -->
+        <button id="install-button">Adicionar à tela inicial</button>
     </div>
+   
+    <script>
+         // Adicione uma variável de versão no topo do seu script
+const APP_VERSION = '1.0.4'; // Incremente este valor quando fizer alterações no seu GAS
+        // Elementos principais
+        const loadingScreen = document.getElementById('loading-screen');
+        const appFrame = document.getElementById('app-frame');
+        const installButton = document.getElementById('install-button');
+        const offlineMessage = document.getElementById('offline-message');
+        const greeting = document.getElementById('greeting');
+        const userName = document.getElementById('user-name');
+        const nameModal = document.getElementById('name-modal');
+        const userNameInput = document.getElementById('user-name-input');
+        const saveNameButton = document.getElementById('save-name-button');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const retryButton = document.getElementById('retry-button');
+        const maleOption = document.getElementById('male-option');
+        const femaleOption = document.getElementById('female-option');
+        const refreshButton = document.getElementById('refresh-button');
+        
+        // Cores baseadas no gênero
+        const colors = {
+            male: '#4e9af1',    // Azul
+            female: '#ff69b4',  // Rosa
+            neutral: '#7e57c2'  // Roxo (neutro)
+        };
+        
+        // Emojis baseados no gênero
+        const emojis = {
+            male: '🎮',
+            female: '💄',
+            neutral: '👤'
+        };
+        
+        // Variável para armazenar o gênero selecionado
+        let selectedGender = 'neutral';
+        
+        // Variável para armazenar o prompt de instalação
+        let deferredPrompt;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona as logos
+            const logo1 = document.querySelector('.logo-1');
+            const logo2 = document.querySelector('.logo-2');
+            
+            // Inicializa: primeira logo ativa e com efeito de pulsar
+            logo1.classList.add('active', 'pulse');
+            
+            // Função para alternar entre as logos
+            function toggleLogos() {
+                if (logo1.classList.contains('active')) {
+                    // Transição para a segunda logo
+                    logo1.classList.remove('active', 'pulse');
+                    logo2.classList.add('active', 'pulse');
+                } else {
+                    // Transição para a primeira logo
+                    logo2.classList.remove('active', 'pulse');
+                    logo1.classList.add('active', 'pulse');
+                }
+            }
+            
+            // Alterna as logos a cada 5 segundos
+            setInterval(toggleLogos, 5000);
+            
+            // Configurar o botão de atualização
+            if (refreshButton) {
+                // Obter a cor do tema atual
+                const currentGender = localStorage.getItem('userGender') || 'neutral';
+                const themeColor = colors[currentGender];
+                
+                // Aplicar a cor ao botão
+                refreshButton.querySelector('svg').style.stroke = themeColor;
+                refreshButton.querySelector('.refresh-progress').style.borderTopColor = themeColor;
+                
+                // Adicionar evento de clique
+                refreshButton.addEventListener('click', function() {
+                    // Evitar múltiplos cliques durante a atualização
+                    if (refreshButton.classList.contains('refreshing')) {
+                        return;
+                    }
+                    
+                    // Adicionar classe para mostrar animação
+                    refreshButton.classList.add('refreshing');
+                    
+                    // Mostrar toast de notificação
+                    showToast('Atualizando aplicativo...');
+                    
+                    // Forçar atualização do iframe
+                    forceGoogleAppsScriptUpdate();
+                    
+                    // Remover classe de animação após a conclusão
+                    setTimeout(() => {
+                        refreshButton.classList.remove('refreshing');
+                    }, 3000);
+                });
+            }
+        });
+        
+        // Função para aplicar o tema baseado no gênero
+        function applyTheme(gender) {
+            const color = colors[gender] || colors.neutral;
+            
+            // Aplicar cor ao nome do usuário
+            userName.style.color = color;
+            
+            // Aplicar cor ao spinner
+            loadingSpinner.style.borderTopColor = color;
+            
+            // Aplicar cor aos botões
+            installButton.style.backgroundColor = color;
+            retryButton.style.backgroundColor = color;
+            saveNameButton.style.backgroundColor = color;
+            
+            // Aplicar cor ao botão de atualização
+            if (refreshButton) {
+                refreshButton.querySelector('svg').style.stroke = color;
+                refreshButton.querySelector('.refresh-progress').style.borderTopColor = color;
+            }
+            
+            // Salvar a preferência
+            localStorage.setItem('userGender', gender);
+            selectedGender = gender;
+        }
+        
+        // Função para atualizar a cor do botão Salvar
+        function updateSaveButtonColor() {
+            // Verificar o gênero selecionado ou usar o armazenado
+            const gender = selectedGender || localStorage.getItem('userGender') || 'neutral';
+            saveNameButton.style.backgroundColor = colors[gender];
+        }
+        
+        // Função para extrair emoji e gênero da meta tag
+        function detectGenderFromMetaTag() {
+            const metaTitle = document.querySelector('meta[name="title"]');
+            if (!metaTitle) return null;
+            
+            const titleContent = metaTitle.getAttribute('content');
+            
+            // Verificar emojis específicos
+            if (titleContent.includes('💄') || 
+                titleContent.includes('👩') || 
+                titleContent.includes('👧') || 
+                titleContent.includes('👱‍♀️')) {
+                return 'female';
+            } else if (titleContent.includes('👨') || 
+                       titleContent.includes('👦') || 
+                       titleContent.includes('👴') || 
+                       titleContent.includes('🧔') || 
+                       titleContent.includes('🎮')) {
+                return 'male';
+            }
+            
+            return null;
+        }
+        
+        // Configurar seleção de gênero no modal
+        maleOption.addEventListener('click', () => {
+            maleOption.classList.add('selected');
+            femaleOption.classList.remove('selected');
+            selectedGender = 'male';
+            
+            // Atualizar a cor do botão Salvar imediatamente
+            saveNameButton.style.backgroundColor = colors.male;
+        });
+        
+        femaleOption.addEventListener('click', () => {
+            femaleOption.classList.add('selected');
+            maleOption.classList.remove('selected');
+            selectedGender = 'female';
+            
+            // Atualizar a cor do botão Salvar imediatamente
+            saveNameButton.style.backgroundColor = colors.female;
+        });
+        
+        // Configurar saudação baseada no horário
+        function setGreeting() {
+            const hour = new Date().getHours();
+            
+            if (hour >= 5 && hour < 12) {
+                greeting.textContent = 'Bom dia!';
+                
+            } else if (hour >= 12 && hour < 18) {
+                greeting.textContent = 'Boa tarde!';
+            } else {
+                greeting.textContent = 'Boa noite!';
+            }
+        }
+        
+        // Função para obter o nome e gênero do usuário
+        function getUserInfo() {
+            // Verificar se já existe um nome e gênero salvos
+            const storedName = localStorage.getItem('userName');
+            const storedGender = localStorage.getItem('userGender');
+            
+            // Se tiver informações salvas, usá-las
+            if (storedName) {
+                userName.textContent = storedName;
+                
+                if (storedGender) {
+                    applyTheme(storedGender);
+                    
+                    // Adicionar emoji baseado no gênero
+                    const emoji = emojis[storedGender];
+                    if (!userName.textContent.includes(emoji)) {
+                        userName.textContent += ' ' + emoji;
+                    }
+                    
+                    return;
+                }
+            }
+            
+            // Tentar detectar gênero da meta tag
+            const detectedGender = detectGenderFromMetaTag();
+            
+            // Tentar obter o nome da meta tag title
+            const metaTitle = document.querySelector('meta[name="title"]');
+            if (metaTitle) {
+                const titleContent = metaTitle.getAttribute('content');
+                // Remover emoji e espaços extras
+                const cleanName = titleContent.replace(/[^\w\s]/gi, '').trim();
+                
+                if (cleanName) {
+                    userName.textContent = cleanName;
+                    
+                    // Se detectou gênero, aplicar tema e salvar
+                    if (detectedGender) {
+                        applyTheme(detectedGender);
+                        
+                        // Adicionar emoji baseado no gênero
+                        userName.textContent += ' ' + emojis[detectedGender];
+                        
+                        // Salvar as informações
+                        localStorage.setItem('userName', cleanName);
+                        return;
+                    }
+                }
+            }
+            
+            // Se chegou aqui, mostrar o modal para o usuário inserir o nome
+            // Mas primeiro, vamos verificar se é a primeira execução
+            const isFirstRun = !localStorage.getItem('appLaunched');
+            if (isFirstRun || !storedName) {
+                // Marcar que o app já foi executado
+                localStorage.setItem('appLaunched', 'true');
+                
+                // Mostrar o modal após um pequeno atraso
+                setTimeout(() => {
+                    nameModal.style.display = 'flex';
+                    // Atualizar a cor do botão Salvar
+                    updateSaveButtonColor();
+                }, 1000);
+            } else {
+                // Aplicar tema neutro se não tiver gênero definido
+                applyTheme('neutral');
+            }
+        }
+        
+        // Configurar o botão de salvar nome
+        saveNameButton.addEventListener('click', () => {
+            const name = userNameInput.value.trim();
+            if (name) {
+                // Salvar nome
+                localStorage.setItem('userName', name);
+                
+                // Aplicar tema baseado no gênero selecionado
+                applyTheme(selectedGender);
+                
+                // Atualizar nome com emoji
+                userName.textContent = name + ' ' + emojis[selectedGender];
+                
+                // Fechar modal
+                nameModal.style.display = 'none';
+            } else {
+                // Destacar o input se estiver vazio
+                userNameInput.style.border = '1px solid red';
+                setTimeout(() => {
+                    userNameInput.style.border = '1px solid #ddd';
+                }, 1000);
+            }
+        });
+        
+        // Permitir pressionar Enter no input
+        userNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                saveNameButton.click();
+            }
+        });
+        
+        // Inicializar a saudação e o nome
+        setGreeting();
+        getUserInfo();
+        
+        // Verificar conexão com a internet
+        function checkConnection() {
+            if (!navigator.onLine) {
+                showOfflineMessage();
+                return false;
+            }
+            return true;
+        }
+        
+        // Mostrar mensagem offline
+        function showOfflineMessage() {
+            offlineMessage.style.display = 'block';
+            loadingScreen.style.display = 'none';
+        }
+        
+        // Esconder a tela de carregamento sem transição
+        function hideLoadingScreen() {
+            // Remover diretamente sem animação para evitar tela branca
+            loadingScreen.style.display = 'none';
+        }
+        
+        // Evento de carregamento do iframe
+        appFrame.onload = function() {
+            console.log('Frame carregado com sucesso');
+            // Pequeno atraso para garantir que o iframe esteja completamente renderizado
+            setTimeout(hideLoadingScreen, 100);
+        };
+        
+        // Evento de erro do iframe
+        appFrame.onerror = function() {
+            console.error('Erro ao carregar o iframe');
+            if (navigator.onLine) {
+                // Se estiver online mas o iframe falhou, tentar recarregar
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            } else {
+                showOfflineMessage();
+            }
+        };
+        
+        // Timeout para garantir que a tela de carregamento não fique presa
+        setTimeout(function() {
+            hideLoadingScreen();
+        }, 5000);
+        
+        // Verificar se o service worker é suportado
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(error => {
+                    console.error('Erro ao registrar o Service Worker:', error);
+                });
+            });
+        }
+        
+        // Evento para capturar o prompt de instalação
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+        });
+        
+        // Configurar o botão de instalação
+        installButton.addEventListener('click', () => {
+            installButton.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                deferredPrompt = null;
+            });
+        });
+        
+        // Verificar se o app já está instalado
+        window.addEventListener('appinstalled', () => {
+            installButton.style.display = 'none';
+        });
+        
+        // Verificar se o app está sendo executado em modo standalone
+        if (window.matchMedia('(display-mode: standalone)').matches || 
+            window.navigator.standalone === true) {
+            installButton.style.display = 'none';
+        }
+        
+               // Eventos de conexão
+        window.addEventListener('online', () => {
+            offlineMessage.style.display = 'none';
+            window.location.reload();
+        });
+        
+        window.addEventListener('offline', () => {
+            showOfflineMessage();
+        });
+        
+        // Verificar conexão inicial
+        checkConnection();
+        
+        // Adicione esta função para limpar o cache do navegador para o domínio específico
+function clearCacheForDomain(domain) {
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            for (let name of names) {
+                caches.delete(name).then(function() {
+                    console.log('Cache deletado: ' + name);
+                });
+            }
+        });
+    }
+}
+        
+        // Função para forçar a atualização do Google Apps Script
+        function forceGoogleAppsScriptUpdate() {
+    // Mostrar a tela de carregamento primeiro
+    loadingScreen.style.display = 'flex';
+    
+    // Adicionar timestamp e versão para evitar cache
+    const timestamp = new Date().getTime();
+    const currentSrc = appFrame.src;
+    const baseUrl = currentSrc.split('?')[0];
+    
+    // Usar a versão do app no parâmetro da URL
+    appFrame.src = `${baseUrl}?v=${APP_VERSION}&t=${timestamp}&nocache=true`;
+    
+    // Mostrar a tela de carregamento novamente
+    loadingScreen.style.display = 'flex';
+}
+        
+        // Função para mostrar toast de notificação
+        function showToast(message, duration = 3000) {
+            // Verificar se já existe um toast
+            let toast = document.getElementById('toast-notification');
+            
+            // Se não existir, criar um novo
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-notification';
+                document.body.appendChild(toast);
+            }
+            
+            // Definir a mensagem
+            toast.textContent = message;
+            
+            // Mostrar o toast
+            toast.style.bottom = '20px';
+            toast.style.opacity = '1';
+            
+            // Esconder após a duração especificada
+            setTimeout(() => {
+                toast.style.bottom = '-50px';
+                toast.style.opacity = '0';
+            }, duration);
+        }
+    </script>
 </body>
 </html>
+
