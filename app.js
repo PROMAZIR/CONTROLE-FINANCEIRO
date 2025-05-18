@@ -1,8 +1,10 @@
 // Variáveis globais
-    let categorias = ['Alimentação', 'Transporte', 'Lazer', 'Calçados', 'Moradia', 'Saúde', 'Educação', 'Investimentos', 'Salário', 'Outros'];
-    let lancamentosData = [];
-    let chartGastosCategorias, chartEvolucaoMensal, chartReceitasDespesas;
-    
+let apiUrl = localStorage.getItem('apiUrl') || 'https://script.google.com/macros/s/AKfycbw7y6XzCAjEVMYMI-WhflFE6eqiDVHWCbHQfr5At7LRuOwQ1-tN6DfRmq1yjIYsMdhuiA/exec';
+let categorias = ['Alimentação', 'Transporte', 'Moradia', 'Saúde', 'Educação', 'Lazer', 'Outros'];
+let lancamentosData = [];
+let chartGastosCategorias = null;
+let chartEvolucaoMensal = null;
+let chartReceitasDespesas = null;
         // Inicialização
     function inicializar() {
       carregarLancamentos();
