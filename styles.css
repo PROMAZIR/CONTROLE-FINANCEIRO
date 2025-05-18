@@ -311,7 +311,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .btn {
-    padding: var(--spacing-md) var(--spacing-lg);
+   padding: var(--spacing-md) var(--spacing-lg);
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -625,4 +625,3 @@ input:focus, select:focus, textarea:focus {
   background-color: rgba(29, 233, 182, 0.2);
   color: #1de9b6;
 }
-
