@@ -4,35 +4,58 @@ let categorias = ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', '
 let chartGastosCategorias = null;
 let chartEvolucaoMensal = null;
 let chartReceitasDespesas = null;
+let appInitialized = false;
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
-  inicializar();
+  console.log("DOM carregado, iniciando aplicação...");
+  
+  // Verificar se estamos na página correta com os elementos necessários
+  if (document.getElementById('dashboard')) {
+    console.log("Dashboard encontrado, inicializando aplicação...");
+    inicializar();
+  } else {
+    console.warn("Elementos necessários não encontrados. A aplicação pode estar em uma página diferente.");
+  }
 });
 
 function inicializar() {
-  // Inicializar navegação
-  initNavigation();
+  if (appInitialized) return;
+  appInitialized = true;
   
-  // Carregar preferências salvas
-  carregarPreferenciasDeTemasalvas();
+  console.log("Inicializando aplicação...");
   
-  // Carregar categorias salvas
-  carregarCategoriasSalvas();
-  
-  // Inicializar formulário
-  initForm();
-  
-  // Carregar dados
-  setTimeout(carregarLancamentos, 100); // Pequeno atraso para garantir que o DOM esteja pronto
-  
-  // Atualizar lista de categorias
-  atualizarListaCategorias();
-  atualizarSelectCategorias();
-  
-  // Ajustar layout
-  adjustLayout();
-  window.addEventListener('resize', adjustLayout);
+  try {
+    // Inicializar navegação
+    initNavigation();
+    
+    // Carregar preferências salvas
+    carregarPreferenciasDeTemasalvas();
+    
+    // Carregar categorias salvas
+    carregarCategoriasSalvas();
+    
+    // Inicializar formulário
+    initForm();
+    
+    // Atualizar lista de categorias
+    atualizarListaCategorias();
+    atualizarSelectCategorias();
+    
+    // Ajustar layout
+    adjustLayout();
+    window.addEventListener('resize', adjustLayout);
+    
+    // Carregar dados (com verificação de elementos)
+    if (document.getElementById('lancamentosTabela')) {
+      console.log("Tabela de lançamentos encontrada, carregando dados...");
+      setTimeout(carregarLancamentos, 100);
+    } else {
+      console.warn("Tabela de lançamentos não encontrada. Pulando carregamento de dados.");
+    }
+  } catch (error) {
+    console.error("Erro durante a inicialização:", error);
+  }
 }
 
 // Inicializar navegação
@@ -56,7 +79,10 @@ function initNavigation() {
       
       // Ativar o item de menu e página selecionados
       this.classList.add('active');
-      document.getElementById(pageId).classList.add('active');
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
       
       // Fechar sidebar em dispositivos móveis
       if (window.innerWidth <= 768) {
@@ -64,8 +90,8 @@ function initNavigation() {
       }
       
       // Atualizar gráficos se estiver na página de relatórios
-      if (pageId === 'relatorios') {
-        setTimeout(atualizarGraficos, 100); // Pequeno atraso para garantir que o DOM esteja pronto
+      if (pageId === 'relatorios' && document.getElementById('relatorios')) {
+        setTimeout(atualizarGraficos, 100);
       }
     });
   });
@@ -92,6 +118,8 @@ function initForm() {
 
 // Carregar lançamentos
 function carregarLancamentos() {
+  console.log("Carregando lançamentos...");
+  
   const tabelaLancamentos = document.getElementById('lancamentosTabela');
   
   // Verificar se a tabela existe
@@ -139,6 +167,8 @@ function carregarLancamentos() {
 
 // Carregar dados de exemplo para demonstração
 function carregarDadosExemplo() {
+  console.log("Carregando dados de exemplo...");
+  
   setTimeout(() => {
     lancamentosData = [
       {linha: 1, data: "01/05/2023", descricao: "Salário", categoria: "Outros", valor: "R$ 3000,00", tipo: "Receita", comprovante: true},
@@ -148,17 +178,24 @@ function carregarDadosExemplo() {
       {linha: 5, data: "20/05/2023", descricao: "Restaurante", categoria: "Alimentação", valor: "R$ 120,00", tipo: "Gasto", comprovante: true}
     ];
     
-    processarLancamentos(lancamentosData);
+    const tabelaLancamentos = document.getElementById('lancamentosTabela');
+    if (tabelaLancamentos) {
+      processarLancamentos(lancamentosData);
+    } else {
+      console.error("Elemento 'lancamentosTabela' não encontrado ao processar dados de exemplo");
+    }
   }, 1000);
 }
 
 // Processar e exibir lançamentos
 function processarLancamentos(dados) {
+  console.log("Processando lançamentos...");
+  
   const tabelaLancamentos = document.getElementById('lancamentosTabela');
   
   // Verificar se a tabela existe
   if (!tabelaLancamentos) {
-    console.error("Elemento 'lancamentosTabela' não encontrado");
+    console.error("Elemento 'lancamentosTabela' não encontrado ao processar lançamentos");
     return;
   }
   
@@ -204,15 +241,9 @@ function processarLancamentos(dados) {
             `<button class="btn-sm btn-visualizar" onclick="verComprovante(${lancamento.linha})">
               <i class="fas fa-file-alt"></i>
             </button>` : 
-            `<div class="comprovante-upload">
-              <input type="file" id="fileInput${lancamento.linha}" accept="image/*,.pdf" style="display:none;">
-              <button class="btn-sm btn-visualizar" onclick="document.getElementById('fileInput${lancamento.linha}').click()">
-                <i class="fas fa-upload"></i>
-              </button>
-              <button class="btn-sm btn-visualizar" onclick="uploadComprovante(${lancamento.linha})" style="margin-left:5px;">
-                <i class="fas fa-save"></i>
-              </button>
-            </div>`
+            `<span class="status-comprovante pendente">
+              <i class="fas fa-file-upload"></i> Pendente
+            </span>`
           }
           <button class="btn-sm btn-excluir" onclick="excluirLancamento(${lancamento.linha})">
             <i class="fas fa-trash"></i>
@@ -230,6 +261,8 @@ function processarLancamentos(dados) {
 
 // Atualizar resumo financeiro
 function atualizarResumo(totalReceitas, totalGastos) {
+  console.log("Atualizando resumo...");
+  
   const painelResumo = document.getElementById('painelResumo');
   if (!painelResumo) {
     console.error("Elemento 'painelResumo' não encontrado");
@@ -263,3 +296,393 @@ function atualizarResumo(totalReceitas, totalGastos) {
     </div>
   `;
 }
+
+// Função placeholder para salvar lançamento
+function salvarLancamento() {
+  alert("Função de salvar lançamento ainda não implementada completamente");
+  // Implementação completa seria feita aqui
+}
+
+// Função placeholder para excluir lançamento
+function excluirLancamento(linha) {
+  alert(`Função de excluir lançamento (linha ${linha}) ainda não implementada completamente`);
+  // Implementação completa seria feita aqui
+}
+
+// Função placeholder para ver comprovante
+function verComprovante(linha) {
+  alert(`Função de visualizar comprovante (linha ${linha}) ainda não implementada completamente`);
+  // Implementação completa seria feita aqui
+}
+
+// Função placeholder para atualizar gráficos
+function atualizarGraficos() {
+  console.log("Atualizando gráficos...");
+  // Implementação completa seria feita aqui
+}
+
+// Função placeholder para atualizar lista de categorias
+function atualizarListaCategorias() {
+  console.log("Atualizando lista de categorias...");
+  const listaCategorias = document.getElementById('listaCategorias');
+  if (!listaCategorias) {
+    console.warn("Elemento 'listaCategorias' não encontrado");
+    return;
+  }
+  
+  // Implementação básica
+  listaCategorias.innerHTML = '';
+  categorias.forEach((categoria, index) => {
+    const item = document.createElement('div');
+    item.className = 'resumo-item';
+    item.style.justifyContent = 'space-between';
+    item.innerHTML = `
+      <span>${categoria}</span>
+      <button class="btn-sm btn-excluir" onclick="alert('Remover categoria ${categoria}')">
+        <i class="fas fa-trash"></i>
+      </button>
+    `;
+    listaCategorias.appendChild(item);
+  });
+}
+
+// Função placeholder para atualizar select de categorias
+function atualizarSelectCategorias() {
+  console.log("Atualizando select de categorias...");
+  const select = document.getElementById('categoria');
+  if (!select) {
+    console.warn("Elemento 'categoria' não encontrado");
+    return;
+  }
+  
+  // Implementação básica
+  select.innerHTML = '';
+  categorias.forEach(categoria => {
+    const option = document.createElement('option');
+    option.value = categoria;
+    option.textContent = categoria;
+    select.appendChild(option);
+  });
+}
+
+// Função placeholder para carregar preferências de tema
+function carregarPreferenciasDeTemasalvas() {
+  console.log("Carregando preferências de tema...");
+  // Implementação completa seria feita aqui
+}
+
+// Função placeholder para carregar categorias salvas
+function carregarCategoriasSalvas() {
+  console.log("Carregando categorias salvas...");
+  const categoriasSalvas = JSON.parse(localStorage.getItem('categorias'));
+  if (categoriasSalvas && Array.isArray(categoriasSalvas) && categoriasSalvas.length > 0) {
+    categorias = categoriasSalvas;
+  }
+}
+
+// Função placeholder para ajustar layout
+function adjustLayout() {
+  console.log("Ajustando layout...");
+  
+  // Verificar se estamos em modo paisagem em dispositivo móvel
+  const isMobile = window.innerWidth <= 768;
+  const isLandscape = window.innerWidth > window.innerHeight;
+  
+  if (isMobile && isLandscape) {
+    document.body.classList.add('landscape-mobile');
+  } else {
+    document.body.classList.remove('landscape-mobile');
+  }
+  
+  // Ajustar altura dos gráficos
+  const chartContainers = document.querySelectorAll('.chart-container');
+  chartContainers.forEach(container => {
+    if (isMobile) {
+      container.style.height = isLandscape ? '200px' : '300px';
+    } else {
+      container.style.height = '400px';
+    }
+  });
+}
+
+// Função para alternar entre abas nos relatórios
+function changeTab(tabId) {
+  // Desativar todas as abas
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.classList.remove('active');
+  });
+  
+  // Ativar a aba selecionada
+  const selectedTab = document.getElementById(tabId);
+  if (selectedTab) {
+    selectedTab.classList.add('active');
+  }
+  
+  // Ativar o botão correspondente
+  const button = document.querySelector(`.tab-button[onclick="changeTab('${tabId}')"]`);
+  if (button) {
+    button.classList.add('active');
+  }
+  
+  // Atualizar gráficos específicos da aba
+  if (tabId === 'tab-resumo') {
+    atualizarGraficoReceitasDespesas();
+  } else if (tabId === 'tab-categorias') {
+    atualizarGraficoGastosCategorias();
+  } else if (tabId === 'tab-evolucao') {
+    atualizarGraficoEvolucaoMensal();
+  }
+}
+
+// Função placeholder para atualizar gráfico de receitas e despesas
+function atualizarGraficoReceitasDespesas() {
+  console.log("Atualizando gráfico de receitas e despesas...");
+  const canvas = document.getElementById('chartReceitasDespesas');
+  if (!canvas) {
+    console.warn("Canvas 'chartReceitasDespesas' não encontrado");
+    return;
+  }
+  
+  // Implementação básica (sem Chart.js real)
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText('Gráfico de Receitas e Despesas (simulado)', canvas.width / 2, canvas.height / 2);
+  }
+}
+
+// Função placeholder para atualizar gráfico de gastos por categorias
+function atualizarGraficoGastosCategorias() {
+  console.log("Atualizando gráfico de gastos por categorias...");
+  const canvas = document.getElementById('chartGastosCategorias');
+  if (!canvas) {
+    console.warn("Canvas 'chartGastosCategorias' não encontrado");
+    return;
+  }
+  
+  // Implementação básica (sem Chart.js real)
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText('Gráfico de Gastos por Categorias (simulado)', canvas.width / 2, canvas.height / 2);
+  }
+}
+
+// Função placeholder para atualizar gráfico de evolução mensal
+function atualizarGraficoEvolucaoMensal() {
+  console.log("Atualizando gráfico de evolução mensal...");
+  const canvas = document.getElementById('chartEvolucaoMensal');
+  if (!canvas) {
+    console.warn("Canvas 'chartEvolucaoMensal' não encontrado");
+    return;
+  }
+  
+  // Implementação básica (sem Chart.js real)
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText('Gráfico de Evolução Mensal (simulado)', canvas.width / 2, canvas.height / 2);
+  }
+}
+
+// Função para adicionar nova categoria
+function adicionarCategoria() {
+  const input = document.getElementById('novaCategoria');
+  if (!input) {
+    console.warn("Elemento 'novaCategoria' não encontrado");
+    return;
+  }
+  
+  const novaCategoria = input.value.trim();
+  
+  if (novaCategoria === '') {
+    mostrarAlerta('Por favor, insira um nome para a categoria.', 'warning');
+    return;
+  }
+  
+  if (categorias.includes(novaCategoria)) {
+    mostrarAlerta('Esta categoria já existe.', 'warning');
+    return;
+  }
+  
+  categorias.push(novaCategoria);
+  localStorage.setItem('categorias', JSON.stringify(categorias));
+  
+  // Atualizar interface
+  atualizarListaCategorias();
+  atualizarSelectCategorias();
+  
+  // Limpar campo
+  input.value = '';
+  
+  mostrarAlerta('Categoria adicionada com sucesso!', 'success');
+}
+
+// Função para exportar dados
+function exportarDados() {
+  if (lancamentosData.length === 0) {
+    mostrarAlerta('Não há dados para exportar.', 'warning');
+    return;
+  }
+  
+  const dadosExportacao = {
+    lancamentos: lancamentosData,
+    categorias: categorias,
+    dataExportacao: new Date().toISOString()
+  };
+  
+  const blob = new Blob([JSON.stringify(dadosExportacao, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `financas_pessoais_${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a);
+  a.click();
+  
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
+  
+  mostrarAlerta('Dados exportados com sucesso!', 'success');
+}
+
+// Função para importar dados
+function importarDados() {
+  const input = document.getElementById('importarArquivo');
+  if (!input) {
+    console.warn("Elemento 'importarArquivo' não encontrado");
+    return;
+  }
+  
+  if (!input.files || input.files.length === 0) {
+    mostrarAlerta('Por favor, selecione um arquivo para importar.', 'warning');
+    return;
+  }
+  
+  const file = input.files[0];
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const dados = JSON.parse(e.target.result);
+      
+      if (!dados.lancamentos || !Array.isArray(dados.lancamentos)) {
+        throw new Error('Formato de arquivo inválido.');
+      }
+      
+      // Atualizar dados
+      lancamentosData = dados.lancamentos;
+      
+      if (dados.categorias && Array.isArray(dados.categorias)) {
+        categorias = dados.categorias;
+        localStorage.setItem('categorias', JSON.stringify(categorias));
+      }
+      
+      // Atualizar interface
+      processarLancamentos(lancamentosData);
+      atualizarListaCategorias();
+      atualizarSelectCategorias();
+      
+      mostrarAlerta('Dados importados com sucesso!', 'success');
+    } catch (error) {
+      console.error('Erro ao importar dados:', error);
+      mostrarAlerta('Erro ao importar dados. Verifique o formato do arquivo.', 'error');
+    }
+  };
+  
+  reader.readAsText(file);
+}
+
+// Função para atualizar cor do tema
+function updateThemeColor(variable, value) {
+  document.documentElement.style.setProperty(`--${variable}`, value);
+  
+  // Salvar preferências
+  const temaAtual = JSON.parse(localStorage.getItem('tema') || '{}');
+  temaAtual[variable] = value;
+  localStorage.setItem('tema', JSON.stringify(temaAtual));
+  
+  mostrarAlerta('Tema atualizado!', 'info');
+}
+
+// Função para mostrar alertas
+function mostrarAlerta(mensagem, tipo) {
+  // Remover alertas existentes
+  const alertasAntigos = document.querySelectorAll('.alerta-flutuante');
+  alertasAntigos.forEach(alerta => {
+    alerta.classList.add('fechar');
+    setTimeout(() => {
+      if (alerta.parentNode) {
+        alerta.parentNode.removeChild(alerta);
+      }
+    }, 500);
+  });
+  
+  // Criar novo alerta
+  const alerta = document.createElement('div');
+  alerta.className = `alerta-flutuante alerta-${tipo}`;
+  
+  let icone = '';
+  switch (tipo) {
+    case 'success':
+      icone = '<i class="fas fa-check-circle"></i>';
+      break;
+    case 'error':
+      icone = '<i class="fas fa-exclamation-circle"></i>';
+      break;
+    case 'warning':
+      icone = '<i class="fas fa-exclamation-triangle"></i>';
+      break;
+    case 'info':
+      icone = '<i class="fas fa-info-circle"></i>';
+      break;
+  }
+  
+  alerta.innerHTML = `
+    ${icone}
+    <span>${mensagem}</span>
+    <button onclick="this.parentNode.classList.add('fechar'); setTimeout(() => this.parentNode.remove(), 500);">
+      <i class="fas fa-times"></i>
+    </button>
+  `;
+  
+  document.body.appendChild(alerta);
+  
+  // Remover automaticamente após 5 segundos
+  setTimeout(() => {
+    if (document.body.contains(alerta)) {
+      alerta.classList.add('fechar');
+      setTimeout(() => {
+        if (document.body.contains(alerta)) {
+          document.body.removeChild(alerta);
+        }
+      }, 500);
+    }
+  }, 5000);
+}
+
+// Função para abrir modal de comprovante
+function fecharModalComprovante() {
+  const modal = document.getElementById('modalComprovante');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+
+// Inicializar a aplicação quando o script for carregado
+console.log("Script app.js carregado");
