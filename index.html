@@ -18,230 +18,226 @@
   <title>Controle Financeiro</title>
 </head>
 <body class="tema-escuro">
-    <div class="app-container">
-        <!-- Sidebar -->
-        <div id="sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <h2><i class="fas fa-wallet"></i> FinControl</h2>
-            </div>
-            <div class="sidebar-menu">
-                <div class="menu-item active" data-page="dashboard">
-                    <i class="fas fa-chart-pie"></i> Dashboard
-                </div>
-                <div class="menu-item" data-page="novo-lancamento">
-                    <i class="fas fa-plus-circle"></i> Novo Lançamento
-                </div>
-                <div class="menu-item" data-page="relatorios">
-                    <i class="fas fa-chart-bar"></i> Relatórios
-                </div>
-                <div class="menu-item" data-page="configuracoes">
-                    <i class="fas fa-cog"></i> Configurações
-                </div>
-            </div>
-            <div class="sidebar-footer">
-                <p>v1.0.0 - Desenvolvido com ❤️</p>
-            </div>
-        </div>
+   body onload="inicializar()">
+  <button id="toggleSidebar" class="toggle-sidebar" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="top-bar">
-                <button id="toggleSidebar" class="toggle-btn">
-                    <i class="fas fa-bars"></i>
+  <div class="app-wrapper">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-wallet"></i>
+          <span>Controle Financeiro</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-menu">
+  <div class="menu-item" id="menu-dashboard" data-page="dashboard">
+    <i class="fas fa-home"></i>
+    <span>Dashboard</span>
+  </div>
+  <div class="menu-item" id="menu-novo-lancamento" data-page="novo-lancamento">
+    <i class="fas fa-plus-circle"></i>
+    <span>Novo Lançamento</span>
+  </div>
+  <div class="menu-item" id="menu-relatorios" data-page="relatorios">
+    <i class="fas fa-chart-pie"></i>
+    <span>Relatórios</span>
+  </div>
+  <div class="menu-item" id="menu-configuracoes" data-page="configuracoes">
+    <i class="fas fa-cog"></i>
+    <span>Configurações</span>
+  </div>
+</nav>
+
+      
+      <div class="sidebar-footer">
+        Desenvolvido por <strong>StarkTech</strong>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <!-- Dashboard -->
+      <div id="dashboard" class="page active">
+        <div class="container">
+          <h1>Dashboard Financeiro</h1>
+          <div id="painelResumo" class="resumo">Carregando...</div>
+          
+          <div class="historico">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th>Valor</th>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-registros"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Novo Lançamento -->
+      <div id="novo-lancamento" class="page">
+        <div class="container">
+          <h1>Novo Lançamento</h1>
+          
+          <div class="form-group">
+            <label for="tipoTransacao">Tipo de Transação</label>
+            <select id="tipoTransacao">
+              <option value="recebimento">Recebimento</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="valor">Valor (R$)</label>
+            <input type="text" id="valor" placeholder="Digite o valor">
+          </div>
+          
+          <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao" placeholder="Descrição da transação">
+          </div>
+          
+          <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria">
+              <option value="Alimentação">Alimentação</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Calçados">Calçados</option>
+              <option value="Moradia">Moradia</option>
+              <option value="Saúde">Saúde</option>
+              <option value="Educação">Educação</option>
+              <option value="Investimentos">Investimentos</option>
+              <option value="Salário">Salário</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+          
+          <button id="btnRegistrar" class="btn-registrar" onclick="enviar()">
+            <i class="fas fa-save"></i> Registrar
+          </button>
+        </div>
+      </div>
+
+      <!-- Relatórios -->
+      <div id="relatorios" class="page">
+        <div class="container">
+          <h1>Relatórios Financeiros</h1>
+          
+          <div class="tab-container">
+            <div class="tab-buttons">
+              <button class="tab-button active" onclick="changeTab('tab-gastos-categoria')">Gastos por Categoria</button>
+              <button class="tab-button" onclick="changeTab('tab-evolucao-mensal')">Evolução Mensal</button>
+              <button class="tab-button" onclick="changeTab('tab-receitas-despesas')">Receitas x Despesas</button>
+            </div>
+            
+            <div id="tab-gastos-categoria" class="tab-content active">
+              <div class="chart-container">
+                <canvas id="chartGastosCategorias"></canvas>
+              </div>
+            </div>
+            
+            <div id="tab-evolucao-mensal" class="tab-content">
+              <div class="chart-container">
+                <canvas id="chartEvolucaoMensal"></canvas>
+              </div>
+            </div>
+            
+            <div id="tab-receitas-despesas" class="tab-content">
+              <div class="chart-container">
+                <canvas id="chartReceitasDespesas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configurações -->
+      <div id="configuracoes" class="page">
+        <div class="container">
+          <h1>Configurações</h1>
+          
+          <div class="config-section">
+            <div class="config-title">Personalização</div>
+            
+            <div class="color-picker">
+              <label>Cor Principal:</label>
+              <input type="color" id="primaryColor" value="#e50914" onchange="updateThemeColor('primary-color', this.value)">
+            </div>
+            
+            <div class="color-picker">
+              <label>Cor de Fundo:</label>
+              <input type="color" id="backgroundColor" value="#141414" onchange="updateThemeColor('background-color', this.value)">
+            </div>
+            
+            <div class="color-picker">
+              <label>Cor Positiva:</label>
+              <input type="color" id="positiveColor" value="#1de9b6" onchange="updateThemeColor('positive-text', this.value)">
+            </div>
+            
+            <div class="color-picker">
+              <label>Cor Negativa:</label>
+              <input type="color" id="negativeColor" value="#ff5252" onchange="updateThemeColor('negative-text', this.value)">
+            </div>
+          </div>
+          
+          <div class="config-section">
+            <div class="config-title">Categorias</div>
+            
+            <div class="form-group">
+              <label for="novaCategoria">Adicionar Nova Categoria</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" id="novaCategoria" placeholder="Nome da categoria">
+                <button class="btn-sm btn-registrar" style="width: auto;" onclick="adicionarCategoria()">
+                  <i class="fas fa-plus"></i>
                 </button>
-                <div class="user-info">
-                    <span id="dataAtual"></span>
-                </div>
+              </div>
             </div>
-
-            <!-- Dashboard Page -->
-            <div id="dashboard" class="page active">
-                <div class="container">
-                    <h1>Dashboard Financeiro</h1>
-                    <div id="painelResumo" class="resumo">
-                        <div class="resumo-item">
-                            <span>Recebido:</span> <span>R$ 0,00</span>
-                        </div>
-                        <div class="resumo-item">
-                            <span>Gasto:</span> <span>R$ 0,00</span>
-                        </div>
-                        <div class="resumo-item">
-                            <span>Saldo:</span> <span>R$ 0,00</span>
-                        </div>
-                    </div>
-                    <div class="historico">
-                        <h2>Histórico de Transações</h2>
-                        <div class="table-responsive">
-                            <table class="tabela">
-                                <thead>
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Tipo</th>
-                                        <th>Valor</th>
-                                        <th>Descrição</th>
-                                        <th>Categoria</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabela-registros">
-                                    <tr>
-                                        <td colspan="6">Carregando registros...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            
+            <div class="form-group">
+              <label>Categorias Atuais</label>
+              <div id="listaCategorias" class="historico" style="max-height: 200px;"></div>
             </div>
-
-            <!-- Novo Lançamento Page -->
-            <div id="novo-lancamento" class="page">
-                <div class="container">
-                    <h1>Novo Lançamento</h1>
-                    <div class="form-container">
-                        <div class="form-group">
-                            <label for="tipoTransacao">Tipo de Transação</label>
-                            <select id="tipoTransacao" class="form-control">
-                                <option value="Receita">Receita</option>
-                                <option value="Gasto">Gasto</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="valor">Valor (R$)</label>
-                            <input type="text" id="valor" class="form-control" placeholder="0,00">
-                        </div>
-                        <div class="form-group">
-                            <label for="descricao">Descrição</label>
-                            <input type="text" id="descricao" class="form-control" placeholder="Ex: Compra de supermercado">
-                        </div>
-                        <div class="form-group">
-                            <label for="categoria">Categoria</label>
-                            <select id="categoria" class="form-control">
-                                <!-- Categorias serão carregadas dinamicamente -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="dataTransacao">Data</label>
-                            <input type="date" id="dataTransacao" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <button id="btnRegistrar" class="btn btn-primary" onclick="enviar()">
-                                <i class="fas fa-save"></i> Registrar
-                            </button>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          
+          <div class="config-section">
+            <div class="config-title">Exportar/Importar Dados</div>
+            
+            <button class="btn-registrar" onclick="exportarDados()">
+              <i class="fas fa-file-export"></i> Exportar Dados
+            </button>
+            
+            <div class="form-group" style="margin-top: 1rem;">
+              <label for="importarArquivo">Importar Dados</label>
+              <input type="file" id="importarArquivo" accept=".json" style="padding: 0.5rem;">
+              <button class="btn-registrar" onclick="importarDados()">
+                <i class="fas fa-file-import"></i> Importar
+              </button>
             </div>
-
-            <!-- Relatórios Page -->
-            <div id="relatorios" class="page">
-                <div class="container">
-                    <h1>Relatórios</h1>
-                    <div class="tabs">
-                        <button class="tab-button active" onclick="changeTab('tab-graficos')">Gráficos</button>
-                        <button class="tab-button" onclick="changeTab('tab-resumo-mensal')">Resumo Mensal</button>
-                        <button class="tab-button" onclick="changeTab('tab-categorias')">Análise por Categorias</button>
-                    </div>
-                    
-                    <div id="tab-graficos" class="tab-content active">
-                        <div class="chart-container">
-                            <canvas id="chartGastosCategorias"></canvas>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="chartEvolucaoMensal"></canvas>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="chartReceitasDespesas"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div id="tab-resumo-mensal" class="tab-content">
-                        <div class="resumo-mensal" id="resumoMensal">
-                            <p>Carregando dados...</p>
-                        </div>
-                    </div>
-                    
-                    <div id="tab-categorias" class="tab-content">
-                        <div class="analise-categorias" id="analiseCategorias">
-                            <p>Carregando dados...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Configurações Page -->
-            <div id="configuracoes" class="page">
-                <div class="container">
-                    <h1>Configurações</h1>
-                    
-                    <div class="config-section">
-                        <h2>Personalização</h2>
-                        <div class="form-group">
-                            <label for="primaryColor">Cor Principal</label>
-                            <input type="color" id="primaryColor" value="#1976d2" onchange="updateThemeColor('primary-color', this.value)">
-                        </div>
-                        <div class="form-group">
-                            <label for="secondaryColor">Cor Secundária</label>
-                            <input type="color" id="secondaryColor" value="#424242" onchange="updateThemeColor('secondary-color', this.value)">
-                        </div>
-                        <div class="form-group">
-                            <label for="accentColor">Cor de Destaque</label>
-                            <input type="color" id="accentColor" value="#1de9b6" onchange="updateThemeColor('accent-color', this.value)">
-                        </div>
-                    </div>
-                    
-                    <div class="config-section">
-                        <h2>Gerenciar Categorias</h2>
-                        <div class="form-group">
-                            <input type="text" id="novaCategoria" class="form-control" placeholder="Nova categoria">
-                            <button class="btn btn-primary" onclick="adicionarCategoria()">
-                                <i class="fas fa-plus"></i> Adicionar
-                            </button>
-                        </div>
-                        <div id="listaCategorias" class="lista-categorias">
-                            <!-- Categorias serão carregadas dinamicamente -->
-                        </div>
-                    </div>
-                    
-                    <div class="config-section">
-                        <h2>Importar/Exportar Dados</h2>
-                        <div class="form-group">
-                            <button class="btn btn-primary" onclick="exportarDados()">
-                                <i class="fas fa-download"></i> Exportar Dados
-                            </button>
-                        </div>
-                        <div class="form-group">
-                            <label for="importarArquivo">Importar Dados</label>
-                            <input type="file" id="importarArquivo" class="form-control">
-                            <button class="btn btn-primary" onclick="importarDados()">
-                                <i class="fas fa-upload"></i> Importar
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="config-section">
-                        <h2>Configuração da API</h2>
-                        <div class="form-group">
-                            <label for="apiUrl">URL da API (Google Apps Script)</label>
-                            <input type="text" id="apiUrl" class="form-control" placeholder="https://script.google.com/macros/s/...">
-                            <button class="btn btn-primary" onclick="salvarUrlApi()">
-                                <i class="fas fa-save"></i> Salvar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </main>
+  </div>
 
-    <!-- Modal para visualização de comprovantes -->
-    <div id="modalComprovante" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="document.getElementById('modalComprovante').style.display='none'">&times;</span>
-            <div id="comprovanteModal"></div>
-        </div>
+  <footer class="footer">
+    <p>Controle Financeiro &copy; 2025 - Desenvolvido por <strong>Deuzimar</strong><strong>StarkTech</strong></p>
+  </footer>
+  
+  <div id="modalComprovante" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('modalComprovante').style.display = 'none'">&times;</span>
+      <div id="comprovanteModal"></div>
     </div>
-
+  </div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
