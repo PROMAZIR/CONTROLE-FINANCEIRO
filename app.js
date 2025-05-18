@@ -1,15 +1,21 @@
  // Variáveis globais
-    let categorias = ['Alimentação', 'Transporte', 'Lazer', 'Calçados', 'Moradia', 'Saúde', 'Educação', 'Investimentos', 'Salário', 'Outros'];
-    let lancamentosData = [];
-    let chartGastosCategorias, chartEvolucaoMensal, chartReceitasDespesas;
+let categorias = ['Alimentação', 'Transporte', 'Lazer', 'Calçados', 'Moradia', 'Saúde', 'Educação', 'Investimentos', 'Salário', 'Outros'];
+let lancamentosData = [];
+let chartGastosCategorias, chartEvolucaoMensal, chartReceitasDespesas;
+let API_URL = 'https://script.google.com/macros/s/AKfycbw7y6XzCAjEVMYMI-WhflFE6eqiDVHWCbHQfr5At7LRuOwQ1-tN6DfRmq1yjIYsMdhuiA/exec';
     
         // Inicialização
-    function inicializar() {
-      carregarLancamentos();
-      atualizarListaCategorias();
-      setActiveMenuItem('dashboard');
-      mostrarAlerta("Sistema de controle financeiro carregado com sucesso!", "info");
-    }
+function inicializar() {
+  // Definir a URL da API do Google Apps Script
+  API_URL = 'https://script.google.com/macros/s/AKfycbw7y6XzCAjEVMYMI-WhflFE6eqiDVHWCbHQfr5At7LRuOwQ1-tN6DfRmq1yjIYsMdhuiA/exec';
+       carregarLancamentos();
+  atualizarListaCategorias();
+  setActiveMenuItem('dashboard');
+  mostrarAlerta("Sistema de controle financeiro carregado com sucesso!", "info");
+  
+  // Configurar eventos de menu
+  setupMenuItemsEvents();
+}
 
     
         function showPage(pageId) {
