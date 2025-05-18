@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log("DOM carregado, iniciando aplicação...");
   
   // Verificar se estamos na página correta com os elementos necessários
-  if (document.getElementById('dashboard')) {
-    console.log("Dashboard encontrado, inicializando aplicação...");
+  if (document.querySelector('.app-container')) {
+    console.log("App container encontrado, inicializando aplicação...");
     inicializar();
   } else {
     console.warn("Elementos necessários não encontrados. A aplicação pode estar em uma página diferente.");
@@ -30,7 +30,7 @@ function inicializar() {
     initNavigation();
     
     // Carregar preferências salvas
-    carregarPreferenciasDeTemasalvas();
+    carregarPreferenciasDeTema();
     
     // Carregar categorias salvas
     carregarCategoriasSalvas();
@@ -91,11 +91,16 @@ function initNavigation() {
       
       // Atualizar gráficos se estiver na página de relatórios
       if (pageId === 'relatorios' && document.getElementById('relatorios')) {
-        setTimeout(atualizarGraficos, 100);
+        setTimeout(function() {
+          atualizarGraficoReceitasDespesas();
+          atualizarGraficoGastosCategorias();
+          atualizarGraficoEvolucaoMensal();
+        }, 100);
       }
     });
   });
 }
+
 
 // Inicializar formulário
 function initForm() {
@@ -560,6 +565,145 @@ function exportarDados() {
   
   mostrarAlerta('Dados exportados com sucesso!', 'success');
 }
+// Tornando funções acessíveis globalmente para uso no HTML
+window.adicionarCategoria = function() {
+  const input = document.getElementById('novaCategoria');
+  if (!input) {
+    console.warn("Elemento 'novaCategoria' não encontrado");
+    return;
+  }
+  
+  const novaCategoria = input.value.trim();
+  
+  if (novaCategoria === '') {
+    mostrarAlerta('Por favor, insira um nome para a categoria.', 'warning');
+    return;
+  }
+  
+  if (categorias.includes(novaCategoria)) {
+    mostrarAlerta('Esta categoria já existe.', 'warning');
+    return;
+  }
+  
+  categorias.push(novaCategoria);
+  localStorage.setItem('categorias', JSON.stringify(categorias));
+  
+  // Atualizar interface
+  atualizarListaCategorias();
+  atualizarSelectCategorias();
+  
+  // Limpar campo
+  input.value = '';
+  
+  mostrarAlerta('Categoria adicionada com sucesso!', 'success');
+};
+
+window.exportarDados = function() {
+  if (lancamentosData.length === 0) {
+    mostrarAlerta('Não há dados para exportar.', 'warning');
+    return;
+  }
+  
+  const dadosExportacao = {
+    lancamentos: lancamentosData,
+    categorias: categorias,
+    dataExportacao: new Date().toISOString()
+  };
+  
+  const blob = new Blob([JSON.stringify(dadosExportacao, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `financas_pessoais_${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a);
+  a.click();
+  
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
+  
+  mostrarAlerta('Dados exportados com sucesso!', 'success');
+};
+
+window.importarDados = function() {
+  const input = document.getElementById('importarArquivo');
+  if (!input) {
+    console.warn("Elemento 'importarArquivo' não encontrado");
+    return;
+  }
+  
+  if (!input.files || input.files.length === 0) {
+    mostrarAlerta('Por favor, selecione um arquivo para importar.', 'warning');
+    return;
+  }
+  
+  const file = input.files[0];
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const dados = JSON.parse(e.target.result);
+      
+      if (!dados.lancamentos || !Array.isArray(dados.lancamentos)) {
+        throw new Error('Formato de arquivo inválido.');
+      }
+      
+      // Atualizar dados
+      lancamentosData = dados.lancamentos;
+      
+      if (dados.categorias && Array.isArray(dados.categorias)) {
+        categorias = dados.categorias;
+        localStorage.setItem('categorias', JSON.stringify(categorias));
+      }
+      
+      // Atualizar interface
+      processarLancamentos(lancamentosData);
+      atualizarListaCategorias();
+      atualizarSelectCategorias();
+      
+      mostrarAlerta('Dados importados com sucesso!', 'success');
+    } catch (error) {
+      console.error('Erro ao importar dados:', error);
+      mostrarAlerta('Erro ao importar dados. Verifique o formato do arquivo.', 'error');
+    }
+  };
+  
+  reader.readAsText(file);
+};
+
+window.fecharModalComprovante = function() {
+  const modal = document.getElementById('modalComprovante');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+};
+
+window.verComprovante = function(linha) {
+  alert(`Função de visualizar comprovante (linha ${linha}) ainda não implementada completamente`);
+  // Implementação completa seria feita aqui
+};
+
+window.excluirLancamento = function(linha) {
+  alert(`Função de excluir lançamento (linha ${linha}) ainda não implementada completamente`);
+  // Implementação completa seria feita aqui
+};
+
+// Função para atualizar cor do tema
+// Definindo como global para ser acessível via onclick no HTML
+window.updateThemeColor = function(variable, value) {
+  document.documentElement.style.setProperty(`--${variable}`, value);
+  
+  // Salvar preferências
+  const temaAtual = JSON.parse(localStorage.getItem('tema') || '{}');
+  temaAtual[variable] = value;
+  localStorage.setItem('tema', JSON.stringify(temaAtual));
+  
+  mostrarAlerta('Tema atualizado!', 'info');
+};
+
+
 
 // Função para importar dados
 function importarDados() {
@@ -606,6 +750,70 @@ function importarDados() {
   };
   
   reader.readAsText(file);
+}
+// Função para alternar entre abas nos relatórios
+// Definindo como global para ser acessível via onclick no HTML
+window.changeTab = function(tabId) {
+  console.log("Alterando para a aba:", tabId);
+  
+  // Desativar todas as abas
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.classList.remove('active');
+  });
+  
+  // Ativar a aba selecionada
+  const selectedTab = document.getElementById(tabId);
+  if (selectedTab) {
+    selectedTab.classList.add('active');
+  }
+  
+  // Ativar o botão correspondente
+  const buttons = document.querySelectorAll('.tab-button');
+  buttons.forEach(button => {
+    if (button.getAttribute('onclick').includes(tabId)) {
+      button.classList.add('active');
+    }
+  });
+  
+  // Atualizar gráficos específicos da aba
+  if (tabId === 'tab-resumo') {
+    atualizarGraficoReceitasDespesas();
+  } else if (tabId === 'tab-categorias') {
+    atualizarGraficoGastosCategorias();
+  } else if (tabId === 'tab-evolucao') {
+    atualizarGraficoEvolucaoMensal();
+  }
+};
+
+// Função para carregar preferências de tema
+function carregarPreferenciasDeTema() {
+  console.log("Carregando preferências de tema...");
+  
+  try {
+    const temasSalvos = JSON.parse(localStorage.getItem('tema') || '{}');
+    
+    // Aplicar cores salvas
+    if (temasSalvos['primary-color']) {
+      document.documentElement.style.setProperty('--primary-color', temasSalvos['primary-color']);
+      document.getElementById('primaryColor').value = temasSalvos['primary-color'];
+    }
+    
+    if (temasSalvos['secondary-color']) {
+      document.documentElement.style.setProperty('--secondary-color', temasSalvos['secondary-color']);
+      document.getElementById('secondaryColor').value = temasSalvos['secondary-color'];
+    }
+    
+    if (temasSalvos['accent-color']) {
+      document.documentElement.style.setProperty('--accent-color', temasSalvos['accent-color']);
+      document.getElementById('accentColor').value = temasSalvos['accent-color'];
+    }
+  } catch (error) {
+    console.error("Erro ao carregar preferências de tema:", error);
+  }
 }
 
 // Função para atualizar cor do tema
