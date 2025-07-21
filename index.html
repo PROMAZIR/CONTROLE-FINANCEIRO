@@ -1,225 +1,422 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controle Financeiro</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CRED-StarkTech-Julia</title>
+    
+    <!-- PWA Meta tags -->
+    <meta name="title" content="CRED-StarkTech">
+    <meta name="description" content="Sistema de Gestão Financeira">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cred.starktech.net.br">
+    <meta property="og:title" content="CRED-StarkTech">
+    <meta property="og:description" content="Sistema de Gestão Financeira">
+    <meta property="og:image" content="https://i.ibb.co/hxcjRjwm/2131.jpg">
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+        
+        /* Tela inicial */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .welcome-content {
+            text-align: center;
+            color: white;
+            max-width: 90%;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .app-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .app-subtitle {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Botão de instalação flutuante */
+        #install-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #FF6B6B, #ee5a52);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            z-index: 1001;
+            display: none;
+            transition: all 0.3s ease;
+        }
+        
+        #install-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        /* Container do iframe */
+        #app-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        #app-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+        
+        /* Loading spinner */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 1002;
+            display: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1003;
+            transition: bottom 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .toast.show {
+            bottom: 30px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .app-title {
+                font-size: 28px;
+            }
+            
+            .app-subtitle {
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <h2>Controle Financeiro</h2>
-      </div>
-      <nav class="sidebar-menu">
-        <div class="menu-item active" data-page="dashboard">
-          <i class="fas fa-home"></i>
-          <span>Dashboard</span>
-        </div>
-        <div class="menu-item" data-page="novo-lancamento">
-          <i class="fas fa-plus-circle"></i>
-          <span>Novo Lançamento</span>
-        </div>
-        <div class="menu-item" data-page="relatorios">
-          <i class="fas fa-chart-pie"></i>
-          <span>Relatórios</span>
-        </div>
-        <div class="menu-item" data-page="configuracoes">
-          <i class="fas fa-cog"></i>
-          <span>Configurações</span>
-        </div>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <header class="top-bar">
-        <button id="toggleSidebar" class="toggle-btn">
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="user-info">
-          <span>Olá, Usuário</span>
-          <i class="fas fa-user-circle"></i>
-        </div>
-      </header>
-
-      <!-- Dashboard Page -->
-      <div id="dashboard" class="page active">
-        <div class="container">
-          <h1>Dashboard</h1>
-          <div id="painelResumo" class="resumo positivo">
-            <div class="resumo-item">
-              <span>Recebido:</span> <span>R$ 0,00</span>
-            </div>
-            <div class="resumo-item">
-              <span>Gasto:</span> <span>R$ 0,00</span>
-            </div>
-            <div class="resumo-item">
-              <span>Saldo:</span> <span>R$ 0,00</span>
-            </div>
-          </div>
-          <div class="historico">
-            <h2>Histórico de Transações</h2>
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                                        <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>Valor</th>
-                    <th>Tipo</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="lancamentosTabela">
-                  <!-- Dados serão inseridos via JavaScript -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Novo Lançamento Page -->
-      <div id="novo-lancamento" class="page">
-        <div class="container">
-          <h1>Novo Lançamento</h1>
-          <form id="formLancamento" class="form-lancamento">
-            <div class="form-group">
-              <label for="data">Data</label>
-              <input type="date" id="data" name="data" required>
-            </div>
-            <div class="form-group">
-              <label for="descricao">Descrição</label>
-              <input type="text" id="descricao" name="descricao" placeholder="Ex: Compra no supermercado" required>
-            </div>
-            <div class="form-group">
-              <label for="categoria">Categoria</label>
-              <select id="categoria" name="categoria" required>
-                <!-- Categorias serão inseridas via JavaScript -->
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="valor">Valor (R$)</label>
-              <input type="number" id="valor" name="valor" step="0.01" min="0.01" placeholder="0,00" required>
-            </div>
-            <div class="form-group">
-              <label>Tipo</label>
-              <div class="radio-group">
-                <label class="radio-label">
-                  <input type="radio" name="tipo" value="receita" checked> Receita
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="tipo" value="gasto"> Gasto
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="comprovante">Comprovante (opcional)</label>
-              <input type="file" id="comprovante" name="comprovante" accept="image/*,.pdf">
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Salvar</button>
-              <button type="reset" class="btn btn-secondary">Limpar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Relatórios Page -->
-      <div id="relatorios" class="page">
-        <div class="container">
-          <h1>Relatórios</h1>
-          <div class="tabs">
-            <div class="tab-buttons">
-              <button class="tab-button active" onclick="changeTab('tab-resumo')">Resumo</button>
-              <button class="tab-button" onclick="changeTab('tab-categorias')">Categorias</button>
-              <button class="tab-button" onclick="changeTab('tab-evolucao')">Evolução</button>
-            </div>
-            <div class="tab-content active" id="tab-resumo">
-              <div class="chart-container">
-                <canvas id="chartReceitasDespesas"></canvas>
-              </div>
-            </div>
-            <div class="tab-content" id="tab-categorias">
-              <div class="chart-container">
-                <canvas id="chartGastosCategorias"></canvas>
-              </div>
-            </div>
-            <div class="tab-content" id="tab-evolucao">
-              <div class="chart-container">
-                <canvas id="chartEvolucaoMensal"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Configurações Page -->
-      <div id="configuracoes" class="page">
-        <div class="container">
-          <h1>Configurações</h1>
-          <div class="config-section">
-            <h2>Personalização</h2>
-            <div class="form-group">
-              <label for="primaryColor">Cor Principal</label>
-              <input type="color" id="primaryColor" value="#1976d2" onchange="updateThemeColor('primary-color', this.value)">
-            </div>
-            <div class="form-group">
-              <label for="secondaryColor">Cor Secundária</label>
-              <input type="color" id="secondaryColor" value="#03a9f4" onchange="updateThemeColor('secondary-color', this.value)">
-            </div>
-            <div class="form-group">
-              <label for="accentColor">Cor de Destaque</label>
-              <input type="color" id="accentColor" value="#ff4081" onchange="updateThemeColor('accent-color', this.value)">
-            </div>
-          </div>
-          <div class="config-section">
-            <h2>Categorias</h2>
-            <div class="form-group">
-              <label for="novaCategoria">Nova Categoria</label>
-              <div class="input-with-button">
-                <input type="text" id="novaCategoria" placeholder="Nome da categoria">
-                <button class="btn btn-primary" onclick="adicionarCategoria()">Adicionar</button>
-              </div>
-            </div>
-            <div id="listaCategorias" class="categorias-lista">
-              <!-- Categorias serão inseridas via JavaScript -->
-            </div>
-          </div>
-          <div class="config-section">
-            <h2>Importar/Exportar Dados</h2>
-            <div class="form-actions">
-              <button class="btn btn-primary" onclick="exportarDados()">
-                <i class="fas fa-download"></i> Exportar Dados
-              </button>
-              <div class="input-with-button">
-                <input type="file" id="importarArquivo" accept=".json">
-                <button class="btn btn-secondary" onclick="importarDados()">
-                  <i class="fas fa-upload"></i> Importar Dados
+    <!-- Tela de boas-vindas -->
+    <div id="welcome-screen">
+        <div class="welcome-content">
+            <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" 
+                 alt="CRED-StarkTech Logo" class="logo">
+            
+            <h1 class="app-title">CRED-StarkTech</h1>
+            <p class="app-subtitle">Sistema de Gestão Financeira</p>
+            
+            <div class="button-container">
+                <button id="install-pwa-btn" class="btn btn-primary">
+                    📱 Instalar Aplicativo
                 </button>
-              </div>
+                
+                <button id="access-app-btn" class="btn btn-secondary">
+                    🚀 Acessar Sistema
+                </button>
             </div>
-          </div>
         </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Modal para visualização de comprovantes -->
-  <div id="modalComprovante" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fecharModalComprovante()">&times;</span>
-      <div id="comprovanteModal"></div>
     </div>
-  </div>
+    
+    <!-- Container do aplicativo -->
+    <div id="app-container">
+        <iframe
+            id="app-frame"
+            src="https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec"
+            allow="autoplay; camera; microphone; fullscreen"
+            allowfullscreen
+            loading="lazy">
+        </iframe>
+    </div>
+    
+    <!-- Botão de instalação flutuante -->
+    <button id="install-button">📱 Instalar</button>
+    
+    <!-- Loading spinner -->
+    <div id="loading" class="loading"></div>
+    
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
 
-  <script src="app.js"></script>
+    <script>
+        // Variáveis globais
+        let deferredPrompt;
+        let isAppLoaded = false;
+        
+        // Elementos DOM
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const appContainer = document.getElementById('app-container');
+        const appFrame = document.getElementById('app-frame');
+        const installPwaBtn = document.getElementById('install-pwa-btn');
+        const accessAppBtn = document.getElementById('access-app-btn');
+        const installButton = document.getElementById('install-button');
+        const loading = document.getElementById('loading');
+        const toast = document.getElementById('toast');
+        
+        // Função para mostrar toast
+        function showToast(message, duration = 3000) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+        
+        // Função para mostrar loading
+        function showLoading() {
+            loading.style.display = 'block';
+        }
+        
+        // Função para esconder loading
+        function hideLoading() {
+            loading.style.display = 'none';
+        }
+        
+        // Função para acessar o aplicativo
+        function accessApp() {
+            showLoading();
+            
+            // Se o app já foi carregado, apenas mostrar
+            if (isAppLoaded) {
+                welcomeScreen.style.opacity = '0';
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                    appContainer.classList.add('active');
+                    hideLoading();
+                }, 500);
+            } else {
+                // Carregar o app pela primeira vez
+                appFrame.onload = () => {
+                    isAppLoaded = true;
+                    welcomeScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        welcomeScreen.style.display = 'none';
+                        appContainer.classList.add('active');
+                        hideLoading();
+                    }, 500);
+                };
+                
+                // Timeout de segurança
+                setTimeout(() => {
+                    if (!isAppLoaded) {
+                        hideLoading();
+                        showToast('⚠️ Erro ao carregar. Tente novamente.');
+                    }
+                }, 10000);
+            }
+        }
+        
+        // Função para instalar PWA
+        async function installPWA() {
+            if (!deferredPrompt) {
+                showToast('ℹ️ Instalação não disponível neste navegador');
+                return;
+            }
+            
+            try {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    showToast('🎉 Aplicativo instalado com sucesso!');
+                    installPwaBtn.style.display = 'none';
+                    installButton.style.display = 'none';
+                } else {
+                    showToast('ℹ️ Instalação cancelada');
+                }
+                
+                deferredPrompt = null;
+            } catch (error) {
+                showToast('⚠️ Erro durante a instalação');
+            }
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar se está rodando como PWA
+            if (window.matchMedia('(display-mode: standalone)').matches || 
+                window.navigator.standalone === true) {
+                installPwaBtn.style.display = 'none';
+                installButton.style.display = 'none';
+            }
+        });
+        
+        // Evento para capturar o prompt de instalação
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+        });
+        
+        // Evento quando o app é instalado
+        window.addEventListener('appinstalled', () => {
+            installPwaBtn.style.display = 'none';
+            installButton.style.display = 'none';
+            deferredPrompt = null;
+            showToast('🎉 Aplicativo instalado!');
+        });
+        
+        // Eventos dos botões
+        installPwaBtn.addEventListener('click', installPWA);
+        installButton.addEventListener('click', installPWA);
+        accessAppBtn.addEventListener('click', accessApp);
+        
+        // Precarregar o iframe em background
+        setTimeout(() => {
+            if (!isAppLoaded) {
+                const preloadFrame = appFrame.cloneNode();
+                preloadFrame.style.display = 'none';
+                document.body.appendChild(preloadFrame);
+                
+                preloadFrame.onload = () => {
+                    isAppLoaded = true;
+                    document.body.removeChild(preloadFrame);
+                };
+            }
+        }, 2000);
+    </script>
 </body>
 </html>
-
