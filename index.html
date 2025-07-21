@@ -784,17 +784,6 @@
             </div>
         </div>
 
-        <!-- Botão de atualização -->
-        <button id="refresh-button" title="Atualizar aplicativo" aria-label="Atualizar aplicativo">
-            <div class="refresh-progress"></div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 024 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 4v6h-6"></path>
-                <path d="M1 20v-6h6"></path>
-                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
-                <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"></path>
-            </svg>
-        </button>
-
         <!-- Frame do aplicativo -->
         <div class="frame-container" id="frame-container">
             <iframe
@@ -806,32 +795,6 @@
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation"
                 title="Aplicativo de Controle Financeiro">
             </iframe>
-        </div>
-
-        <!-- Modal para inserir nome -->
-        <div id="name-modal">
-            <div class="modal-content">
-                <div class="modal-title">👋 Como você gostaria de ser chamado(a)?</div>
-                <input type="text" 
-                       id="user-name-input" 
-                       placeholder="Digite seu nome" 
-                       maxlength="20"
-                       autocomplete="given-name"
-                       aria-label="Nome do usuário">
-
-                <div class="gender-selection">
-                    <div class="gender-option" id="male-option" role="button" tabindex="0" aria-label="Selecionar masculino">
-                        <span>👨 Masculino</span>
-                    </div>
-                    <div class="gender-option" id="female-option" role="button" tabindex="0" aria-label="Selecionar feminino">
-                        <span>👩 Feminino</span>
-                    </div>
-                </div>
-
-                <button id="save-name-button" aria-label="Salvar nome e preferências">
-                    Começar 🚀
-                </button>
-            </div>
         </div>
 
         <!-- Mensagem offline -->
