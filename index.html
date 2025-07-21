@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CRED-StarkTech-Julia</title>
+    <title>CRED-StarkTech</title>
     
     <!-- PWA Meta tags -->
     <meta name="title" content="CRED-StarkTech">
@@ -177,6 +177,29 @@
             height: 100%;
             border: none;
             background: white;
+            display: block;
+        }
+        
+        /* Loading overlay para o iframe */
+        .iframe-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 501;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        
+        .iframe-loading.show {
+            opacity: 1;
+            visibility: visible;
         }
         
         /* Loading spinner */
@@ -264,7 +287,7 @@
     <div id="app-container">
         <iframe
             id="app-frame"
-            src="https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec"
+            src="https://script.google.com/macros/s/AKfycbwjlXAo1FeFq5ns546Sw1KKUwkYi6GdiXjFOz99zSsMyx7GSAhdbM2eXFMLc69o1TuR/exec"
             allow="autoplay; camera; microphone; fullscreen"
             allowfullscreen
             loading="lazy">
@@ -284,6 +307,7 @@
         // Variáveis globais
         let deferredPrompt;
         let isAppLoaded = false;
+        const IFRAME_URL = 'https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec';
         
         // Elementos DOM
         const welcomeScreen = document.getElementById('welcome-screen');
@@ -315,44 +339,81 @@
             loading.style.display = 'none';
         }
         
-        // Função para acessar o aplicativo
-        function accessApp() {
-            showLoading();
-            
-            // Se o app já foi carregado, apenas mostrar
-            if (isAppLoaded) {
-                welcomeScreen.style.opacity = '0';
-                setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                    appContainer.classList.add('active');
-                    hideLoading();
-                }, 500);
-            } else {
-                // Carregar o app pela primeira vez
+        // Função para carregar o iframe
+        function loadIframe() {
+            return new Promise((resolve, reject) => {
+                showToast('📡 Carregando aplicativo...');
+                
+                // Limpar eventos anteriores
+                appFrame.onload = null;
+                appFrame.onerror = null;
+                
+                // Configurar eventos
                 appFrame.onload = () => {
+                    console.log('Iframe carregado com sucesso');
                     isAppLoaded = true;
-                    welcomeScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        welcomeScreen.style.display = 'none';
-                        appContainer.classList.add('active');
-                        hideLoading();
-                    }, 500);
+                    resolve();
                 };
                 
-                // Timeout de segurança
-                setTimeout(() => {
-                    if (!isAppLoaded) {
-                        hideLoading();
-                        showToast('⚠️ Erro ao carregar. Tente novamente.');
-                    }
-                }, 10000);
+                appFrame.onerror = () => {
+                    console.error('Erro ao carregar iframe');
+                    reject(new Error('Erro ao carregar aplicativo'));
+                };
+                
+                // Timeout de segurança (15 segundos para GAS)
+                const timeout = setTimeout(() => {
+                    console.warn('Timeout no carregamento do iframe');
+                    reject(new Error('Timeout ao carregar aplicativo'));
+                }, 15000);
+                
+                // Limpar timeout se carregar com sucesso
+                appFrame.onload = () => {
+                    clearTimeout(timeout);
+                    console.log('Iframe carregado com sucesso');
+                    isAppLoaded = true;
+                    resolve();
+                };
+                
+                // Carregar o iframe
+                appFrame.src = IFRAME_URL;
+            });
+        }
+        
+        // Função para acessar o aplicativo
+        async function accessApp() {
+            showLoading();
+            
+            try {
+                // Se o app já foi carregado, apenas mostrar
+                if (isAppLoaded) {
+                    showWelcomeToApp();
+                } else {
+                    // Carregar o app pela primeira vez
+                    await loadIframe();
+                    showWelcomeToApp();
+                }
+            } catch (error) {
+                hideLoading();
+                console.error('Erro ao acessar app:', error);
+                showToast(`⚠️ ${error.message}. Verifique sua conexão.`);
             }
+        }
+        
+        // Função para mostrar a transição para o app
+        function showWelcomeToApp() {
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                appContainer.classList.add('active');
+                hideLoading();
+                showToast('✅ Aplicativo carregado!');
+            }, 500);
         }
         
         // Função para instalar PWA
         async function installPWA() {
             if (!deferredPrompt) {
-                showToast('ℹ️ Instalação não disponível neste navegador');
+                showToast('ℹ️ Para instalar: Menu do navegador > "Adicionar à tela inicial"');
                 return;
             }
             
@@ -370,22 +431,39 @@
                 
                 deferredPrompt = null;
             } catch (error) {
+                console.error('Erro na instalação:', error);
                 showToast('⚠️ Erro durante a instalação');
             }
         }
         
+        // Função para verificar conectividade
+        function checkConnection() {
+            if (!navigator.onLine) {
+                showToast('📡 Você está offline. Conecte-se à internet.');
+                return false;
+            }
+            return true;
+        }
+        
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM carregado');
+            
             // Verificar se está rodando como PWA
             if (window.matchMedia('(display-mode: standalone)').matches || 
                 window.navigator.standalone === true) {
                 installPwaBtn.style.display = 'none';
                 installButton.style.display = 'none';
+                console.log('Rodando como PWA instalado');
             }
+            
+            // Verificar conectividade
+            checkConnection();
         });
         
         // Evento para capturar o prompt de instalação
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('Prompt de instalação disponível');
             e.preventDefault();
             deferredPrompt = e;
             installButton.style.display = 'block';
@@ -393,30 +471,42 @@
         
         // Evento quando o app é instalado
         window.addEventListener('appinstalled', () => {
+            console.log('App instalado');
             installPwaBtn.style.display = 'none';
             installButton.style.display = 'none';
             deferredPrompt = null;
             showToast('🎉 Aplicativo instalado!');
         });
         
-        // Eventos dos botões
-        installPwaBtn.addEventListener('click', installPWA);
-        installButton.addEventListener('click', installPWA);
-        accessAppBtn.addEventListener('click', accessApp);
+        // Eventos de conectividade
+        window.addEventListener('online', () => {
+            showToast('🌐 Conectado à internet');
+        });
         
-        // Precarregar o iframe em background
-        setTimeout(() => {
-            if (!isAppLoaded) {
-                const preloadFrame = appFrame.cloneNode();
-                preloadFrame.style.display = 'none';
-                document.body.appendChild(preloadFrame);
-                
-                preloadFrame.onload = () => {
-                    isAppLoaded = true;
-                    document.body.removeChild(preloadFrame);
-                };
+        window.addEventListener('offline', () => {
+            showToast('📡 Você ficou offline');
+        });
+        
+        // Eventos dos botões
+        installPwaBtn.addEventListener('click', () => {
+            console.log('Botão instalar clicado');
+            installPWA();
+        });
+        
+        installButton.addEventListener('click', () => {
+            console.log('Botão instalar flutuante clicado');
+            installPWA();
+        });
+        
+        accessAppBtn.addEventListener('click', () => {
+            console.log('Botão acessar clicado');
+            if (checkConnection()) {
+                accessApp();
             }
-        }, 2000);
+        });
+        
+        // Log para debug
+        console.log('Script carregado, aguardando interação do usuário');
     </script>
 </body>
 </html>
