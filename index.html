@@ -1,297 +1,407 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>C.F</title>
-    <!-- Meta tags com emoji para identificação de gênero -->
-    <meta name="title" content="C.F">
+    <title>C.F - Controle Financeiro</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="C.F">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="title" content="C.F - Controle Financeiro">
     <meta name="description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
+    <meta name="keywords" content="controle financeiro, parcelas, compras, gestão">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://credi-boti.jd.starktech.net.br">
-    <meta property="og:title" content="C.F">
+    <meta property="og:title" content="C.F - Controle Financeiro">
     <meta property="og:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta property="og:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://credi-boti.jd.starktech.net.br">
-    <meta name="twitter:title" content="C.F.C">
+    <meta name="twitter:title" content="C.F - Controle Financeiro">
     <meta name="twitter:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta name="twitter:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
+    
+    <!-- Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+    
     <style>
-      body, html {
+        /* Reset e Base */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: white;
+            background-color: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
-        #app-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        
-        /* Tela de carregamento com cumprimentos */
-        #loading-screen {
+
+        /* PWA Loading Screen - Versão Melhorada */
+        .pwa-loading {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            color: white;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .pwa-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
+
+        /* Efeito de partículas de fundo */
+        .pwa-loading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 120px 120px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        /* Container principal do loading */
+        .pwa-loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 2;
+            max-width: 90%;
+            padding: 20px;
+        }
+
+        /* Logo container melhorado */
+        .pwa-logo-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .pwa-logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 50%;
+            transition: all 0.8s ease;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .pwa-logo-img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .pwa-logo-overlay {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+            50% { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        }
+
+        /* Textos do loading */
+        .pwa-loading-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #e3f2fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+            50% { text-shadow: 0 0 30px rgba(255,255,255,0.6); }
+        }
+
+        .pwa-loading-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* Barra de progresso melhorada */
+        .pwa-loading-progress-container {
+            width: 100%;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .pwa-loading-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .pwa-loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #fff, #e3f2fd, #fff);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .pwa-loading-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .pwa-loading-percentage {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        /* Status e dots */
+        .pwa-loading-status {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .pwa-loading-status p {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .pwa-loading-dots {
             display: flex;
             justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            gap: 8px;
         }
-        
-        .loading-container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 15px;
-            background-color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            max-width: 85%;
-        }
-        
-        .greeting {
-            font-size: 22px;
-            font-weight: 600;
-            color: #4a4a4a;
-            margin-bottom: 5px;
-        }
-        
-        .user-name {
-            font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            /* Cor será definida dinamicamente pelo JavaScript */
-        }
-        
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #ff69b4; /* Cor padrão, será alterada pelo JS */
+
+        .pwa-loading-dots span {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.7);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
+            animation: dotPulse 1.5s infinite ease-in-out;
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .pwa-loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .pwa-loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .pwa-loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1.2); opacity: 1; }
         }
-        
-        /* Estilos para o iframe */
+
+        /* Features do PWA */
+        .pwa-features {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            min-width: 80px;
+            transition: all 0.3s ease;
+            animation: featureFloat 4s ease-in-out infinite;
+        }
+
+        .feature-item:nth-child(1) { animation-delay: 0s; }
+        .feature-item:nth-child(2) { animation-delay: 0.5s; }
+        .feature-item:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes featureFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+
+        .feature-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* App Container */
+        #app-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #f8fafc;
+        }
+
+        /* Frame Container */
         .frame-container {
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            background-color: white;
+            background-color: #f8fafc;
             z-index: 900;
         }
-        
+
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            background-color: white;
+            background-color: #f8fafc;
         }
-        
-        /* Estilos para o botão de instalação */
+
+        /* Botão de Instalação Melhorado */
         #install-button {
             position: fixed;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%);
-            /* Cor será definida dinamicamente pelo JavaScript */
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 12px 24px;
+            border-radius: 25px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
             z-index: 1000;
             display: none;
             cursor: pointer;
             border: none;
-            font-size: 16px;
-        }
-        
-        /* Estado offline */
-        #offline-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            z-index: 2000;
-            display: none;
-        }
-        
-        .retry-button {
-            /* Cor será definida dinamicamente pelo JavaScript */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        /* Modal para nome do usuário */
-        #name-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            display: none;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            text-align: center;
-            max-width: 85%;
-            width: 300px;
-        }
-        
-        .modal-title {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 20px;
-            color: #4a4a4a;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        
-        #user-name-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        
-        /* Seleção de gênero */
-        .gender-selection {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .gender-option {
-            flex: 1;
-            padding: 10px;
-            margin: 0 5px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .gender-option.selected {
-            border-color: #4a4a4a;
-            background-color: #f8f8f8;
-        }
-        
-        .gender-option:first-child.selected {
-            border-color: #4e9af1;
-            background-color: #eef5ff;
-        }
-        
-        .gender-option:last-child.selected {
-            border-color: #ff69b4;
-            background-color: #fff0f7;
-        }
-        
-        #save-name-button {
-            /* Cor será definida dinamicamente pelo JavaScript */
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-        
-        /* Estilos para o container de logos */
-        .logo-container {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* Estilos base para as logos */
-        .logo {
-            position: absolute;
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            opacity: 0;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-        }
-        
-        /* Logo ativa */
-        .logo.active {
+
+        #install-button.show {
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
         }
-        
-        /* Animação de pulsar suave */
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.05); }
-            100% { transform: translate(-50%, -50%) scale(1); }
+
+        #install-button:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+                    }
+
+        #install-button:active {
+            transform: translateX(-50%) translateY(0) scale(0.98);
         }
-        
-        /* Classe para aplicar a animação de pulsar */
-        .pulse {
-            animation: pulse 4s infinite ease-in-out;
-        }
-        
-        /* Estilo para o botão de atualização */
+
+        /* Botão de Atualização Melhorado */
         #refresh-button {
             position: fixed;
-            top: 10px;
-            right: 60px; /* Posicionado mais à esquerda para evitar conflito */
-            width: 36px;
-            height: 36px;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border: none;
             cursor: pointer;
             z-index: 1001;
@@ -299,569 +409,1128 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        
-        #refresh-button svg {
-            width: 18px;
-            height: 18px;
-            transition: transform 0.5s ease;
-        }
-        
+
         #refresh-button:hover {
-            background-color: rgba(245, 245, 245, 0.95);
+            background: rgba(245, 245, 245, 0.98);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
-        
+
+        #refresh-button svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.5s ease;
+            color: #667eea;
+        }
+
         #refresh-button:hover svg {
             transform: rotate(180deg);
         }
-        
+
         #refresh-button.refreshing svg {
             animation: spin 1s linear infinite;
         }
-        
-        /* Estilo para o indicador de progresso */
+
         .refresh-progress {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
             border: 2px solid transparent;
+            border-top-color: #667eea;
             box-sizing: border-box;
             opacity: 0;
             transition: opacity 0.3s;
             animation: spin 1s linear infinite;
         }
-        
+
         #refresh-button.refreshing .refresh-progress {
             opacity: 1;
         }
-        
-        /* Toast notification */
-        #toast-notification {
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal de Nome Melhorado */
+        #name-modal {
             position: fixed;
-            bottom: -50px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        #name-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        #name-modal.show .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #2d3748;
+            line-height: 1.4;
+        }
+
+        #user-name-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        #user-name-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .gender-selection {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .gender-option {
+            flex: 1;
+            padding: 15px 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .gender-option:hover {
+            border-color: #cbd5e0;
+            background: white;
+        }
+
+        .gender-option.selected {
+            border-color: #667eea;
+            background: #eef2ff;
+            color: #667eea;
+        }
+
+        .gender-option:first-child.selected {
+            border-color: #4e9af1;
+            background: #eef5ff;
+            color: #4e9af1;
+        }
+
+        .gender-option:last-child.selected {
+            border-color: #ff69b4;
+            background: #fff0f7;
+            color: #ff69b4;
+        }
+
+        #save-name-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        #save-name-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        #save-name-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Toast Notification Melhorado */
+        .toast-notification {
+            position: fixed;
+            bottom: -80px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #333;
+            background: rgba(45, 55, 72, 0.95);
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             z-index: 2000;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             opacity: 0;
             font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast-notification.show {
+            bottom: 30px;
+            opacity: 1;
+        }
+
+        .toast-notification.success {
+            background: rgba(72, 187, 120, 0.95);
+        }
+
+        .toast-notification.error {
+            background: rgba(245, 101, 101, 0.95);
+        }
+
+        .toast-notification.warning {
+            background: rgba(237, 137, 54, 0.95);
+        }
+
+        .toast-notification.info {
+            background: rgba(66, 153, 225, 0.95);
+        }
+
+        /* Mensagem Offline Melhorada */
+        #offline-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 2000;
+            display: none;
+            max-width: 90%;
+            width: 320px;
+        }
+
+        #offline-message h3 {
+            color: #e53e3e;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        #offline-message p {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .pwa-loading-title {
+                font-size: 1.8rem;
+            }
+
+            .pwa-loading-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .pwa-logo-container {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 25px;
+            }
+
+            .pwa-logo-img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .pwa-features {
+                gap: 15px;
+            }
+
+            .feature-item {
+                min-width: 70px;
+                padding: 12px;
+            }
+
+            .modal-content {
+                padding: 25px;
+                width: 300px;
+            }
+
+            .gender-selection {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Animações de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Estados de carregamento */
+        .loading-enter {
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        .loading-exit {
+            animation: fadeInUp 0.4s ease-out reverse;
+        }
+
+        /* Preloader para imagens */
+        .img-preloader {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Melhorias de acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a202c;
+            }
+
+            .frame-container {
+                background-color: #1a202c;
+            }
+
+            iframe {
+                background-color: #1a202c;
+            }
+
+            #refresh-button {
+                background: rgba(45, 55, 72, 0.95);
+                color: white;
+            }
+
+            #refresh-button:hover {
+                background: rgba(45, 55, 72, 0.98);
+            }
         }
     </style>
 </head>
 <body>
     <div id="app-container">
+        <!-- PWA Loading Screen Melhorada -->
+        <div class="pwa-loading" id="pwa-loading">
+            <div class="pwa-loading-container">
+                <!-- Logo com alternância -->
+                <div class="pwa-logo-container">
+                    <img src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" 
+                         alt="Logo 1" 
+                         class="pwa-logo-img logo-1 active"
+                         id="logo1">
+                    <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" 
+                         alt="Logo 2" 
+                         class="pwa-logo-img logo-2"
+                         id="logo2">
+                    <div class="pwa-logo-overlay" id="logo-emoji">💰</div>
+                </div>
+
+                <!-- Título e subtítulo -->
+                <h1 class="pwa-loading-title">C.F</h1>
+                <p class="pwa-loading-subtitle">Controle Financeiro Inteligente</p>
+
+                <!-- Barra de progresso -->
+                <div class="pwa-loading-progress-container">
+                    <div class="pwa-loading-bar">
+                        <div class="pwa-loading-progress" id="loading-progress"></div>
+                    </div>
+                    <div class="pwa-loading-percentage" id="loading-percentage">0%</div>
+                </div>
+
+                <!-- Status de carregamento -->
+                <div class="pwa-loading-status">
+                    <p id="loading-status">Inicializando aplicativo...</p>
+                    <div class="pwa-loading-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <!-- Features do PWA -->
+                <div class="pwa-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-text">Rápido</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">Seguro</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-text">Responsivo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Botão de atualização -->
-        <button id="refresh-button" title="Atualizar aplicativo">
+        <button id="refresh-button" title="Atualizar aplicativo" aria-label="Atualizar aplicativo">
             <div class="refresh-progress"></div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 024 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M23 4v6h-6"></path>
                 <path d="M1 20v-6h6"></path>
                 <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
                 <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"></path>
             </svg>
         </button>
-        
-        <!-- Frame do aplicativo (colocado primeiro para pré-carregar) -->
+
+        <!-- Frame do aplicativo -->
         <div class="frame-container" id="frame-container">
-            <iframe 
+            <iframe
                 id="app-frame"
                 src="https://script.google.com/macros/s/AKfycbw7y6XzCAjEVMYMI-WhflFE6eqiDVHWCbHQfr5At7LRuOwQ1-tN6DfRmq1yjIYsMdhuiA/exec"
                 allow="autoplay; camera; microphone; fullscreen"
                 allowfullscreen
                 loading="eager"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation">
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation"
+                title="Aplicativo de Controle Financeiro">
             </iframe>
         </div>
-        
-        <!-- Tela de carregamento com cumprimentos (colocada por cima) -->
-        <div id="loading-screen">
-            <div class="loading-container">
-                <div class="logo-container">
-                    <img src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" alt="Logo 1" class="logo logo-1 active">
-                    <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" alt="Logo 2" class="logo logo-2">
-                </div>
-                <div class="greeting" id="greeting">Olá!</div>
-                <div class="user-name" id="user-name">Bem-vindo(a)!</div>
-                                <div class="loading-spinner" id="loading-spinner"></div>
-            </div>
-        </div>
-        
-        <!-- Mensagem offline -->
-        <div id="offline-message">
-            <p>Você está offline. Verifique sua conexão com a internet.</p>
-            <button class="retry-button" id="retry-button" onclick="window.location.reload()">Tentar Novamente</button>
-        </div>
-        
+
         <!-- Modal para inserir nome -->
         <div id="name-modal">
             <div class="modal-content">
-                <div class="modal-title">Como você gostaria de ser chamado(a)?</div>
-                <input type="text" id="user-name-input" placeholder="Digite seu nome" maxlength="20">
-                
+                <div class="modal-title">👋 Como você gostaria de ser chamado(a)?</div>
+                <input type="text" 
+                       id="user-name-input" 
+                       placeholder="Digite seu nome" 
+                       maxlength="20"
+                       autocomplete="given-name"
+                       aria-label="Nome do usuário">
+
                 <div class="gender-selection">
-                    <div class="gender-option" id="male-option">
+                    <div class="gender-option" id="male-option" role="button" tabindex="0" aria-label="Selecionar masculino">
                         <span>👨 Masculino</span>
                     </div>
-                    <div class="gender-option" id="female-option">
+                    <div class="gender-option" id="female-option" role="button" tabindex="0" aria-label="Selecionar feminino">
                         <span>👩 Feminino</span>
                     </div>
                 </div>
-                
-                <button id="save-name-button">Salvar</button>
+
+                <button id="save-name-button" aria-label="Salvar nome e preferências">
+                    Começar 🚀
+                </button>
             </div>
         </div>
-        
+
+        <!-- Mensagem offline -->
+        <div id="offline-message">
+            <h3>🔌 Sem conexão</h3>
+            <p>Você está offline. Verifique sua conexão com a internet e tente novamente.</p>
+            <button class="retry-button" id="retry-button" onclick="window.location.reload()">
+                🔄 Tentar Novamente
+            </button>
+        </div>
+
         <!-- Botão de instalação -->
-        <button id="install-button">Adicionar à tela inicial</button>
+        <button id="install-button" aria-label="Instalar aplicativo">
+            📱 Instalar App
+        </button>
+
+        <!-- Toast notification -->
+        <div class="toast-notification" id="toast-notification"></div>
     </div>
-   
+
     <script>
-         // Adicione uma variável de versão no topo do seu script
-const APP_VERSION = '1.0.4'; // Incremente este valor quando fizer alterações no seu GAS
+        // Constantes e configurações
+        const APP_VERSION = '2.0.0';
+        const LOADING_STEPS = [
+            { text: 'Inicializando aplicativo...', progress: 10 },
+            { text: 'Carregando recursos...', progress: 25 },
+            { text: 'Configurando interface...', progress: 45 },
+            { text: 'Conectando serviços...', progress: 65 },
+            { text: 'Preparando dados...', progress: 80 },
+            { text: 'Finalizando...', progress: 95 },
+            { text: 'Pronto!', progress: 100 }
+        ];
+
         // Elementos principais
-        const loadingScreen = document.getElementById('loading-screen');
-        const appFrame = document.getElementById('app-frame');
-        const installButton = document.getElementById('install-button');
-        const offlineMessage = document.getElementById('offline-message');
-        const greeting = document.getElementById('greeting');
-        const userName = document.getElementById('user-name');
-        const nameModal = document.getElementById('name-modal');
-        const userNameInput = document.getElementById('user-name-input');
-        const saveNameButton = document.getElementById('save-name-button');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const retryButton = document.getElementById('retry-button');
-        const maleOption = document.getElementById('male-option');
-        const femaleOption = document.getElementById('female-option');
-        const refreshButton = document.getElementById('refresh-button');
-        
-        // Cores baseadas no gênero
-        const colors = {
-            male: '#4e9af1',    // Azul
-            female: '#ff69b4',  // Rosa
-            neutral: '#7e57c2'  // Roxo (neutro)
+        const elements = {
+            pwaLoading: document.getElementById('pwa-loading'),
+            appFrame: document.getElementById('app-frame'),
+            installButton: document.getElementById('install-button'),
+            offlineMessage: document.getElementById('offline-message'),
+            nameModal: document.getElementById('name-modal'),
+            userNameInput: document.getElementById('user-name-input'),
+            saveNameButton: document.getElementById('save-name-button'),
+            refreshButton: document.getElementById('refresh-button'),
+            loadingProgress: document.getElementById('loading-progress'),
+            loadingPercentage: document.getElementById('loading-percentage'),
+            loadingStatus: document.getElementById('loading-status'),
+            logoEmoji: document.getElementById('logo-emoji'),
+            logo1: document.getElementById('logo1'),
+            logo2: document.getElementById('logo2'),
+            maleOption: document.getElementById('male-option'),
+            femaleOption: document.getElementById('female-option'),
+            toastNotification: document.getElementById('toast-notification')
         };
-        
-        // Emojis baseados no gênero
-        const emojis = {
-            male: '🎮',
-            female: '💄',
-            neutral: '👤'
+
+        // Configurações de tema
+        const themes = {
+            male: { color: '#4e9af1', emoji: '👨' },
+            female: { color: '#ff69b4', emoji: '👩' },
+            neutral: { color: '#667eea', emoji: '👤' }
         };
-        
-        // Variável para armazenar o gênero selecionado
-        let selectedGender = 'neutral';
-        
-        // Variável para armazenar o prompt de instalação
-        let deferredPrompt;
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Seleciona as logos
-            const logo1 = document.querySelector('.logo-1');
-            const logo2 = document.querySelector('.logo-2');
-            
-            // Inicializa: primeira logo ativa e com efeito de pulsar
-            logo1.classList.add('active', 'pulse');
-            
-            // Função para alternar entre as logos
-            function toggleLogos() {
-                if (logo1.classList.contains('active')) {
-                    // Transição para a segunda logo
-                    logo1.classList.remove('active', 'pulse');
-                    logo2.classList.add('active', 'pulse');
-                } else {
-                    // Transição para a primeira logo
-                    logo2.classList.remove('active', 'pulse');
-                    logo1.classList.add('active', 'pulse');
+
+        // Estado da aplicação
+        let appState = {
+            selectedGender: 'neutral',
+            deferredPrompt: null,
+            currentStep: 0,
+            isLoading: true,
+            loadingInterval: null
+        };
+
+        // Classe principal da aplicação
+        class PWAController {
+            constructor() {
+                this.init();
+            }
+
+            async init() {
+                try {
+                    this.setupEventListeners();
+                    this.startLoadingSequence();
+                    this.setupLogoRotation();
+                    this.checkUserPreferences();
+                    this.setupPWAFeatures();
+                    this.checkConnection();
+                } catch (error) {
+                    console.error('Erro na inicialização:', error);
+                    this.showToast('Erro na inicialização do aplicativo', 'error');
                 }
             }
-            
-            // Alterna as logos a cada 5 segundos
-            setInterval(toggleLogos, 5000);
-            
-            // Configurar o botão de atualização
-            if (refreshButton) {
-                // Obter a cor do tema atual
-                const currentGender = localStorage.getItem('userGender') || 'neutral';
-                const themeColor = colors[currentGender];
-                
-                // Aplicar a cor ao botão
-                refreshButton.querySelector('svg').style.stroke = themeColor;
-                refreshButton.querySelector('.refresh-progress').style.borderTopColor = themeColor;
-                
-                // Adicionar evento de clique
-                refreshButton.addEventListener('click', function() {
-                    // Evitar múltiplos cliques durante a atualização
-                    if (refreshButton.classList.contains('refreshing')) {
-                        return;
-                    }
-                    
-                    // Adicionar classe para mostrar animação
-                    refreshButton.classList.add('refreshing');
-                    
-                    // Mostrar toast de notificação
-                    showToast('Atualizando aplicativo...');
-                    
-                    // Forçar atualização do iframe
-                    forceGoogleAppsScriptUpdate();
-                    
-                    // Remover classe de animação após a conclusão
-                    setTimeout(() => {
-                        refreshButton.classList.remove('refreshing');
-                    }, 3000);
+
+            setupEventListeners() {
+                // Eventos do modal de nome
+                elements.saveNameButton.addEventListener('click', () => this.saveUserPreferences());
+                elements.userNameInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.saveUserPreferences();
+                });
+
+                // Eventos de seleção de gênero
+                elements.maleOption.addEventListener('click', () => this.selectGender('male'));
+                elements.femaleOption.addEventListener('click', () => this.selectGender('female'));
+
+                // Eventos do iframe
+                elements.appFrame.addEventListener('load', () => this.handleFrameLoad());
+                elements.appFrame.addEventListener('error', () => this.handleFrameError());
+
+                // Eventos de conexão
+                window.addEventListener('online', () => this.handleOnline());
+                window.addEventListener('offline', () => this.handleOffline());
+
+                // Eventos PWA
+                window.addEventListener('beforeinstallprompt', (e) => this.handleInstallPrompt(e));
+                window.addEventListener('appinstalled', () => this.handleAppInstalled());
+
+                // Botão de atualização
+                elements.refreshButton.addEventListener('click', () => this.refreshApp());
+
+                // Botão de instalação
+                elements.installButton.addEventListener('click', () => this.installApp());
+
+                // Acessibilidade - navegação por teclado
+                elements.maleOption.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') this.selectGender('male');
+                });
+                elements.femaleOption.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') this.selectGender('female');
                 });
             }
-        });
-        
-        // Função para aplicar o tema baseado no gênero
-        function applyTheme(gender) {
-            const color = colors[gender] || colors.neutral;
-            
-            // Aplicar cor ao nome do usuário
-            userName.style.color = color;
-            
-            // Aplicar cor ao spinner
-            loadingSpinner.style.borderTopColor = color;
-            
-            // Aplicar cor aos botões
-            installButton.style.backgroundColor = color;
-            retryButton.style.backgroundColor = color;
-            saveNameButton.style.backgroundColor = color;
-            
-            // Aplicar cor ao botão de atualização
-            if (refreshButton) {
-                refreshButton.querySelector('svg').style.stroke = color;
-                refreshButton.querySelector('.refresh-progress').style.borderTopColor = color;
-            }
-            
-            // Salvar a preferência
-            localStorage.setItem('userGender', gender);
-            selectedGender = gender;
-        }
-        
-        // Função para atualizar a cor do botão Salvar
-        function updateSaveButtonColor() {
-            // Verificar o gênero selecionado ou usar o armazenado
-            const gender = selectedGender || localStorage.getItem('userGender') || 'neutral';
-            saveNameButton.style.backgroundColor = colors[gender];
-        }
-        
-        // Função para extrair emoji e gênero da meta tag
-        function detectGenderFromMetaTag() {
-            const metaTitle = document.querySelector('meta[name="title"]');
-            if (!metaTitle) return null;
-            
-            const titleContent = metaTitle.getAttribute('content');
-            
-            // Verificar emojis específicos
-            if (titleContent.includes('💄') || 
-                titleContent.includes('👩') || 
-                titleContent.includes('👧') || 
-                titleContent.includes('👱‍♀️')) {
-                return 'female';
-            } else if (titleContent.includes('👨') || 
-                       titleContent.includes('👦') || 
-                       titleContent.includes('👴') || 
-                       titleContent.includes('🧔') || 
-                       titleContent.includes('🎮')) {
-                return 'male';
-            }
-            
-            return null;
-        }
-        
-        // Configurar seleção de gênero no modal
-        maleOption.addEventListener('click', () => {
-            maleOption.classList.add('selected');
-            femaleOption.classList.remove('selected');
-            selectedGender = 'male';
-            
-            // Atualizar a cor do botão Salvar imediatamente
-            saveNameButton.style.backgroundColor = colors.male;
-        });
-        
-        femaleOption.addEventListener('click', () => {
-            femaleOption.classList.add('selected');
-            maleOption.classList.remove('selected');
-            selectedGender = 'female';
-            
-            // Atualizar a cor do botão Salvar imediatamente
-            saveNameButton.style.backgroundColor = colors.female;
-        });
-        
-        // Configurar saudação baseada no horário
-        function setGreeting() {
-            const hour = new Date().getHours();
-            
-            if (hour >= 5 && hour < 12) {
-                greeting.textContent = 'Bom dia!';
+
+            startLoadingSequence() {
+                let currentStep = 0;
                 
-            } else if (hour >= 12 && hour < 18) {
-                greeting.textContent = 'Boa tarde!';
-            } else {
-                greeting.textContent = 'Boa noite!';
-            }
-        }
-        
-        // Função para obter o nome e gênero do usuário
-        function getUserInfo() {
-            // Verificar se já existe um nome e gênero salvos
-            const storedName = localStorage.getItem('userName');
-            const storedGender = localStorage.getItem('userGender');
-            
-            // Se tiver informações salvas, usá-las
-            if (storedName) {
-                userName.textContent = storedName;
-                
-                if (storedGender) {
-                    applyTheme(storedGender);
-                    
-                    // Adicionar emoji baseado no gênero
-                    const emoji = emojis[storedGender];
-                    if (!userName.textContent.includes(emoji)) {
-                        userName.textContent += ' ' + emoji;
+                const updateProgress = () => {
+                    if (currentStep < LOADING_STEPS.length) {
+                        const step = LOADING_STEPS[currentStep];
+                        
+                        // Atualizar progresso com animação
+                        elements.loadingProgress.style.width = step.progress + '%';
+                        elements.loadingPercentage.textContent = step.progress + '%';
+                        elements.loadingStatus.textContent = step.text;
+                        
+                        // Atualizar emoji baseado no progresso
+                        this.updateLoadingEmoji(step.progress);
+                        
+                        currentStep++;
+                        
+                        // Continuar se não chegou ao fim
+                        if (currentStep < LOADING_STEPS.length) {
+                            setTimeout(updateProgress, 800 + Math.random() * 400);
+                        } else {
+                            // Finalizar carregamento
+                            setTimeout(() => this.finishLoading(), 500);
+                        }
                     }
-                    
+                };
+
+                // Iniciar sequência após pequeno delay
+                setTimeout(updateProgress, 500);
+            }
+
+            updateLoadingEmoji(progress) {
+                const emojis = ['⏳', '⚡', '🔧', '🌐', '📊', '✨', '🚀'];
+                const emojiIndex = Math.floor((progress / 100) * (emojis.length - 1));
+                elements.logoEmoji.textContent = emojis[emojiIndex];
+            }
+
+            setupLogoRotation() {
+                setInterval(() => {
+                    if (elements.logo1.classList.contains('active')) {
+                        elements.logo1.classList.remove('active');
+                        elements.logo2.classList.add('active');
+                    } else {
+                        elements.logo2.classList.remove('active');
+                        elements.logo1.classList.add('active');
+                    }
+                }, 4000);
+            }
+
+            checkUserPreferences() {
+                const storedName = localStorage.getItem('userName');
+                const storedGender = localStorage.getItem('userGender');
+                const isFirstRun = !localStorage.getItem('appLaunched');
+
+                if (storedName && storedGender) {
+                    this.applyTheme(storedGender);
+                    elements.logoEmoji.textContent = themes[storedGender].emoji;
+                } else if (isFirstRun || !storedName) {
+                    localStorage.setItem('appLaunched', 'true');
+                    // Modal será mostrado após o carregamento
+                }
+            }
+
+            selectGender(gender) {
+                // Remover seleção anterior
+                elements.maleOption.classList.remove('selected');
+                elements.femaleOption.classList.remove('selected');
+
+                // Adicionar nova seleção
+                if (gender === 'male') {
+                    elements.maleOption.classList.add('selected');
+                } else {
+                    elements.femaleOption.classList.add('selected');
+                }
+
+                appState.selectedGender = gender;
+                this.updateSaveButtonTheme(gender);
+            }
+
+            updateSaveButtonTheme(gender) {
+                const theme = themes[gender];
+                elements.saveNameButton.style.background = `linear-gradient(135deg, ${theme.color} 0%, ${this.darkenColor(theme.color, 20)} 100%)`;
+            }
+
+            saveUserPreferences() {
+                const name = elements.userNameInput.value.trim();
+                
+                if (!name) {
+                    this.highlightInput();
+                    this.showToast('Por favor, digite seu nome', 'warning');
                     return;
                 }
-            }
-            
-            // Tentar detectar gênero da meta tag
-            const detectedGender = detectGenderFromMetaTag();
-            
-            // Tentar obter o nome da meta tag title
-            const metaTitle = document.querySelector('meta[name="title"]');
-            if (metaTitle) {
-                const titleContent = metaTitle.getAttribute('content');
-                // Remover emoji e espaços extras
-                const cleanName = titleContent.replace(/[^\w\s]/gi, '').trim();
+
+                // Salvar preferências
+                localStorage.setItem('userName', name);
+                localStorage.setItem('userGender', appState.selectedGender);
+
+                // Aplicar tema
+                this.applyTheme(appState.selectedGender);
+
+                // Fechar modal com animação
+                elements.nameModal.classList.remove('show');
                 
-                if (cleanName) {
-                    userName.textContent = cleanName;
+                // Mostrar toast de boas-vindas
+                setTimeout(() => {
+                    const emoji = themes[appState.selectedGender].emoji;
+                    this.showToast(`Bem-vindo(a), ${name}! ${emoji}`, 'success');
+                }, 300);
+            }
+
+            highlightInput() {
+                elements.userNameInput.style.borderColor = '#e53e3e';
+                elements.userNameInput.style.boxShadow = '0 0 0 3px rgba(229, 62, 62, 0.1)';
+                
+                setTimeout(() => {
+                    elements.userNameInput.style.borderColor = '#e2e8f0';
+                    elements.userNameInput.style.boxShadow = 'none';
+                }, 2000);
+            }
+
+            applyTheme(gender) {
+                const theme = themes[gender];
+                
+                // Aplicar cor aos elementos
+                const elementsToTheme = [
+                    elements.refreshButton.querySelector('svg'),
+                    elements.refreshButton.querySelector('.refresh-progress')
+                ];
+
+                elementsToTheme.forEach(el => {
+                    if (el) el.style.color = theme.color;
+                });
+
+                // Salvar preferência
+                localStorage.setItem('userGender', gender);
+                appState.selectedGender = gender;
+            }
+
+            finishLoading() {
+                appState.isLoading = false;
+                
+                // Esconder tela de carregamento com animação
+                elements.pwaLoading.classList.add('hidden');
+                
+                // Mostrar modal se necessário
+                setTimeout(() => {
+                    const storedName = localStorage.getItem('userName');
+                    if (!storedName) {
+                        elements.nameModal.classList.add('show');
+                        elements.userNameInput.focus();
+                    }
+                }, 600);
+
+                // Remover elemento de loading após animação
+                setTimeout(() => {
+                    if (elements.pwaLoading.classList.contains('hidden')) {
+                        elements.pwaLoading.style.display = 'none';
+                    }
+                }, 1000);
+            }
+
+            handleFrameLoad() {
+                console.log('Frame carregado com sucesso');
+                if (!appState.isLoading) {
+                    this.showToast('Aplicativo atualizado!', 'success');
+                }
+            }
+
+            handleFrameError() {
+                console.error('Erro ao carregar o iframe');
+                if (navigator.onLine) {
+                    setTimeout(() => window.location.reload(), 3000);
+                } else {
+                    this.handleOffline();
+                }
+            }
+
+            handleOnline() {
+                elements.offlineMessage.style.display = 'none';
+                this.showToast('Conexão restaurada!', 'success');
+                setTimeout(() => window.location.reload(), 1000);
+            }
+
+            handleOffline() {
+                elements.offlineMessage.style.display = 'block';
+                this.showToast('Você está offline', 'warning');
+            }
+
+            checkConnection() {
+                if (!navigator.onLine) {
+                    this.handleOffline();
+                }
+            }
+
+            // PWA Features
+            setupPWAFeatures() {
+                // Registrar Service Worker
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', () => {
+                        navigator.serviceWorker.register('/sw.js')
+                            .then(registration => {
+                                console.log('SW registrado:', registration);
+                            })
+                            .catch(error => {
+                                console.error('Erro ao registrar SW:', error);
+                            });
+                    });
+                }
+
+                // Verificar se já está instalado
+                if (window.matchMedia('(display-mode: standalone)').matches
+                                        || window.navigator.standalone === true) {
+                    elements.installButton.style.display = 'none';
+                }
+            }
+
+            handleInstallPrompt(e) {
+                e.preventDefault();
+                appState.deferredPrompt = e;
+                elements.installButton.style.display = 'block';
+            }
+
+            async installApp() {
+                if (!appState.deferredPrompt) {
+                    this.showToast('Instalação não disponível', 'warning');
+                    return;
+                }
+
+                try {
+                    const result = await appState.deferredPrompt.prompt();
+                    console.log('Resultado da instalação:', result);
                     
-                    // Se detectou gênero, aplicar tema e salvar
-                    if (detectedGender) {
-                        applyTheme(detectedGender);
-                        
-                        // Adicionar emoji baseado no gênero
-                        userName.textContent += ' ' + emojis[detectedGender];
-                        
-                        // Salvar as informações
-                        localStorage.setItem('userName', cleanName);
-                        return;
+                    if (result.outcome === 'accepted') {
+                        this.showToast('App instalado com sucesso!', 'success');
+                    } else {
+                        this.showToast('Instalação cancelada', 'info');
+                    }
+                } catch (error) {
+                    console.error('Erro na instalação:', error);
+                    this.showToast('Erro na instalação', 'error');
+                }
+
+                appState.deferredPrompt = null;
+                elements.installButton.style.display = 'none';
+            }
+
+            handleAppInstalled() {
+                elements.installButton.style.display = 'none';
+                this.showToast('App instalado! Você pode acessá-lo pela tela inicial.', 'success');
+            }
+
+            refreshApp() {
+                elements.refreshButton.classList.add('refreshing');
+                
+                // Simular carregamento
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+
+            showToast(message, type = 'info') {
+                elements.toastNotification.textContent = message;
+                elements.toastNotification.className = `toast-notification ${type}`;
+                elements.toastNotification.classList.add('show');
+
+                setTimeout(() => {
+                    elements.toastNotification.classList.remove('show');
+                }, 4000);
+            }
+
+            darkenColor(color, percent) {
+                const num = parseInt(color.replace("#", ""), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) - amt;
+                const G = (num >> 8 & 0x00FF) - amt;
+                const B = (num & 0x0000FF) - amt;
+                return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                    (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                    (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+            }
+        }
+
+        // Utilitários adicionais
+        class Utils {
+            static formatDate(date) {
+                return new Intl.DateTimeFormat('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }).format(date);
+            }
+
+            static formatTime(date) {
+                return new Intl.DateTimeFormat('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).format(date);
+            }
+
+            static debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            static throttle(func, limit) {
+                let inThrottle;
+                return function() {
+                    const args = arguments;
+                    const context = this;
+                    if (!inThrottle) {
+                        func.apply(context, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
                     }
                 }
             }
+        }
+
+        // Analytics e Performance
+        class Analytics {
+            static trackEvent(eventName, properties = {}) {
+                console.log('Event:', eventName, properties);
+                // Aqui você pode integrar com Google Analytics, Firebase, etc.
+            }
+
+            static trackPageView(page) {
+                console.log('Page view:', page);
+            }
+
+            static trackError(error, context = '') {
+                console.error('Error tracked:', error, context);
+            }
+
+            static trackPerformance() {
+                if ('performance' in window) {
+                    const navigation = performance.getEntriesByType('navigation')[0];
+                    const loadTime = navigation.loadEventEnd - navigation.loadEventStart;
+                    console.log('Load time:', loadTime + 'ms');
+                }
+            }
+        }
+
+        // Cache Manager
+        class CacheManager {
+            static async cacheResources() {
+                if ('caches' in window) {
+                    try {
+                        const cache = await caches.open('pwa-cache-v1');
+                        const urlsToCache = [
+                            '/',
+                            '/manifest.json',
+                            'https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png',
+                            'https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png'
+                        ];
+                        await cache.addAll(urlsToCache);
+                        console.log('Recursos em cache salvos');
+                    } catch (error) {
+                        console.error('Erro ao salvar cache:', error);
+                    }
+                }
+            }
+
+            static async getCachedResource(url) {
+                if ('caches' in window) {
+                    try {
+                        const cache = await caches.open('pwa-cache-v1');
+                        const response = await cache.match(url);
+                        return response;
+                    } catch (error) {
+                        console.error('Erro ao buscar cache:', error);
+                        return null;
+                    }
+                }
+                return null;
+            }
+        }
+
+        // Inicialização da aplicação
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar aplicação
+            const app = new PWAController();
             
-            // Se chegou aqui, mostrar o modal para o usuário inserir o nome
-            // Mas primeiro, vamos verificar se é a primeira execução
-            const isFirstRun = !localStorage.getItem('appLaunched');
-            if (isFirstRun || !storedName) {
-                // Marcar que o app já foi executado
-                localStorage.setItem('appLaunched', 'true');
-                
-                // Mostrar o modal após um pequeno atraso
-                setTimeout(() => {
-                    nameModal.style.display = 'flex';
-                    // Atualizar a cor do botão Salvar
-                    updateSaveButtonColor();
-                }, 1000);
-            } else {
-                // Aplicar tema neutro se não tiver gênero definido
-                applyTheme('neutral');
-            }
-        }
-        
-        // Configurar o botão de salvar nome
-        saveNameButton.addEventListener('click', () => {
-            const name = userNameInput.value.trim();
-            if (name) {
-                // Salvar nome
-                localStorage.setItem('userName', name);
-                
-                // Aplicar tema baseado no gênero selecionado
-                applyTheme(selectedGender);
-                
-                // Atualizar nome com emoji
-                userName.textContent = name + ' ' + emojis[selectedGender];
-                
-                // Fechar modal
-                nameModal.style.display = 'none';
-            } else {
-                // Destacar o input se estiver vazio
-                userNameInput.style.border = '1px solid red';
-                setTimeout(() => {
-                    userNameInput.style.border = '1px solid #ddd';
-                }, 1000);
-            }
-        });
-        
-        // Permitir pressionar Enter no input
-        userNameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                saveNameButton.click();
-            }
-        });
-        
-        // Inicializar a saudação e o nome
-        setGreeting();
-        getUserInfo();
-        
-        // Verificar conexão com a internet
-        function checkConnection() {
-            if (!navigator.onLine) {
-                showOfflineMessage();
-                return false;
-            }
-            return true;
-        }
-        
-        // Mostrar mensagem offline
-        function showOfflineMessage() {
-            offlineMessage.style.display = 'block';
-            loadingScreen.style.display = 'none';
-        }
-        
-        // Esconder a tela de carregamento sem transição
-        function hideLoadingScreen() {
-            // Remover diretamente sem animação para evitar tela branca
-            loadingScreen.style.display = 'none';
-        }
-        
-        // Evento de carregamento do iframe
-        appFrame.onload = function() {
-            console.log('Frame carregado com sucesso');
-            // Pequeno atraso para garantir que o iframe esteja completamente renderizado
-            setTimeout(hideLoadingScreen, 100);
-        };
-        
-        // Evento de erro do iframe
-        appFrame.onerror = function() {
-            console.error('Erro ao carregar o iframe');
-            if (navigator.onLine) {
-                // Se estiver online mas o iframe falhou, tentar recarregar
-                setTimeout(() => {
+            // Configurar analytics
+            Analytics.trackPageView('home');
+            Analytics.trackPerformance();
+            
+            // Configurar cache
+            CacheManager.cacheResources();
+            
+            // Log de inicialização
+            console.log(`%c🚀 PWA Controle Financeiro v${APP_VERSION} iniciado!`, 
+                'color: #667eea; font-size: 16px; font-weight: bold;');
+            
+            // Verificar atualizações
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
                     window.location.reload();
-                }, 3000);
-            } else {
-                showOfflineMessage();
-            }
-        };
-        
-        // Timeout para garantir que a tela de carregamento não fique presa
-        setTimeout(function() {
-            hideLoadingScreen();
-        }, 5000);
-        
-        // Verificar se o service worker é suportado
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(error => {
-                    console.error('Erro ao registrar o Service Worker:', error);
                 });
-            });
-        }
-        
-        // Evento para capturar o prompt de instalação
-        window.addEventListener('beforeinstallprompt', (e) => {
+            }
+        });
+
+        // Tratamento de erros globais
+        window.addEventListener('error', (event) => {
+            Analytics.trackError(event.error, 'Global error handler');
+            console.error('Erro global capturado:', event.error);
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            Analytics.trackError(event.reason, 'Unhandled promise rejection');
+            console.error('Promise rejeitada:', event.reason);
+        });
+
+        // Prevenção de zoom em dispositivos móveis
+        document.addEventListener('gesturestart', function (e) {
             e.preventDefault();
-            deferredPrompt = e;
-            installButton.style.display = 'block';
         });
-        
-        // Configurar o botão de instalação
-        installButton.addEventListener('click', () => {
-            installButton.style.display = 'none';
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                deferredPrompt = null;
+
+        // Prevenção de seleção de texto em elementos de interface
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+            }
+        });
+
+        // Otimização de performance
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
         });
-        
-        // Verificar se o app já está instalado
-        window.addEventListener('appinstalled', () => {
-            installButton.style.display = 'none';
+
+        // Observar elementos para animações
+        document.querySelectorAll('.feature-item').forEach(el => {
+            observer.observe(el);
         });
-        
-        // Verificar se o app está sendo executado em modo standalone
-        if (window.matchMedia('(display-mode: standalone)').matches || 
-            window.navigator.standalone === true) {
-            installButton.style.display = 'none';
+
+        // Configurações de acessibilidade
+        document.addEventListener('keydown', (e) => {
+            // ESC para fechar modais
+            if (e.key === 'Escape') {
+                if (elements.nameModal.classList.contains('show')) {
+                    elements.nameModal.classList.remove('show');
+                }
+            }
+            
+            // Tab navigation melhorada
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Configurações de tema do sistema
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addListener((e) => {
+            if (e.matches) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        });
+
+        // Aplicar tema inicial
+        if (mediaQuery.matches) {
+            document.body.classList.add('dark-theme');
         }
-        
-               // Eventos de conexão
-        window.addEventListener('online', () => {
-            offlineMessage.style.display = 'none';
-            window.location.reload();
-        });
-        
-        window.addEventListener('offline', () => {
-            showOfflineMessage();
-        });
-        
-        // Verificar conexão inicial
-        checkConnection();
-        
-        // Adicione esta função para limpar o cache do navegador para o domínio específico
-function clearCacheForDomain(domain) {
-    if ('caches' in window) {
-        caches.keys().then(function(names) {
-            for (let name of names) {
-                caches.delete(name).then(function() {
-                    console.log('Cache deletado: ' + name);
-                });
+
+        // Configurações de bateria (se suportado)
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(battery => {
+                if (battery.level < 0.2) {
+                    // Modo de economia de energia
+                    document.body.classList.add('power-save-mode');
+                }
+            });
+        }
+
+        // Configurações de rede
+        if ('connection' in navigator) {
+            const connection = navigator.connection;
+            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+                // Modo de conexão lenta
+                document.body.classList.add('slow-connection');
             }
-        });
-    }
-}
-        
-        // Função para forçar a atualização do Google Apps Script
-        function forceGoogleAppsScriptUpdate() {
-    // Mostrar a tela de carregamento primeiro
-    loadingScreen.style.display = 'flex';
-    
-    // Adicionar timestamp e versão para evitar cache
-    const timestamp = new Date().getTime();
-    const currentSrc = appFrame.src;
-    const baseUrl = currentSrc.split('?')[0];
-    
-    // Usar a versão do app no parâmetro da URL
-    appFrame.src = `${baseUrl}?v=${APP_VERSION}&t=${timestamp}&nocache=true`;
-    
-    // Mostrar a tela de carregamento novamente
-    loadingScreen.style.display = 'flex';
-}
-        
-        // Função para mostrar toast de notificação
-        function showToast(message, duration = 3000) {
-            // Verificar se já existe um toast
-            let toast = document.getElementById('toast-notification');
-            
-            // Se não existir, criar um novo
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'toast-notification';
-                document.body.appendChild(toast);
+        }
+
+        // Configurações de memória
+        if ('memory' in performance) {
+            const memory = performance.memory;
+            if (memory.usedJSHeapSize / memory.jsHeapSizeLimit > 0.8) {
+                // Modo de baixa memória
+                document.body.classList.add('low-memory');
             }
-            
-            // Definir a mensagem
-            toast.textContent = message;
-            
-            // Mostrar o toast
-            toast.style.bottom = '20px';
-            toast.style.opacity = '1';
-            
-            // Esconder após a duração especificada
-            setTimeout(() => {
-                toast.style.bottom = '-50px';
-                toast.style.opacity = '0';
-            }, duration);
         }
     </script>
 </body>
 </html>
+            
