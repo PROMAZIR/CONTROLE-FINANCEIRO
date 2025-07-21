@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CRED-StarkTech</title>
+    <title>CRED-StarkTech - Sistema de Gestão Financeira</title>
     
     <!-- PWA Meta tags -->
     <meta name="title" content="CRED-StarkTech">
-    <meta name="description" content="Sistema de Gestão Financeira">
+    <meta name="description" content="Sistema completo de gestão financeira para controle de crédito e finanças">
+    <meta name="keywords" content="gestão financeira, crédito, finanças, sistema, controle">
+    <meta name="author" content="StarkTech">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cred.starktech.net.br">
-    <meta property="og:title" content="CRED-StarkTech">
-    <meta property="og:description" content="Sistema de Gestão Financeira">
+    <meta property="og:title" content="CRED-StarkTech - Sistema de Gestão Financeira">
+    <meta property="og:description" content="Sistema completo de gestão financeira para controle de crédito e finanças">
     <meta property="og:image" content="https://i.ibb.co/hxcjRjwm/2131.jpg">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cred.starktech.net.br">
+    <meta property="twitter:title" content="CRED-StarkTech">
+    <meta property="twitter:description" content="Sistema de Gestão Financeira">
+    <meta property="twitter:image" content="https://i.ibb.co/hxcjRjwm/2131.jpg">
     
     <!-- PWA Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -20,8 +33,34 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     
+    <!-- Theme colors -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="CRED-StarkTech">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" as="style">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://script.google.com">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(45deg, #4CAF50, #45a049);
+            --error-gradient: linear-gradient(45deg, #FF6B6B, #ee5a52);
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.15);
+            --shadow-heavy: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --border-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1
+                                                        }
         
         * {
             margin: 0;
@@ -34,6 +73,8 @@
             height: 100%;
             font-family: 'Roboto', sans-serif;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         /* Tela inicial */
@@ -43,7 +84,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -56,31 +97,52 @@
             text-align: center;
             color: white;
             max-width: 90%;
+            padding: 20px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .logo {
             width: 120px;
             height: 120px;
             margin-bottom: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-heavy);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
         
         .app-title {
-            font-size: 32px;
+            font-size: clamp(24px, 8vw, 32px);
             font-weight: 900;
             margin-bottom: 10px;
             background: linear-gradient(45deg, #ffffff, #f0f0f0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .app-subtitle {
-            font-size: 18px;
+            font-size: clamp(14px, 4vw, 18px);
             margin-bottom: 40px;
             opacity: 0.9;
             font-weight: 300;
+            line-height: 1.4;
         }
         
         .button-container {
@@ -88,7 +150,7 @@
             flex-direction: column;
             gap: 15px;
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
         }
         
         .btn {
@@ -98,16 +160,34 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            position: relative;
+            overflow: hidden;
+            min-height: 50px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
+            background: var(--success-gradient);
             color: white;
             box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
         }
@@ -117,16 +197,44 @@
             box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
         }
         
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--glass-border);
             backdrop-filter: blur(10px);
         }
         
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Status de conectividade */
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1004;
+            transition: var(--transition);
+        }
+        
+        .connection-status.online {
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+        }
+        
+        .connection-status.offline {
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
         }
         
         /* Botão de instalação flutuante */
@@ -134,7 +242,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: linear-gradient(45deg, #FF6B6B, #ee5a52);
+            background: var(--error-gradient);
             color: white;
             border: none;
             padding: 15px 20px;
@@ -145,7 +253,7 @@
             box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
             z-index: 1001;
             display: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
         
         #install-button:hover {
@@ -180,50 +288,59 @@
             display: block;
         }
         
-        /* Loading overlay para o iframe */
-        .iframe-loading {
-            position: absolute;
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(102, 126, 234, 0.95);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 501;
+            z-index: 1002;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease;
+            transition: var(--transition);
         }
         
-        .iframe-loading.show {
+        .loading-overlay.show {
             opacity: 1;
             visibility: visible;
         }
         
-        /* Loading spinner */
-        .loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
+        /* Loading spinner melhorado */
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            z-index: 1002;
-            display: none;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
         }
         
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
-        /* Toast notification */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Toast notification melhorado */
         .toast {
             position: fixed;
             bottom: -100px;
@@ -236,47 +353,185 @@
             font-size: 14px;
             font-weight: 500;
             z-index: 1003;
-            transition: bottom 0.3s ease;
+            transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            max-width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-medium);
         }
         
         .toast.show {
             bottom: 30px;
         }
         
-        /* Responsividade */
+        .toast.success {
+            background: rgba(76, 175, 80, 0.9);
+        }
+        
+        .toast.error {
+            background: rgba(255, 107, 107, 0.9);
+        }
+        
+        .toast.warning {
+            background: rgba(255, 193, 7, 0.9);
+            color: #333;
+        }
+        
+        /* Botão de voltar */
+        #back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--glass-bg);
+            color: white;
+            border: 2px solid var(--glass-border);
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 1001;
+            display: none;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        
+        #back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Responsividade aprimorada */
         @media (max-width: 480px) {
-            .app-title {
-                font-size: 28px;
+            .welcome-content {
+                padding: 15px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 20px;
             }
             
             .app-subtitle {
-                font-size: 16px;
+                margin-bottom: 30px;
             }
             
             .btn {
                 padding: 12px 25px;
                 font-size: 14px;
+                min-height: 45px;
+            }
+            
+            .button-container {
+                max-width: 280px;
+                gap: 12px;
+            }
+            
+            #install-button {
+                bottom: 15px;
+                right: 15px;
+                padding: 12px 16px;
+                font-size: 12px;
+            }
+            
+            .toast {
+                bottom: 20px;
+                font-size: 13px;
+                padding: 12px 20px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .welcome-content {
+                padding: 10px;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .button-container {
+                max-width: 260px;
+            }
+        }
+        
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .welcome-content {
+                padding: 10px;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 15px;
+            }
+            
+            .app-subtitle {
+                margin-bottom: 20px;
+            }
+            
+            .button-container {
+                flex-direction: row;
+                max-width: 500px;
+                gap: 10px;
+            }
+            
+            .btn {
+                flex: 1;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .toast {
+                background: rgba(30, 30, 30, 0.95);
+            }
+        }
+        
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* High contrast */
+        @media (prefers-contrast: high) {
+            .btn-secondary {
+                border-width: 3px;
+                background: rgba(255, 255, 255, 0.4);
             }
         }
     </style>
 </head>
 <body>
+    <!-- Status de conectividade -->
+    <div id="connection-status" class="connection-status online">
+        🌐 Online
+    </div>
+    
     <!-- Tela de boas-vindas -->
     <div id="welcome-screen">
         <div class="welcome-content">
-            <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" 
-                 alt="CRED-StarkTech Logo" class="logo">
+            <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png"
+                 alt="CRED-StarkTech Logo" class="logo" loading="eager">
             
             <h1 class="app-title">CRED-StarkTech</h1>
-            <p class="app-subtitle">Sistema de Gestão Financeira</p>
+            <p class="app-subtitle">Sistema completo de gestão financeira para controle de crédito e finanças</p>
             
             <div class="button-container">
-                <button id="install-pwa-btn" class="btn btn-primary">
+                <button id="install-pwa-btn" class="btn btn-primary" aria-label="Instalar aplicativo PWA">
                     📱 Instalar Aplicativo
                 </button>
                 
-                <button id="access-app-btn" class="btn btn-secondary">
+                <button id="access-app-btn" class="btn btn-secondary" aria-label="Acessar sistema online">
                     🚀 Acessar Sistema
                 </button>
             </div>
@@ -285,28 +540,86 @@
     
     <!-- Container do aplicativo -->
     <div id="app-container">
+        <button id="back-button" aria-label="Voltar ao menu inicial">
+            ← Voltar
+        </button>
+        
         <iframe
             id="app-frame"
-            src="https://script.google.com/macros/s/AKfycbwjlXAo1FeFq5ns546Sw1KKUwkYi6GdiXjFOz99zSsMyx7GSAhdbM2eXFMLc69o1TuR/exec"
-            allow="autoplay; camera; microphone; fullscreen"
+            src=""
+            allow="autoplay; camera; microphone; fullscreen; geolocation; payment"
             allowfullscreen
-            loading="lazy">
+            loading="lazy"
+            title="CRED-StarkTech Sistema de Gestão Financeira">
         </iframe>
     </div>
     
     <!-- Botão de instalação flutuante -->
-    <button id="install-button">📱 Instalar</button>
+    <button id="install-button" aria-label="Instalar aplicativo">
+        📱 Instalar
+    </button>
     
-    <!-- Loading spinner -->
-    <div id="loading" class="loading"></div>
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+                <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando aplicativo...</div>
+    </div>
+    
+    <!-- PWA Loading Screen Melhorada -->
+    <div id="pwa-loading" class="pwa-loading">
+        <div class="pwa-loading-container">
+            <div class="pwa-logo-container">
+                <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" 
+                     alt="StarkTech Logo" class="pwa-logo-img">
+                <div class="pwa-logo-overlay">💼</div>
+            </div>
+            
+            <div class="pwa-brand">
+                <h2 class="pwa-loading-title">CRED-StarkTech</h2>
+                <p class="pwa-loading-subtitle">Sistema de Gestão Financeira</p>
+            </div>
+            
+            <div class="pwa-loading-progress-container">
+                <div class="pwa-loading-bar">
+                    <div class="pwa-loading-progress" id="loading-progress"></div>
+                </div>
+                <div class="pwa-loading-percentage" id="loading-percentage">0%</div>
+            </div>
+            
+            <div class="pwa-loading-status">
+                <p id="loading-status">Inicializando aplicativo...</p>
+                <div class="pwa-loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <div class="pwa-features">
+                <div class="feature-item">
+                    <span class="feature-icon">🔒</span>
+                    <span class="feature-text">Seguro</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <span class="feature-text">Responsivo</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span class="feature-text">Rápido</span>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>
-
+    
     <script>
         // Variáveis globais
         let deferredPrompt;
         let isAppLoaded = false;
+        let serviceWorkerRegistration = null;
         const IFRAME_URL = 'https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec';
         
         // Elementos DOM
@@ -316,86 +629,214 @@
         const installPwaBtn = document.getElementById('install-pwa-btn');
         const accessAppBtn = document.getElementById('access-app-btn');
         const installButton = document.getElementById('install-button');
-        const loading = document.getElementById('loading');
+        const backButton = document.getElementById('back-button');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const pwaLoading = document.getElementById('pwa-loading');
+        const connectionStatus = document.getElementById('connection-status');
         const toast = document.getElementById('toast');
         
-        // Função para mostrar toast
-        function showToast(message, duration = 3000) {
+        // Elementos de loading
+        const loadingProgress = document.getElementById('loading-progress');
+        const loadingPercentage = document.getElementById('loading-percentage');
+        const loadingStatus = document.getElementById('loading-status');
+        
+        // Sistema de loading avançado
+        class LoadingManager {
+            constructor() {
+                this.progress = 0;
+                this.steps = [
+                    { text: 'Inicializando aplicativo...', duration: 500 },
+                    { text: 'Registrando Service Worker...', duration: 800 },
+                    { text: 'Verificando conectividade...', duration: 300 },
+                    { text: 'Carregando recursos...', duration: 1000 },
+                    { text: 'Preparando interface...', duration: 600 },
+                    { text: 'Finalizando...', duration: 400 }
+                ];
+                this.currentStep = 0;
+            }
+            
+            async start() {
+                pwaLoading.classList.remove('hidden');
+                
+                for (let i = 0; i < this.steps.length; i++) {
+                    this.currentStep = i;
+                    await this.executeStep(this.steps[i]);
+                }
+                
+                await this.complete();
+            }
+            
+            async executeStep(step) {
+                loadingStatus.textContent = step.text;
+                
+                const targetProgress = ((this.currentStep + 1) / this.steps.length) * 100;
+                await this.animateProgress(targetProgress);
+                
+                // Simular tempo de processamento
+                await new Promise(resolve => setTimeout(resolve, step.duration));
+            }
+            
+            async animateProgress(targetProgress) {
+                return new Promise(resolve => {
+                    const startProgress = this.progress;
+                    const duration = 300;
+                    const startTime = performance.now();
+                    
+                    const animate = (currentTime) => {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        this.progress = startProgress + (targetProgress - startProgress) * progress;
+                        
+                        loadingProgress.style.width = `${this.progress}%`;
+                        loadingPercentage.textContent = `${Math.round(this.progress)}%`;
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            resolve();
+                        }
+                    };
+                    
+                    requestAnimationFrame(animate);
+                });
+            }
+            
+            async complete() {
+                loadingStatus.textContent = 'Pronto!';
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                pwaLoading.classList.add('hidden');
+                setTimeout(() => {
+                    pwaLoading.style.display = 'none';
+                }, 500);
+            }
+        }
+        
+        // Gerenciador de conectividade
+        class ConnectionManager {
+            constructor() {
+                this.isOnline = navigator.onLine;
+                this.setupEventListeners();
+                this.updateStatus();
+            }
+            
+            setupEventListeners() {
+                window.addEventListener('online', () => {
+                    this.isOnline = true;
+                    this.updateStatus();
+                    showToast('🌐 Conectado à internet', 'success');
+                });
+                
+                window.addEventListener('offline', () => {
+                    this.isOnline = false;
+                    this.updateStatus();
+                    showToast('📡 Você está offline', 'warning');
+                });
+            }
+            
+            updateStatus() {
+                if (this.isOnline) {
+                    connectionStatus.className = 'connection-status online';
+                    connectionStatus.textContent = '🌐 Online';
+                } else {
+                    connectionStatus.className = 'connection-status offline';
+                    connectionStatus.textContent = '📡 Offline';
+                }
+            }
+            
+            checkConnection() {
+                if (!this.isOnline) {
+                    showToast('📡 Você está offline. Conecte-se à internet.', 'warning');
+                    return false;
+                }
+                return true;
+            }
+        }
+        
+        // Sistema de toast melhorado
+        function showToast(message, type = 'info', duration = 3000) {
             toast.textContent = message;
-            toast.classList.add('show');
+            toast.className = `toast ${type} show`;
             
             setTimeout(() => {
                 toast.classList.remove('show');
             }, duration);
         }
         
-        // Função para mostrar loading
-        function showLoading() {
-            loading.style.display = 'block';
+        // Função para mostrar loading overlay
+        function showLoadingOverlay(text = 'Carregando...') {
+            loadingOverlay.querySelector('.loading-text').textContent = text;
+            loadingOverlay.classList.add('show');
         }
         
-        // Função para esconder loading
-        function hideLoading() {
-            loading.style.display = 'none';
+        // Função para esconder loading overlay
+        function hideLoadingOverlay() {
+            loadingOverlay.classList.remove('show');
         }
         
-        // Função para carregar o iframe
-        function loadIframe() {
-            return new Promise((resolve, reject) => {
-                showToast('📡 Carregando aplicativo...');
-                
-                // Limpar eventos anteriores
-                appFrame.onload = null;
-                appFrame.onerror = null;
-                
-                // Configurar eventos
-                appFrame.onload = () => {
-                    console.log('Iframe carregado com sucesso');
-                    isAppLoaded = true;
-                    resolve();
-                };
-                
-                appFrame.onerror = () => {
-                    console.error('Erro ao carregar iframe');
-                    reject(new Error('Erro ao carregar aplicativo'));
-                };
-                
-                // Timeout de segurança (15 segundos para GAS)
-                const timeout = setTimeout(() => {
-                    console.warn('Timeout no carregamento do iframe');
-                    reject(new Error('Timeout ao carregar aplicativo'));
-                }, 15000);
-                
-                // Limpar timeout se carregar com sucesso
-                appFrame.onload = () => {
-                    clearTimeout(timeout);
-                    console.log('Iframe carregado com sucesso');
-                    isAppLoaded = true;
-                    resolve();
-                };
-                
-                // Carregar o iframe
-                appFrame.src = IFRAME_URL;
-            });
+        // Função para carregar o iframe com retry
+        async function loadIframe(retries = 3) {
+            for (let attempt = 1; attempt <= retries; attempt++) {
+                try {
+                    showLoadingOverlay(`Carregando sistema... (Tentativa ${attempt}/${retries})`);
+                    
+                    await new Promise((resolve, reject) => {
+                        const timeout = setTimeout(() => {
+                            reject(new Error('Timeout ao carregar aplicativo'));
+                        }, 20000); // 20 segundos para GAS
+                        
+                        appFrame.onload = () => {
+                            clearTimeout(timeout);
+                            console.log('Iframe carregado com sucesso');
+                            isAppLoaded = true;
+                            resolve();
+                        };
+                        
+                        appFrame.onerror = () => {
+                            clearTimeout(timeout);
+                            reject(new Error('Erro ao carregar aplicativo'));
+                        };
+                        
+                        // Carregar o iframe
+                        if (appFrame.src !== IFRAME_URL) {
+                            appFrame.src = IFRAME_URL;
+                        }
+                    });
+                    
+                    hideLoadingOverlay();
+                    return; // Sucesso, sair da função
+                    
+                } catch (error) {
+                    console.error(`Tentativa ${attempt} falhou:`, error);
+                    
+                    if (attempt === retries) {
+                        hideLoadingOverlay();
+                        throw error;
+                    }
+                    
+                    // Aguardar antes da próxima tentativa
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                }
+            }
         }
         
         // Função para acessar o aplicativo
         async function accessApp() {
-            showLoading();
+            if (!connectionManager.checkConnection()) {
+                return;
+            }
             
             try {
-                // Se o app já foi carregado, apenas mostrar
                 if (isAppLoaded) {
                     showWelcomeToApp();
                 } else {
-                    // Carregar o app pela primeira vez
                     await loadIframe();
                     showWelcomeToApp();
                 }
             } catch (error) {
-                hideLoading();
                 console.error('Erro ao acessar app:', error);
-                showToast(`⚠️ ${error.message}. Verifique sua conexão.`);
+                showToast(`⚠️ ${error.message}. Tente novamente.`, 'error');
             }
         }
         
@@ -405,63 +846,122 @@
             setTimeout(() => {
                 welcomeScreen.style.display = 'none';
                 appContainer.classList.add('active');
-                hideLoading();
-                showToast('✅ Aplicativo carregado!');
+                backButton.style.display = 'block';
+                showToast('✅ Sistema carregado com sucesso!', 'success');
             }, 500);
+        }
+        
+        // Função para voltar ao menu
+        function goBackToMenu() {
+            appContainer.classList.remove('active');
+            backButton.style.display = 'none';
+            welcomeScreen.style.display = 'flex';
+            setTimeout(() => {
+                welcomeScreen.style.opacity = '1';
+            }, 100);
         }
         
         // Função para instalar PWA
         async function installPWA() {
             if (!deferredPrompt) {
-                showToast('ℹ️ Para instalar: Menu do navegador > "Adicionar à tela inicial"');
+                // Instruções específicas por plataforma
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isAndroid = /Android/.test(navigator.userAgent);
+                
+                let instructions = 'Para instalar: ';
+                if (isIOS) {
+                    instructions += 'Toque no ícone de compartilhar e selecione "Adicionar à Tela de Início"';
+                } else if (isAndroid) {
+                    instructions += 'Toque no menu (⋮) e selecione "Adicionar à tela inicial"';
+                } else {
+                    instructions += 'Menu do navegador > "Instalar aplicativo" ou "Adicionar à tela inicial"';
+                }
+                
+                showToast(instructions, 'info', 5000);
                 return;
             }
             
             try {
+                showLoadingOverlay('Preparando instalação...');
+                
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 
+                hideLoadingOverlay();
+                
                 if (outcome === 'accepted') {
-                    showToast('🎉 Aplicativo instalado com sucesso!');
-                    installPwaBtn.style.display = 'none';
-                    installButton.style.display = 'none';
+                    showToast('🎉 Aplicativo instalado com sucesso!', 'success');
+                    hideInstallButtons();
                 } else {
-                    showToast('ℹ️ Instalação cancelada');
+                    showToast('ℹ️ Instalação cancelada', 'info');
                 }
                 
                 deferredPrompt = null;
             } catch (error) {
+                hideLoadingOverlay();
                 console.error('Erro na instalação:', error);
-                showToast('⚠️ Erro durante a instalação');
+                showToast('⚠️ Erro durante a instalação', 'error');
             }
         }
         
-        // Função para verificar conectividade
-        function checkConnection() {
-            if (!navigator.onLine) {
-                showToast('📡 Você está offline. Conecte-se à internet.');
-                return false;
-            }
-            return true;
+        // Função para esconder botões de instalação
+        function hideInstallButtons() {
+            installPwaBtn.style.display = 'none';
+            installButton.style.display = 'none';
         }
         
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM carregado');
+        // Registrar Service Worker
+        async function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    serviceWorkerRegistration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('Service Worker registrado:', serviceWorkerRegistration);
+                    
+                    // Verificar atualizações
+                    serviceWorkerRegistration.addEventListener('updatefound', () => {
+                        const newWorker = serviceWorkerRegistration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                showToast('🔄 Nova versão disponível. Recarregue a página.', 'info', 5000);
+                            }
+                        });
+                    });
+                    
+                } catch (error) {
+                    console.error('Erro ao registrar Service Worker:', error);
+                }
+            }
+        }
+        
+        // Inicialização da aplicação
+        async function initializeApp() {
+            const loadingManager = new LoadingManager();
             
             // Verificar se está rodando como PWA
-            if (window.matchMedia('(display-mode: standalone)').matches || 
-                window.navigator.standalone === true) {
-                installPwaBtn.style.display = 'none';
-                installButton.style.display = 'none';
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                               window.navigator.standalone === true;
+            
+            if (isStandalone) {
+                hideInstallButtons();
                 console.log('Rodando como PWA instalado');
             }
             
-            // Verificar conectividade
-            checkConnection();
-        });
+            // Iniciar loading
+            await loadingManager.start();
+            
+            // Registrar Service Worker
+            await registerServiceWorker();
+            
+            console.log('Aplicação inicializada com sucesso');
+        }
         
-        // Evento para capturar o prompt de instalação
+        // Instanciar gerenciador de conectividade
+        const connectionManager = new ConnectionManager();
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', initializeApp);
+        
+                // Evento para capturar o prompt de instalação
         window.addEventListener('beforeinstallprompt', (e) => {
             console.log('Prompt de instalação disponível');
             e.preventDefault();
@@ -471,42 +971,100 @@
         
         // Evento quando o app é instalado
         window.addEventListener('appinstalled', () => {
-            console.log('App instalado');
-            installPwaBtn.style.display = 'none';
-            installButton.style.display = 'none';
+            console.log('App instalado com sucesso');
+            hideInstallButtons();
             deferredPrompt = null;
-            showToast('🎉 Aplicativo instalado!');
-        });
-        
-        // Eventos de conectividade
-        window.addEventListener('online', () => {
-            showToast('🌐 Conectado à internet');
-        });
-        
-        window.addEventListener('offline', () => {
-            showToast('📡 Você ficou offline');
+            showToast('🎉 Aplicativo instalado na tela inicial!', 'success');
         });
         
         // Eventos dos botões
-        installPwaBtn.addEventListener('click', () => {
-            console.log('Botão instalar clicado');
-            installPWA();
+        installPwaBtn.addEventListener('click', installPWA);
+        installButton.addEventListener('click', installPWA);
+        accessAppBtn.addEventListener('click', accessApp);
+        backButton.addEventListener('click', goBackToMenu);
+        
+        // Detectar gestos de swipe para voltar (mobile)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
         });
         
-        installButton.addEventListener('click', () => {
-            console.log('Botão instalar flutuante clicado');
-            installPWA();
-        });
-        
-        accessAppBtn.addEventListener('click', () => {
-            console.log('Botão acessar clicado');
-            if (checkConnection()) {
-                accessApp();
+        document.addEventListener('touchend', (e) => {
+            if (!appContainer.classList.contains('active')) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Swipe da esquerda para direita (voltar)
+            if (deltaX > 100 && Math.abs(deltaY) < 100 && touchStartX < 50) {
+                goBackToMenu();
             }
         });
         
-        // Log para debug
-        console.log('Script carregado, aguardando interação do usuário');
+        // Atalhos de teclado
+        document.addEventListener('keydown', (e) => {
+            // ESC para voltar
+            if (e.key === 'Escape' && appContainer.classList.contains('active')) {
+                goBackToMenu();
+            }
+            
+            // Ctrl/Cmd + I para instalar
+            if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+                e.preventDefault();
+                installPWA();
+            }
+        });
+        
+        // Preload do iframe quando hover no botão (desktop)
+        if (!('ontouchstart' in window)) {
+            accessAppBtn.addEventListener('mouseenter', () => {
+                if (!isAppLoaded && connectionManager.isOnline) {
+                    // Preload silencioso
+                    const preloadFrame = document.createElement('iframe');
+                    preloadFrame.style.display = 'none';
+                    preloadFrame.src = IFRAME_URL;
+                    document.body.appendChild(preloadFrame);
+                    
+                    preloadFrame.onload = () => {
+                        console.log('Iframe pré-carregado');
+                        document.body.removeChild(preloadFrame);
+                        isAppLoaded = true;
+                    };
+                }
+            });
+        }
+        
+        // Monitorar performance
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    console.log('Performance:', {
+                        loadTime: perfData.loadEventEnd - perfData.loadEventStart,
+                        domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
+                        totalTime: perfData.loadEventEnd - perfData.fetchStart
+                    });
+                }, 0);
+            });
+        }
+        
+        // Analytics simples (opcional)
+        function trackEvent(action, category = 'PWA') {
+            console.log(`Analytics: ${category} - ${action}`);
+            // Aqui você pode integrar com Google Analytics, etc.
+        }
+        
+        // Rastrear eventos importantes
+        installPwaBtn.addEventListener('click', () => trackEvent('Install Button Clicked'));
+        accessAppBtn.addEventListener('click', () => trackEvent('Access App Clicked'));
+        
+        console.log('🚀 CRED-StarkTech PWA inicializado');
     </script>
 </body>
 </html>
+
