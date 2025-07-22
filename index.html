@@ -216,7 +216,7 @@
             transform: scale(1.1);
         }
 
-        /* Efeito de partículas de fundo bancário */
+        /* Efeito de fundo bancário minimalista */
         .pwa-loading::before {
             content: '';
             position: absolute;
@@ -224,58 +224,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15) 1px, transparent 1px),
-                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.12) 1px, transparent 1px),
-                radial-gradient(circle at 60% 30%, rgba(255,255,255,0.08) 2px, transparent 2px);
-            background-size: 120px 120px, 180px 180px, 150px 150px, 200px 200px;
-            animation: bankingFloat 25s ease-in-out infinite;
-        }
-
-        @keyframes bankingFloat {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg) scale(1); 
-                opacity: 1;
-            }
-            25% { 
-                transform: translateY(-15px) rotate(1deg) scale(1.02); 
-                opacity: 0.8;
-            }
-            50% { 
-                transform: translateY(-25px) rotate(0deg) scale(1.05); 
-                opacity: 0.6;
-            }
-            75% { 
-                transform: translateY(-15px) rotate(-1deg) scale(1.02); 
-                opacity: 0.8;
-            }
-        }
-
-        /* Efeito adicional de brilho bancário */
-        .pwa-loading::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
             background: radial-gradient(
-                circle,
-                transparent 30%, 
-                rgba(255,255,255,0.03) 40%, 
-                rgba(255,255,255,0.08) 50%, 
-                rgba(255,255,255,0.03) 60%, 
+                circle at 50% 50%, 
+                rgba(255,255,255,0.05) 0%, 
                 transparent 70%
             );
-            animation: bankingShine 15s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes bankingShine {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
         }
 
         /* Container principal do loading */
@@ -290,100 +243,73 @@
             padding: 20px;
         }
 
-        /* Logo container bancário melhorado */
+        /* Logo container bancário clean */
         .pwa-logo-container {
             position: relative;
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             margin-bottom: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.15);
-            border-radius: 50%;
-            backdrop-filter: blur(15px);
-            border: 3px solid rgba(255,255,255,0.3);
-            animation: bankingLogoFloat 4s ease-in-out infinite;
-            box-shadow: 
-                0 10px 30px rgba(0,0,0,0.2),
-                inset 0 2px 10px rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: logoFadeIn 2s ease-out;
         }
 
-        @keyframes bankingLogoFloat {
-            0%, 100% { 
-                transform: translateY(0px) scale(1) rotateY(0deg); 
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 2px 10px rgba(255,255,255,0.2);
+        @keyframes logoFadeIn {
+            0% { 
+                opacity: 0;
+                transform: scale(0.8);
             }
-            25% { 
-                transform: translateY(-8px) scale(1.02) rotateY(90deg); 
-                box-shadow: 0 15px 40px rgba(0,0,0,0.3), inset 0 3px 15px rgba(255,255,255,0.3);
-            }
-            50% { 
-                transform: translateY(-15px) scale(1.05) rotateY(180deg); 
-                box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 4px 20px rgba(255,255,255,0.4);
-            }
-            75% { 
-                transform: translateY(-8px) scale(1.02) rotateY(270deg); 
-                box-shadow: 0 15px 40px rgba(0,0,0,0.3), inset 0 3px 15px rgba(255,255,255,0.3);
+            100% { 
+                opacity: 1;
+                transform: scale(1);
             }
         }
 
         .pwa-logo-img {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
-            border-radius: 50%;
-            transition: all 1.2s ease;
+            border-radius: 12px;
+            transition: opacity 1s ease;
             opacity: 0;
-            transform: scale(0.8) rotateY(0deg);
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
         }
 
         .pwa-logo-img.active {
             opacity: 1;
-            transform: scale(1) rotateY(360deg);
-            animation: logoSpin 8s linear infinite;
-        }
-
-        @keyframes logoSpin {
-            0% { transform: scale(1) rotateY(0deg) rotateZ(0deg); }
-            25% { transform: scale(1.1) rotateY(90deg) rotateZ(90deg); }
-            50% { transform: scale(1) rotateY(180deg) rotateZ(180deg); }
-            75% { transform: scale(0.9) rotateY(270deg) rotateZ(270deg); }
-            100% { transform: scale(1) rotateY(360deg) rotateZ(360deg); }
         }
 
         .pwa-logo-overlay {
             position: absolute;
             top: -8px;
             right: -8px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            animation: bankingPulse 3s infinite;
-            box-shadow: 
-                0 4px 20px rgba(102, 126, 234, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.3);
-            border: 2px solid rgba(255,255,255,0.5);
+            font-size: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            animation: badgeFadeIn 2.5s ease-out;
         }
 
-        @keyframes bankingPulse {
+        @keyframes badgeFadeIn {
             0% { 
-                transform: scale(1) rotateZ(0deg); 
-                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4), inset 0 2px 5px rgba(255,255,255,0.3);
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
             }
-            50% { 
-                transform: scale(1.15) rotateZ(180deg); 
-                box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6), inset 0 3px 8px rgba(255,255,255,0.5);
+            70% { 
+                opacity: 0;
             }
             100% { 
-                transform: scale(1) rotateZ(360deg); 
-                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4), inset 0 2px 5px rgba(255,255,255,0.3);
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
             }
         }
 
@@ -411,43 +337,29 @@
             font-weight: 300;
         }
 
-        /* Barra de progresso bancária melhorada */
+        /* Barra de progresso bancária clean */
         .pwa-loading-progress-container {
             width: 100%;
-            max-width: 320px;
+            max-width: 280px;
             margin-bottom: 25px;
         }
 
         .pwa-loading-bar {
             width: 100%;
-            height: 8px;
+            height: 4px;
             background: rgba(255,255,255,0.2);
-            border-radius: 15px;
+            border-radius: 2px;
             overflow: hidden;
             position: relative;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.3);
-            box-shadow: 
-                inset 0 2px 5px rgba(0,0,0,0.2),
-                0 2px 10px rgba(0,0,0,0.1);
         }
 
         .pwa-loading-progress {
             height: 100%;
-            background: linear-gradient(90deg, 
-                #667eea 0%, 
-                #764ba2 25%, 
-                #ffffff 50%, 
-                #764ba2 75%, 
-                #667eea 100%
-            );
-            border-radius: 15px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
             width: 0%;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.4s ease;
             position: relative;
-            box-shadow: 
-                0 0 15px rgba(102, 126, 234, 0.6),
-                inset 0 1px 3px rgba(255,255,255,0.3);
         }
 
         .pwa-loading-progress::after {
@@ -459,18 +371,15 @@
             bottom: 0;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255,255,255,0.6) 30%, 
-                rgba(255,255,255,0.8) 50%, 
-                rgba(255,255,255,0.6) 70%, 
+                rgba(255,255,255,0.4), 
                 transparent
             );
-            animation: bankingShimmer 2.5s infinite;
+            animation: progressShine 2s infinite;
         }
 
-        @keyframes bankingShimmer {
-            0% { transform: translateX(-100%) scaleX(0.5); }
-            50% { transform: translateX(0%) scaleX(1); }
-            100% { transform: translateX(200%) scaleX(0.5); }
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
         }
 
         .pwa-loading-percentage {
@@ -958,6 +867,24 @@
             line-height: 1.5;
         }
 
+        /* Debug Info Styling */
+        #debug-info {
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        #debug-info div {
+            margin-bottom: 5px;
+        }
+
+        #debug-info span {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
         /* Responsividade */
         @media (max-width: 480px) {
             .pwa-loading-title {
@@ -1057,22 +984,18 @@
         <!-- PWA Loading Screen Melhorada -->
         <div class="pwa-loading" id="pwa-loading">
             <div class="pwa-loading-container">
-                <!-- Logo com alternância -->
+                <!-- Logo única estática -->
                 <div class="pwa-logo-container">
                     <img src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" 
-                         alt="Logo 1" 
-                         class="pwa-logo-img logo-1 active"
-                         id="logo1">
-                    <img src="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png" 
-                         alt="Logo 2" 
-                         class="pwa-logo-img logo-2"
-                         id="logo2">
-                    <div class="pwa-logo-overlay" id="logo-emoji">💰</div>
+                         alt="Logo C.F" 
+                         class="pwa-logo-img active"
+                         id="main-logo">
+                    <div class="pwa-logo-overlay" id="logo-emoji">💳</div>
                 </div>
 
                 <!-- Título e subtítulo -->
                 <h1 class="pwa-loading-title">C.F</h1>
-                <p class="pwa-loading-subtitle">Sistema de Parcelas & Formas de Pagamento</p>
+                <p class="pwa-loading-subtitle">Controle Financeiro</p>
 
                 <!-- Barra de progresso -->
                 <div class="pwa-loading-progress-container">
@@ -1095,10 +1018,6 @@
                 <!-- Features do PWA -->
                 <div class="pwa-features">
                     <div class="feature-item">
-                        <div class="feature-icon">💳</div>
-                        <div class="feature-text">Parcelas</div>
-                    </div>
-                    <div class="feature-item">
                         <div class="feature-icon">🔒</div>
                         <div class="feature-text">Seguro</div>
                     </div>
@@ -1106,33 +1025,56 @@
                         <div class="feature-icon">⚡</div>
                         <div class="feature-text">Rápido</div>
                     </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💳</div>
+                        <div class="feature-text">Confiável</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Frame do aplicativo -->
+        <!-- Frame do aplicativo com debugging melhorado -->
         <div class="frame-container" id="frame-container">
             <iframe
                 id="app-frame"
                 src="https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec"
-                allow="autoplay; camera; microphone; fullscreen"
+                allow="autoplay; camera; microphone; fullscreen; geolocation; payment"
                 allowfullscreen
                 loading="eager"
+                referrerpolicy="no-referrer-when-downgrade"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation allow-popups-to-escape-sandbox"
                 title="Aplicativo de Controle Financeiro">
             </iframe>
+            
+            <!-- Debug info -->
+            <div id="debug-info" style="display: none; position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 999;">
+                <div>Status: <span id="iframe-status">Carregando...</span></div>
+                <div>Tentativas: <span id="retry-count">0</span></div>
+                <div>Tempo: <span id="load-time">0s</span></div>
+                <div>URL: <span id="current-url">-</span></div>
+            </div>
         </div>
 
         <!-- Tela de Erro do Iframe -->
         <div class="iframe-error" id="iframe-error">
-            <div class="error-icon">💳</div>
-            <h2 class="error-title">Ops! Sistema Temporariamente Indisponível</h2>
-            <p class="error-message">Não conseguimos conectar com o sistema de parcelas. Isso pode ser temporário devido a manutenção ou problemas de conexão.</p>
+            <div class="error-icon">⚠️</div>
+            <h2 class="error-title">Serviço Indisponível</h2>
+            <p class="error-message">Não foi possível conectar com o sistema. Isso pode acontecer por:</p>
+            <ul style="text-align: left; margin: 15px 0; color: #4a5568;">
+                <li>🌐 Problemas de conexão</li>
+                <li>🔒 Bloqueio de segurança (CORS/X-Frame-Options)</li>
+                <li>⚙️ Manutenção do servidor</li>
+                <li>🔧 Configuração do navegador</li>
+            </ul>
             <div class="error-buttons">
                 <button class="retry-button" onclick="retryIframe()">
-                    🔄 Tentar Novamente
+                    Tentar Novamente
                 </button>
                 <button class="fallback-button" onclick="showFallbackApp()">
-                    💳 Usar Versão Simplificada
+                    Versão Simplificada
+                </button>
+                <button class="retry-button" onclick="testDirectAccess()" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                    Abrir em Nova Aba
                 </button>
             </div>
         </div>
@@ -1140,8 +1082,8 @@
         <!-- App Fallback -->
         <div class="fallback-app" id="fallback-app">
             <div class="fallback-header">
-                <h1 class="fallback-title">💳 Sistema de Parcelas</h1>
-                <p class="fallback-subtitle">Formas de Pagamento para Vendas</p>
+                <h1 class="fallback-title">Controle Financeiro</h1>
+                <p class="fallback-subtitle">Versão Simplificada</p>
             </div>
             
             <div class="fallback-content">
@@ -1190,15 +1132,15 @@
         <!-- Modal de Nome -->
         <div id="name-modal">
             <div class="modal-content">
-                <h2 class="modal-title">💳 Bem-vindo ao Sistema de Parcelas!</h2>
+                <h2 class="modal-title">Bem-vindo!</h2>
                 
                 <input type="text" 
                        id="user-name-input" 
-                       placeholder="Digite seu nome ou nome da loja"
+                       placeholder="Digite seu nome"
                        maxlength="50">
                 
                 <button id="save-name-button">
-                    🚀 Iniciar Vendas
+                    Continuar
                 </button>
             </div>
         </div>
@@ -1324,13 +1266,11 @@
         // Constantes e configurações
         const APP_VERSION = '2.1.0';
         const LOADING_STEPS = [
-            { text: 'Inicializando sistema de pagamentos...', progress: 15, emoji: '💳' },
-            { text: 'Carregando opções de parcelamento...', progress: 30, emoji: '📋' },
-            { text: 'Configurando formas de pagamento...', progress: 45, emoji: '💰' },
-            { text: 'Sincronizando dados do cliente...', progress: 60, emoji: '👤' },
-            { text: 'Preparando simulador de parcelas...', progress: 75, emoji: '🧮' },
-            { text: 'Finalizando configurações...', progress: 90, emoji: '⚙️' },
-            { text: 'Sistema pronto para vendas!', progress: 100, emoji: '✅' }
+            { text: 'Carregando...', progress: 20, emoji: '💳' },
+            { text: 'Iniciando sistema...', progress: 40, emoji: '⚙️' },
+            { text: 'Configurando...', progress: 60, emoji: '🔧' },
+            { text: 'Quase pronto...', progress: 80, emoji: '⏳' },
+            { text: 'Pronto!', progress: 100, emoji: '✅' }
         ];
 
         // Elementos principais
@@ -1346,11 +1286,15 @@
             loadingPercentage: document.getElementById('loading-percentage'),
             loadingStatus: document.getElementById('loading-status'),
             logoEmoji: document.getElementById('logo-emoji'),
-            logo1: document.getElementById('logo1'),
-            logo2: document.getElementById('logo2'),
+            mainLogo: document.getElementById('main-logo'),
             toastNotification: document.getElementById('toast-notification'),
             iframeError: document.getElementById('iframe-error'),
-            fallbackApp: document.getElementById('fallback-app')
+            fallbackApp: document.getElementById('fallback-app'),
+            debugInfo: document.getElementById('debug-info'),
+            iframeStatus: document.getElementById('iframe-status'),
+            retryCountElement: document.getElementById('retry-count'),
+            loadTimeElement: document.getElementById('load-time'),
+            currentUrlElement: document.getElementById('current-url')
         };
 
         // Configurações de tema
@@ -1367,28 +1311,37 @@
             iframeLoaded: false,
             iframeError: false,
             retryCount: 0,
-            maxRetries: 3
+            maxRetries: 3,
+            loadStartTime: null,
+            debugMode: true // Ativar debug temporariamente
         };
 
         // Instância dos emojis flutuantes
         let floatingEmojis;
 
-        // === FUNÇÕES PARA IFRAME ===
+        // === FUNÇÕES PARA IFRAME COM DEBUG ===
         function retryIframe() {
             if (appState.retryCount < appState.maxRetries) {
                 appState.retryCount++;
                 elements.iframeError.classList.remove('show');
                 
+                updateDebugInfo(`Tentativa ${appState.retryCount}`, 'Reconectando...');
                 showToast(`Tentativa ${appState.retryCount} de ${appState.maxRetries}...`, 'info');
                 
-                // Recriar iframe
+                // Recriar iframe com URL atualizada
+                const timestamp = Date.now();
+                const originalUrl = 'https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec';
+                const newUrl = `${originalUrl}?v=${timestamp}&retry=${appState.retryCount}`;
+                
                 const newIframe = document.createElement('iframe');
                 newIframe.id = 'app-frame';
-                newIframe.src = elements.appFrame.src + '?retry=' + appState.retryCount;
-                newIframe.allow = elements.appFrame.allow;
+                newIframe.src = newUrl;
+                newIframe.allow = 'autoplay; camera; microphone; fullscreen; geolocation; payment';
                 newIframe.allowFullscreen = true;
                 newIframe.loading = 'eager';
-                newIframe.title = elements.appFrame.title;
+                newIframe.referrerPolicy = 'no-referrer-when-downgrade';
+                newIframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation allow-popups-to-escape-sandbox';
+                newIframe.title = 'Aplicativo de Controle Financeiro';
                 
                 // Eventos do novo iframe
                 newIframe.addEventListener('load', handleFrameLoad);
@@ -1398,21 +1351,108 @@
                 elements.appFrame.parentNode.replaceChild(newIframe, elements.appFrame);
                 elements.appFrame = newIframe;
                 
+                // Reset timer
+                appState.loadStartTime = Date.now();
+                
                 // Timeout para detectar falha de carregamento
                 setTimeout(() => {
                     if (!appState.iframeLoaded) {
+                        console.error('Timeout: Iframe não carregou em 15 segundos');
                         handleFrameError();
                     }
-                }, 10000);
+                }, 15000);
             } else {
-                showToast('Muitas tentativas. Tente a versão simplificada.', 'error');
+                updateDebugInfo('Máximo de tentativas', 'Falharam');
+                showToast('Muitas tentativas. Use a versão simplificada.', 'error');
             }
         }
 
         function showFallbackApp() {
             elements.iframeError.classList.remove('show');
             elements.fallbackApp.classList.add('show');
+            updateDebugInfo('Fallback', 'Ativo');
             showToast('Versão simplificada carregada!', 'success');
+        }
+
+        function updateDebugInfo(status, extra = '') {
+            if (appState.debugMode && elements.iframeStatus) {
+                elements.iframeStatus.textContent = status;
+                elements.retryCountElement.textContent = appState.retryCount;
+                elements.currentUrlElement.textContent = elements.appFrame.src.substring(0, 50) + '...';
+                
+                if (appState.loadStartTime) {
+                    const elapsed = ((Date.now() - appState.loadStartTime) / 1000).toFixed(1);
+                    elements.loadTimeElement.textContent = elapsed + 's';
+                }
+                
+                console.log(`🔍 Debug: ${status} - ${extra} - Tentativa: ${appState.retryCount}`);
+            }
+        }
+
+        function enableDebugMode() {
+            if (elements.debugInfo) {
+                elements.debugInfo.style.display = 'block';
+                updateDebugInfo('Debug ativo', 'Monitorando');
+            }
+        }
+
+        // === FUNÇÃO PARA TESTAR ACESSO DIRETO ===
+        function testDirectAccess() {
+            const url = elements.appFrame.src;
+            console.log('🔗 Testando acesso direto à URL:', url);
+            updateDebugInfo('Teste direto', 'Abrindo nova aba');
+            
+            const newWindow = window.open(url, '_blank');
+            
+            if (newWindow) {
+                showToast('Abrindo em nova aba...', 'info');
+                // Verificar se a janela carregou após 3 segundos
+                setTimeout(() => {
+                    try {
+                        if (newWindow.closed) {
+                            showToast('Janela foi fechada', 'warning');
+                        } else {
+                            showToast('Se carregou na nova aba, o problema é com iframe', 'info');
+                        }
+                    } catch (e) {
+                        console.log('Não foi possível verificar status da nova janela:', e);
+                    }
+                }, 3000);
+            } else {
+                showToast('Popup bloqueado pelo navegador', 'error');
+                updateDebugInfo('Popup bloqueado', 'Verificar configurações');
+            }
+        }
+
+        // === FUNÇÃO PARA DIAGNOSTICAR PROBLEMAS ===
+        function runDiagnostics() {
+            console.group('🏥 Diagnóstico Completo');
+            
+            // Teste 1: Conectividade
+            console.log('1. Teste de Conectividade:', navigator.onLine ? '✅ Online' : '❌ Offline');
+            
+            // Teste 2: Suporte a iframe
+            console.log('2. Suporte a iframe:', document.createElement('iframe') ? '✅ Suportado' : '❌ Não suportado');
+            
+            // Teste 3: Cookies e localStorage
+            console.log('3. localStorage:', typeof localStorage !== 'undefined' ? '✅ Disponível' : '❌ Bloqueado');
+            
+            // Teste 4: JavaScript
+            console.log('4. JavaScript:', true ? '✅ Ativo' : '❌ Desabilitado');
+            
+            // Teste 5: Protocolo
+            console.log('5. Protocolo:', location.protocol === 'https:' ? '✅ HTTPS' : '⚠️ HTTP');
+            
+            // Teste 6: User Agent
+            console.log('6. Navegador:', navigator.userAgent);
+            
+            // Teste 7: Sandbox
+            const iframe = elements.appFrame;
+            console.log('7. Sandbox iframe:', iframe.sandbox.toString() || 'Não definido');
+            
+            console.groupEnd();
+            
+            updateDebugInfo('Diagnóstico', 'Concluído - Ver console');
         }
 
         // Classe principal da aplicação
@@ -1428,7 +1468,6 @@
                     
                     this.setupEventListeners();
                     this.startLoadingSequence();
-                    this.setupLogoRotation();
                     this.checkUserPreferences();
                     this.setupPWAFeatures();
                     this.checkConnection();
@@ -1506,19 +1545,6 @@
                 elements.logoEmoji.textContent = emoji;
             }
 
-            setupLogoRotation() {
-                // Rotação mais lenta e suave para efeito bancário
-                setInterval(() => {
-                    if (elements.logo1.classList.contains('active')) {
-                        elements.logo1.classList.remove('active');
-                        elements.logo2.classList.add('active');
-                    } else {
-                        elements.logo2.classList.remove('active');
-                        elements.logo1.classList.add('active');
-                    }
-                }, 6000); // 6 segundos para transição mais suave
-            }
-
             checkUserPreferences() {
                 const storedName = localStorage.getItem('userName');
                 const isFirstRun = !localStorage.getItem('appLaunched');
@@ -1536,7 +1562,7 @@
                 
                 if (!name) {
                     this.highlightInput();
-                    this.showToast('Por favor, digite seu nome ou nome da loja', 'warning');
+                    this.showToast('Por favor, digite seu nome', 'warning');
                     return;
                 }
 
@@ -1548,7 +1574,7 @@
                 
                 // Mostrar toast de boas-vindas
                 setTimeout(() => {
-                    this.showToast(`Pronto para vendas, ${name}! 💳`, 'success');
+                    this.showToast(`Bem-vindo, ${name}!`, 'success');
                 }, 300);
             }
 
@@ -1679,18 +1705,67 @@
 
         // === HANDLERS GLOBAIS DO IFRAME ===
         function handleFrameLoad() {
-            console.log('Frame carregado com sucesso');
+            console.log('✅ Frame carregado com sucesso');
             appState.iframeLoaded = true;
             appState.iframeError = false;
+            
+            updateDebugInfo('Carregado', 'Sucesso');
+            
+            // Verificar se o conteúdo realmente carregou
+            try {
+                const iframe = elements.appFrame;
+                if (iframe.contentWindow) {
+                    updateDebugInfo('Conteúdo OK', 'Acessível');
+                } else {
+                    console.warn('⚠️ Iframe carregou mas conteúdo não acessível (possível CORS)');
+                    updateDebugInfo('CORS Bloqueado', 'Sem acesso');
+                }
+            } catch (error) {
+                console.warn('⚠️ Erro ao verificar conteúdo do iframe:', error);
+                updateDebugInfo('Verificação falhou', error.message);
+            }
+            
             if (!appState.isLoading) {
                 showToast('Aplicativo carregado!', 'success');
             }
         }
 
-        function handleFrameError() {
-            console.error('Erro ao carregar o iframe');
+        function handleFrameError(event) {
+            console.error('❌ Erro ao carregar o iframe:', event);
             appState.iframeError = true;
             appState.iframeLoaded = false;
+            
+            // Diagnóstico detalhado
+            const iframe = elements.appFrame;
+            const url = iframe.src;
+            
+            console.group('🔍 Diagnóstico do Iframe');
+            console.log('URL:', url);
+            console.log('Sandbox:', iframe.sandbox);
+            console.log('Allow:', iframe.allow);
+            console.log('Conexão online:', navigator.onLine);
+            console.log('User Agent:', navigator.userAgent);
+            console.groupEnd();
+            
+            updateDebugInfo('Erro', 'Falha no carregamento');
+            
+            // Tentar detectar o tipo de erro
+            if (!navigator.onLine) {
+                updateDebugInfo('Offline', 'Sem internet');
+                elements.offlineMessage.style.display = 'block';
+                return;
+            }
+            
+            // Testar se a URL é acessível
+            fetch(url, { method: 'HEAD', mode: 'no-cors' })
+                .then(() => {
+                    console.log('🌐 URL acessível, mas iframe bloqueado (provavelmente X-Frame-Options)');
+                    updateDebugInfo('X-Frame-Options', 'Bloqueado');
+                })
+                .catch(error => {
+                    console.log('🚫 URL não acessível:', error);
+                    updateDebugInfo('URL Inacessível', error.message);
+                });
             
             if (!appState.isLoading) {
                 elements.iframeError.classList.add('show');
@@ -1709,14 +1784,32 @@
             }, 4000);
         }
 
-        // === INICIALIZAÇÃO ===
+        // === INICIALIZAÇÃO COM DEBUGGING ===
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializar aplicação
             const app = new PWAController();
             
+            // Ativar diagnóstico em caso de problemas
+            setTimeout(() => {
+                if (!appState.iframeLoaded && !appState.isLoading) {
+                    console.warn('⚠️ Iframe não carregou, executando diagnóstico...');
+                    runDiagnostics();
+                }
+            }, 10000);
+            
             // Log de inicialização
             console.log(`%c🚀 PWA Controle Financeiro v${APP_VERSION} iniciado!`, 
                 'color: #667eea; font-size: 16px; font-weight: bold;');
+            
+            // Log da URL do iframe
+            console.log('🔗 URL do iframe:', elements.appFrame.src);
+            
+            // Verificar se Service Worker está registrado
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    console.log('🔧 Service Workers registrados:', registrations.length);
+                });
+            }
         });
 
         // === TRATAMENTO DE ERROS GLOBAIS ===
