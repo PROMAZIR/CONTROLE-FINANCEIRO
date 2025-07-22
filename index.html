@@ -6,7 +6,7 @@
     <title>C.F - Controle Financeiro</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#667eea">
+    <meta name="theme-color" content="#1e3a8a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="C.F">
@@ -17,19 +17,12 @@
     <meta name="description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta name="keywords" content="controle financeiro, parcelas, compras, gestão">
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://credi-boti.jd.starktech.net.br">
     <meta property="og:title" content="C.F - Controle Financeiro">
     <meta property="og:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta property="og:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://credi-boti.jd.starktech.net.br">
-    <meta name="twitter:title" content="C.F - Controle Financeiro">
-    <meta name="twitter:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
-    <meta name="twitter:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
     
     <style>
         /* Reset e Base */
@@ -43,326 +36,190 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            position: relative;
         }
 
-        /* === EMOJIS FLUTUANTES DE FUNDO === */
-        .floating-emojis {
+        /* === LOADING SCREEN BANCÁRIO PREMIUM === */
+        .loading-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .floating-emoji {
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.1;
-            animation: floatUp 15s infinite linear;
-            user-select: none;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.1;
-            }
-            90% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .floating-emoji:nth-child(odd) {
-            animation-duration: 18s;
-            font-size: 1.2rem;
-        }
-
-        .floating-emoji:nth-child(even) {
-            animation-duration: 12s;
-            font-size: 2rem;
-        }
-
-        .floating-emoji:nth-child(3n) {
-            animation-duration: 20s;
-            font-size: 1.8rem;
-        }
-
-        /* Variações de trajetória */
-        .floating-emoji.left {
-            left: 10%;
-            animation-name: floatUpLeft;
-        }
-
-        .floating-emoji.center {
-            left: 45%;
-            animation-name: floatUpCenter;
-        }
-
-        .floating-emoji.right {
-            left: 80%;
-            animation-name: floatUpRight;
-        }
-
-        @keyframes floatUpLeft {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            25% {
-                transform: translateY(75vh) translateX(20px) rotate(90deg);
-                opacity: 0.1;
-            }
-            50% {
-                transform: translateY(50vh) translateX(-10px) rotate(180deg);
-                opacity: 0.15;
-            }
-            75% {
-                transform: translateY(25vh) translateX(15px) rotate(270deg);
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(-5px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatUpCenter {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
-            20% {
-                transform: translateY(80vh) translateX(-15px) rotate(72deg) scale(1);
-                opacity: 0.1;
-            }
-            40% {
-                transform: translateY(60vh) translateX(10px) rotate(144deg) scale(1.1);
-                opacity: 0.15;
-            }
-            60% {
-                transform: translateY(40vh) translateX(-8px) rotate(216deg) scale(0.9);
-                opacity: 0.15;
-            }
-            80% {
-                transform: translateY(20vh) translateX(12px) rotate(288deg) scale(1);
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(0) rotate(360deg) scale(0.8);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatUpRight {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            30% {
-                transform: translateY(70vh) translateX(-25px) rotate(108deg);
-                opacity: 0.1;
-            }
-            60% {
-                transform: translateY(40vh) translateX(20px) rotate(216deg);
-                opacity: 0.15;
-            }
-            90% {
-                transform: translateY(10vh) translateX(-10px) rotate(324deg);
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(5px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* === RESTO DO CSS ORIGINAL === */
-        /* PWA Loading Screen - Versão Melhorada */
-        .pwa-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 99999;
+            z-index: 9999;
             color: white;
-            transition: all 0.5s ease;
-            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .pwa-loading.hidden {
+        .loading-container.fade-out {
             opacity: 0;
+            transform: scale(1.05);
             pointer-events: none;
-            transform: scale(1.1);
         }
 
-        /* Efeito de fundo bancário minimalista */
-        .pwa-loading::before {
+        /* Padrão geométrico de fundo */
+        .loading-container::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(
-                circle at 50% 50%, 
-                rgba(255,255,255,0.05) 0%, 
-                transparent 70%
-            );
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            background-size: 100px 100px;
+            animation: backgroundFloat 20s ease-in-out infinite;
         }
 
-        /* Container principal do loading */
-        .pwa-loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 2;
-            max-width: 90%;
-            padding: 20px;
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(10px, -10px) rotate(1deg); }
+            66% { transform: translate(-5px, 5px) rotate(-1deg); }
         }
 
-        /* Logo container bancário clean */
-        .pwa-logo-container {
+        /* Logo Container */
+        .logo-container {
             position: relative;
-            width: 120px;
-            height: 120px;
             margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: logoFadeIn 2s ease-out;
+            animation: logoEntrance 1.5s ease-out;
         }
 
-        @keyframes logoFadeIn {
-            0% { 
+        @keyframes logoEntrance {
+            0% {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: scale(0.3) rotate(-10deg);
             }
-            100% { 
+            60% {
                 opacity: 1;
-                transform: scale(1);
+                transform: scale(1.1) rotate(2deg);
             }
-        }
-
-        .pwa-logo-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            border-radius: 12px;
-            transition: opacity 1s ease;
-            opacity: 0;
-        }
-
-        .pwa-logo-img.active {
-            opacity: 1;
-        }
-
-        .pwa-logo-overlay {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            animation: badgeFadeIn 2.5s ease-out;
-        }
-
-        @keyframes badgeFadeIn {
-            0% { 
-                opacity: 0;
-                transform: scale(0.5) rotate(-10deg);
-            }
-            70% { 
-                opacity: 0;
-            }
-            100% { 
+            100% {
                 opacity: 1;
                 transform: scale(1) rotate(0deg);
             }
         }
 
-        /* Textos do loading */
-        .pwa-loading-title {
-            font-size: 2.2rem;
+        .logo-wrapper {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 2px 8px rgba(255, 255, 255, 0.1) inset;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: logoShine 3s ease-in-out infinite;
+        }
+
+        @keyframes logoShine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 16px;
+            filter: brightness(1.1) contrast(1.1);
+        }
+
+        /* Badge de Status */
+        .status-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Título e Subtítulo */
+        .app-title {
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #fff, #e3f2fd);
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: titleGlow 3s ease-in-out infinite;
+            text-align: center;
+            letter-spacing: -1px;
         }
 
-        @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 20px rgba(255,255,255,0.3); }
-            50% { text-shadow: 0 0 30px rgba(255,255,255,0.6); }
-        }
-
-        .pwa-loading-subtitle {
-            font-size: 1rem;
+        .app-subtitle {
+            font-size: 1.1rem;
             opacity: 0.9;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
             font-weight: 300;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
 
-        /* Barra de progresso bancária clean */
-        .pwa-loading-progress-container {
+        /* Progress Bar Bancário */
+        .progress-container {
             width: 100%;
-            max-width: 280px;
-            margin-bottom: 25px;
+            max-width: 320px;
+            margin-bottom: 30px;
         }
 
-        .pwa-loading-bar {
+        .progress-track {
             width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
             overflow: hidden;
             position: relative;
         }
 
-        .pwa-loading-progress {
+        .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 3px;
             width: 0%;
-            transition: width 0.4s ease;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
 
-        .pwa-loading-progress::after {
+        .progress-bar::after {
             content: '';
             position: absolute;
             top: 0;
@@ -371,7 +228,7 @@
             bottom: 0;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255,255,255,0.4), 
+                rgba(255,255,255,0.6), 
                 transparent
             );
             animation: progressShine 2s infinite;
@@ -382,124 +239,128 @@
             100% { transform: translateX(200%); }
         }
 
-        .pwa-loading-percentage {
+        .progress-text {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 12px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 500;
             opacity: 0.8;
         }
 
-        /* Status e dots */
-        .pwa-loading-status {
-            margin-bottom: 30px;
+        /* Status Loading */
+        .loading-status {
             text-align: center;
+            margin-bottom: 40px;
         }
 
-        .pwa-loading-status p {
-            font-size: 0.95rem;
-            margin-bottom: 15px;
+        .status-text {
+            font-size: 1rem;
+            margin-bottom: 16px;
             opacity: 0.9;
+            transition: all 0.3s ease;
         }
 
-        .pwa-loading-dots {
+        .loading-dots {
             display: flex;
             justify-content: center;
             gap: 8px;
         }
 
-        .pwa-loading-dots span {
+        .dot {
             width: 8px;
             height: 8px;
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
-            animation: dotPulse 1.5s infinite ease-in-out;
+            animation: dotBounce 1.4s infinite ease-in-out;
         }
 
-        .pwa-loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .pwa-loading-dots span:nth-child(2) { animation-delay: -0.16s; }
-        .pwa-loading-dots span:nth-child(3) { animation-delay: 0s; }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        .dot:nth-child(3) { animation-delay: 0s; }
 
-        @keyframes dotPulse {
-            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
-            40% { transform: scale(1.2); opacity: 1; }
+        @keyframes dotBounce {
+            0%, 80%, 100% { 
+                transform: scale(0.8); 
+                opacity: 0.5; 
+            }
+            40% { 
+                transform: scale(1.2); 
+                opacity: 1; 
+            }
         }
 
-        /* Features do PWA */
-        .pwa-features {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
+        /* Features Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 360px;
+            width: 100%;
         }
 
-        .feature-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            min-width: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
             transition: all 0.3s ease;
-            animation: featureFloat 4s ease-in-out infinite;
+            animation: featureFloat 6s ease-in-out infinite;
         }
 
-        .feature-item:nth-child(1) { animation-delay: 0s; }
-        .feature-item:nth-child(2) { animation-delay: 0.5s; }
-        .feature-item:nth-child(3) { animation-delay: 1s; }
+        .feature-card:nth-child(1) { animation-delay: 0s; }
+        .feature-card:nth-child(2) { animation-delay: 1s; }
+        .feature-card:nth-child(3) { animation-delay: 2s; }
 
         @keyframes featureFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-8px); }
         }
 
-        .feature-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            background: rgba(255,255,255,0.15);
+        .feature-card:hover {
+            transform: translateY(-4px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .feature-icon {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .feature-text {
-            font-size: 0.8rem;
+        .feature-label {
+            font-size: 0.85rem;
             font-weight: 500;
             opacity: 0.9;
         }
 
-        /* App Container */
-        #app-container {
+        /* === APP CONTAINER === */
+        .app-container {
             width: 100%;
             height: 100%;
             position: relative;
-            background-color: #f8fafc;
+            background: #f8fafc;
         }
 
-        /* Frame Container */
-        .frame-container {
+        .iframe-container {
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            background-color: #f8fafc;
-            z-index: 900;
+            background: #f8fafc;
         }
 
-        iframe {
+        #main-iframe {
             width: 100%;
             height: 100%;
             border: none;
-            background-color: #f8fafc;
+            background: #f8fafc;
         }
 
-        /* === IFRAME ERROR HANDLER === */
-        .iframe-error {
+        /* === ERROR HANDLING === */
+        .error-screen {
             position: absolute;
             top: 0;
             left: 0;
@@ -510,51 +371,50 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 950;
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
+            z-index: 1000;
         }
 
-        .iframe-error.show {
+        .error-screen.show {
             display: flex;
         }
 
         .error-icon {
             font-size: 4rem;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+            margin-bottom: 24px;
+            animation: errorFloat 3s ease-in-out infinite;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        @keyframes errorFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .error-title {
             font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 10px;
-            color: #2d3748;
+            margin-bottom: 12px;
+            color: #374151;
         }
 
         .error-message {
             font-size: 1rem;
-            color: #4a5568;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            color: #6b7280;
+            margin-bottom: 32px;
+            line-height: 1.6;
             max-width: 400px;
         }
 
-        .error-buttons {
+        .error-actions {
             display: flex;
-            gap: 15px;
+            gap: 16px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
-        .retry-button, .fallback-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -563,124 +423,34 @@
             font-size: 14px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
         }
 
-        .fallback-button {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
-        }
-
-        .retry-button:hover, .fallback-button:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
         }
 
-        .fallback-button:hover {
-            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        .btn.secondary {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
         }
 
-        /* Fallback App */
-        .fallback-app {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #f8fafc;
-            display: none;
-            flex-direction: column;
-            z-index: 975;
-            padding: 20px;
-            overflow-y: auto;
+        .btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
         }
 
-        .fallback-app.show {
-            display: flex;
-        }
-
-        .fallback-header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .fallback-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
-
-        .fallback-subtitle {
-            color: #4a5568;
-            font-size: 1rem;
-        }
-
-        .fallback-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .finance-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .finance-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .card-icon {
-            font-size: 2rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .card-description {
-            color: #4a5568;
-            line-height: 1.5;
-        }
-
-        /* Botão de Instalação Melhorado */
-        #install-button {
+        /* === INSTALL BUTTON === */
+        .install-button {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.4);
             z-index: 1000;
             display: none;
             cursor: pointer;
@@ -692,116 +462,23 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        #install-button.show {
+        .install-button.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
 
-        #install-button:hover {
+        .install-button:hover {
             transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 6px 25px rgba(30, 58, 138, 0.5);
         }
 
-        #install-button:active {
-            transform: translateX(-50%) translateY(0) scale(0.98);
-        }
-
-        /* Modal de Nome Melhorado */
-        #name-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        #name-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            text-align: center;
-            max-width: 90%;
-            width: 350px;
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.3s ease;
-        }
-
-        #name-modal.show .modal-content {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: #2d3748;
-            line-height: 1.4;
-        }
-
-        #user-name-input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 25px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
-
-        #user-name-input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        #save-name-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        #save-name-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        #save-name-button:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        /* Toast Notification Melhorado */
-        .toast-notification {
+        /* === TOAST NOTIFICATIONS === */
+        .toast {
             position: fixed;
             bottom: -80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(45, 55, 72, 0.95);
+            background: rgba(17, 24, 39, 0.95);
             color: white;
             padding: 16px 24px;
             border-radius: 12px;
@@ -817,143 +494,124 @@
             text-align: center;
         }
 
-        .toast-notification.show {
+        .toast.show {
             bottom: 30px;
             opacity: 1;
         }
 
-        .toast-notification.success {
-            background: rgba(72, 187, 120, 0.95);
+        .toast.success {
+            background: rgba(5, 150, 105, 0.95);
         }
 
-        .toast-notification.error {
-            background: rgba(245, 101, 101, 0.95);
+        .toast.error {
+            background: rgba(239, 68, 68, 0.95);
         }
 
-        .toast-notification.warning {
-            background: rgba(237, 137, 54, 0.95);
+        .toast.warning {
+            background: rgba(245, 158, 11, 0.95);
         }
 
-        .toast-notification.info {
-            background: rgba(66, 153, 225, 0.95);
-        }
-
-        /* Mensagem Offline Melhorada */
-        #offline-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            text-align: center;
-            z-index: 2000;
-            display: none;
-            max-width: 90%;
-            width: 320px;
-        }
-
-        #offline-message h3 {
-            color: #e53e3e;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        #offline-message p {
-            color: #4a5568;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        /* Debug Info Styling */
-        #debug-info {
-            font-family: 'Courier New', monospace;
-            line-height: 1.4;
-            max-width: 300px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        #debug-info div {
-            margin-bottom: 5px;
-        }
-
-        #debug-info span {
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        /* Responsividade */
-        @media (max-width: 480px) {
-            .pwa-loading-title {
-                font-size: 1.8rem;
+        /* === RESPONSIVIDADE === */
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 2rem;
             }
 
-            .pwa-loading-subtitle {
-                font-size: 0.9rem;
+            .app-subtitle {
+                font-size: 1rem;
+                margin-bottom: 40px;
             }
 
-            .pwa-logo-container {
+            .logo-wrapper {
                 width: 100px;
                 height: 100px;
-                margin-bottom: 25px;
             }
 
-            .pwa-logo-img {
+            .logo-img {
                 width: 70px;
                 height: 70px;
             }
 
-            .pwa-features {
-                gap: 15px;
+            .progress-container {
+                max-width: 280px;
             }
 
-            .feature-item {
-                min-width: 70px;
+            .features-grid {
+                max-width: 300px;
+                gap: 16px;
+            }
+
+            .feature-card {
+                padding: 16px;
+            }
+
+            .feature-icon {
+                font-size: 1.5rem;
+            }
+
+            .feature-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loading-container {
+                padding: 20px;
+            }
+
+            .app-title {
+                font-size: 1.8rem;
+            }
+
+            .logo-wrapper {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 30px;
+            }
+
+            .logo-img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 200px;
+                gap: 12px;
+            }
+
+            .feature-card {
                 padding: 12px;
             }
 
-            .modal-content {
-                padding: 25px;
-                width: 300px;
-            }
-
-            .error-buttons {
+            .error-actions {
                 flex-direction: column;
                 align-items: center;
             }
 
-            .floating-emoji {
-                font-size: 1rem;
-            }
-
-            .floating-emoji:nth-child(even) {
-                font-size: 1.5rem;
-            }
-
-            .floating-emoji:nth-child(3n) {
-                font-size: 1.3rem;
+            .btn {
+                width: 200px;
             }
         }
 
-        /* Dark mode support */
+        /* === ACESSIBILIDADE === */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a202c;
+            .app-container,
+            .iframe-container,
+            #main-iframe {
+                background: #111827;
             }
 
-            .frame-container {
-                background-color: #1a202c;
-            }
-
-            iframe {
-                background-color: #1a202c;
-            }
-
-            .iframe-error {
-                background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            .error-screen {
+                background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
                 color: white;
             }
 
@@ -962,906 +620,467 @@
             }
 
             .error-message {
-                color: #cbd5e0;
+                color: #d1d5db;
             }
         }
 
-        /* Preloader para reduzir movimento para usuários sensíveis */
-        @media (prefers-reduced-motion: reduce) {
-            .floating-emoji {
-                animation: none;
-                opacity: 0.05;
-                position: relative;
+        /* === PREVENÇÕES MOBILE === */
+        .loading-container,
+        .app-container {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* === ANIMAÇÕES DE ENTRADA === */
+        .loading-container > * {
+            animation-fill-mode: both;
+        }
+
+        .progress-container {
+            animation: slideUp 0.8s ease-out 0.5s both;
+        }
+
+        .loading-status {
+            animation: slideUp 0.8s ease-out 0.7s both;
+        }
+
+        .features-grid {
+            animation: slideUp 0.8s ease-out 0.9s both;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Emojis Flutuantes de Fundo -->
-    <div class="floating-emojis" id="floating-emojis"></div>
-
-    <div id="app-container">
-        <!-- PWA Loading Screen Melhorada -->
-        <div class="pwa-loading" id="pwa-loading">
-            <div class="pwa-loading-container">
-                <!-- Logo única estática -->
-                <div class="pwa-logo-container">
-                    <img src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" 
-                         alt="Logo C.F" 
-                         class="pwa-logo-img active"
-                         id="main-logo">
-                    <div class="pwa-logo-overlay" id="logo-emoji">💳</div>
-                </div>
-
-                <!-- Título e subtítulo -->
-                <h1 class="pwa-loading-title">C.F</h1>
-                <p class="pwa-loading-subtitle">Controle Financeiro</p>
-
-                <!-- Barra de progresso -->
-                <div class="pwa-loading-progress-container">
-                    <div class="pwa-loading-bar">
-                        <div class="pwa-loading-progress" id="loading-progress"></div>
-                    </div>
-                    <div class="pwa-loading-percentage" id="loading-percentage">0%</div>
-                </div>
-
-                <!-- Status de carregamento -->
-                <div class="pwa-loading-status">
-                    <p id="loading-status">Inicializando aplicativo...</p>
-                    <div class="pwa-loading-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-
-                <!-- Features do PWA -->
-                <div class="pwa-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">🔒</div>
-                        <div class="feature-text">Seguro</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">⚡</div>
-                        <div class="feature-text">Rápido</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">💳</div>
-                        <div class="feature-text">Confiável</div>
-                    </div>
-                </div>
+    <!-- Loading Screen -->
+    <div class="loading-container" id="loadingScreen">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-wrapper">
+                <img src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" 
+                     alt="C.F Logo" 
+                     class="logo-img">
+                <div class="status-badge">✓</div>
             </div>
         </div>
 
-        <!-- Frame do aplicativo com debugging melhorado -->
-        <div class="frame-container" id="frame-container">
+        <!-- Título -->
+        <h1 class="app-title">C.F</h1>
+        <p class="app-subtitle">Controle Financeiro Profissional</p>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+
+        <!-- Loading Status -->
+        <div class="loading-status">
+            <div class="status-text" id="statusText">Inicializando aplicativo...</div>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <span class="feature-label">Seguro</span>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <span class="feature-label">Rápido</span>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💎</span>
+                <span class="feature-label">Premium</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container" id="appContainer">
+        <div class="iframe-container">
             <iframe
-                id="app-frame"
+                id="mainIframe"
                 src="https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec"
                 allow="autoplay; camera; microphone; fullscreen; geolocation; payment"
                 allowfullscreen
                 loading="eager"
                 referrerpolicy="no-referrer-when-downgrade"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation allow-popups-to-escape-sandbox"
-                title="Aplicativo de Controle Financeiro">
+                title="Controle Financeiro">
             </iframe>
-            
-            <!-- Debug info -->
-            <div id="debug-info" style="display: none; position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 999;">
-                <div>Status: <span id="iframe-status">Carregando...</span></div>
-                <div>Tentativas: <span id="retry-count">0</span></div>
-                <div>Tempo: <span id="load-time">0s</span></div>
-                <div>URL: <span id="current-url">-</span></div>
-            </div>
         </div>
 
-        <!-- Tela de Erro do Iframe -->
-        <div class="iframe-error" id="iframe-error">
+        <!-- Error Screen -->
+        <div class="error-screen" id="errorScreen">
             <div class="error-icon">⚠️</div>
-            <h2 class="error-title">Serviço Indisponível</h2>
-            <p class="error-message">Não foi possível conectar com o sistema. Isso pode acontecer por:</p>
-            <ul style="text-align: left; margin: 15px 0; color: #4a5568;">
-                <li>🌐 Problemas de conexão</li>
-                <li>🔒 Bloqueio de segurança (CORS/X-Frame-Options)</li>
-                <li>⚙️ Manutenção do servidor</li>
-                <li>🔧 Configuração do navegador</li>
-            </ul>
-            <div class="error-buttons">
-                <button class="retry-button" onclick="retryIframe()">
+            <h2 class="error-title">Serviço Temporariamente Indisponível</h2>
+            <p class="error-message">
+                Nosso sistema está passando por manutenção ou pode haver um problema de conectividade. 
+                Tente novamente em alguns instantes.
+            </p>
+            <div class="error-actions">
+                <button class="btn" onclick="retryConnection()">
                     Tentar Novamente
                 </button>
-                <button class="fallback-button" onclick="showFallbackApp()">
-                    Versão Simplificada
-                </button>
-                <button class="retry-button" onclick="testDirectAccess()" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                <button class="btn secondary" onclick="openInNewTab()">
                     Abrir em Nova Aba
                 </button>
             </div>
         </div>
-
-        <!-- App Fallback -->
-        <div class="fallback-app" id="fallback-app">
-            <div class="fallback-header">
-                <h1 class="fallback-title">Controle Financeiro</h1>
-                <p class="fallback-subtitle">Versão Simplificada</p>
-            </div>
-            
-            <div class="fallback-content">
-                <div class="finance-card">
-                    <div class="card-header">
-                        <div class="card-icon">💳</div>
-                        <div class="card-title">Simular Parcelas</div>
-                    </div>
-                    <div class="card-description">
-                        Calcule as melhores opções de parcelamento para seus clientes com diferentes formas de pagamento.
-                    </div>
-                </div>
-
-                <div class="finance-card">
-                    <div class="card-header">
-                        <div class="card-icon">💰</div>
-                        <div class="card-title">Formas de Pagamento</div>
-                    </div>
-                    <div class="card-description">
-                        Configure e apresente todas as opções disponíveis: cartão, PIX, boleto e parcelamentos.
-                    </div>
-                </div>
-
-                <div class="finance-card">
-                    <div class="card-header">
-                        <div class="card-icon">🧮</div>
-                        <div class="card-title">Calculadora de Juros</div>
-                    </div>
-                    <div class="card-description">
-                        Ferramenta para calcular juros, entrada e valores de parcelas de forma rápida e precisa.
-                    </div>
-                </div>
-
-                <div class="finance-card">
-                    <div class="card-header">
-                        <div class="card-icon">📋</div>
-                        <div class="card-title">Propostas de Venda</div>
-                    </div>
-                    <div class="card-description">
-                        Gere propostas detalhadas com todas as condições de pagamento para apresentar ao cliente.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal de Nome -->
-        <div id="name-modal">
-            <div class="modal-content">
-                <h2 class="modal-title">Bem-vindo!</h2>
-                
-                <input type="text" 
-                       id="user-name-input" 
-                       placeholder="Digite seu nome"
-                       maxlength="50">
-                
-                <button id="save-name-button">
-                    Continuar
-                </button>
-            </div>
-        </div>
-
-        <!-- Mensagem offline -->
-        <div id="offline-message">
-            <h3>🔌 Sem conexão</h3>
-            <p>Você está offline. Verifique sua conexão com a internet e tente novamente.</p>
-            <button class="retry-button" onclick="window.location.reload()">
-                🔄 Tentar Novamente
-            </button>
-        </div>
-
-        <!-- Botão de instalação -->
-        <button id="install-button" aria-label="Instalar aplicativo">
-            📱 Instalar App
-        </button>
-
-        <!-- Toast notification -->
-        <div class="toast-notification" id="toast-notification"></div>
     </div>
 
+    <!-- Install Button -->
+    <button class="install-button" id="installBtn" aria-label="Instalar aplicativo">
+        📱 Instalar App
+    </button>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <script>
-        // === SISTEMA DE EMOJIS FLUTUANTES ===
-        class FloatingEmojis {
+        // Configurações
+        const CONFIG = {
+            IFRAME_URL: 'https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec',
+            LOADING_DURATION: 3000,
+            RETRY_ATTEMPTS: 3,
+            IFRAME_TIMEOUT: 15000
+        };
+
+        // Estados
+        let state = {
+            currentRetry: 0,
+            loadingProgress: 0,
+            iframeLoaded: false,
+            deferredPrompt: null
+        };
+
+        // Elementos DOM
+        const elements = {
+            loadingScreen: document.getElementById('loadingScreen'),
+            progressBar: document.getElementById('progressBar'),
+            progressText: document.getElementById('progressText'),
+            statusText: document.getElementById('statusText'),
+            mainIframe: document.getElementById('mainIframe'),
+            errorScreen: document.getElementById('errorScreen'),
+            installBtn: document.getElementById('installBtn'),
+            toast: document.getElementById('toast')
+        };
+
+        // === LOADING SEQUENCE ===
+        class LoadingController {
             constructor() {
-                this.container = document.getElementById('floating-emojis');
-                this.emojis = ['💳', '💰', '💵', '🛒', '🏪', '📱', '💸', '🪙', '💲', '📋', '🧾', '🎯', '⚡', '✅', '🔐', '📊', '🛍️', '🏬'];
-                this.positions = ['left', 'center', 'right'];
-                this.isActive = true;
-                this.intervals = [];
-                
-                this.init();
-            }
-
-            init() {
-                // Verificar preferência de movimento reduzido
-                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                if (prefersReducedMotion) {
-                    this.createStaticEmojis();
-                    return;
-                }
-
-                this.startFloatingEmojis();
-            }
-
-            createStaticEmojis() {
-                // Para usuários que preferem movimento reduzido, criar emojis estáticos
-                for (let i = 0; i < 10; i++) {
-                    const emoji = document.createElement('div');
-                    emoji.className = 'floating-emoji static';
-                    emoji.textContent = this.emojis[Math.floor(Math.random() * this.emojis.length)];
-                    emoji.style.left = Math.random() * 100 + '%';
-                    emoji.style.top = Math.random() * 100 + '%';
-                    emoji.style.position = 'absolute';
-                    emoji.style.opacity = '0.05';
-                    this.container.appendChild(emoji);
-                }
-            }
-
-            createFloatingEmoji() {
-                if (!this.isActive) return;
-
-                const emoji = document.createElement('div');
-                const randomEmoji = this.emojis[Math.floor(Math.random() * this.emojis.length)];
-                const randomPosition = this.positions[Math.floor(Math.random() * this.positions.length)];
-                
-                emoji.className = `floating-emoji ${randomPosition}`;
-                emoji.textContent = randomEmoji;
-                
-                // Pequena variação horizontal
-                const baseLeft = randomPosition === 'left' ? 10 : randomPosition === 'center' ? 45 : 80;
-                const leftOffset = (Math.random() - 0.5) * 20; // ±10% de variação
-                emoji.style.left = Math.max(0, Math.min(90, baseLeft + leftOffset)) + '%';
-                
-                this.container.appendChild(emoji);
-
-                // Remover emoji após a animação
-                setTimeout(() => {
-                    if (emoji.parentNode) {
-                        emoji.parentNode.removeChild(emoji);
-                    }
-                }, 20000);
-            }
-
-            startFloatingEmojis() {
-                // Criar emojis em intervalos aleatórios
-                const createEmojiInterval = () => {
-                    if (this.isActive) {
-                        this.createFloatingEmoji();
-                        
-                        // Próximo emoji em 1-4 segundos
-                        const nextInterval = setTimeout(createEmojiInterval, 1000 + Math.random() * 3000);
-                        this.intervals.push(nextInterval);
-                    }
-                };
-
-                // Começar após 2 segundos
-                setTimeout(createEmojiInterval, 2000);
-            }
-
-            stop() {
-                this.isActive = false;
-                this.intervals.forEach(interval => clearTimeout(interval));
-                this.intervals = [];
+                this.steps = [
+                    { progress: 20, text: 'Conectando aos serviços...' },
+                    { progress: 40, text: 'Verificando segurança...' },
+                    { progress: 60, text: 'Carregando interface...' },
+                    { progress: 80, text: 'Sincronizando dados...' },
+                    { progress: 100, text: 'Finalizando...' }
+                ];
+                this.currentStep = 0;
             }
 
             start() {
-                if (!this.isActive) {
-                    this.isActive = true;
-                    this.startFloatingEmojis();
+                this.animateProgress();
+            }
+
+            animateProgress() {
+                if (this.currentStep < this.steps.length) {
+                    const step = this.steps[this.currentStep];
+                    
+                    // Animar progresso
+                    setTimeout(() => {
+                        elements.progressBar.style.width = step.progress + '%';
+                        elements.progressText.textContent = step.progress + '%';
+                        elements.statusText.textContent = step.text;
+                        state.loadingProgress = step.progress;
+                    }, this.currentStep * 600);
+
+                    this.currentStep++;
+                    this.animateProgress();
+                } else {
+                    // Finalizar loading
+                    setTimeout(() => {
+                        this.complete();
+                    }, 800);
                 }
             }
 
-            clear() {
-                while (this.container.firstChild) {
-                    this.container.removeChild(this.container.firstChild);
-                }
+            complete() {
+                elements.loadingScreen.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    elements.loadingScreen.style.display = 'none';
+                    this.setupIframe();
+                }, 800);
             }
-        }
 
-        // === RESTO DO CÓDIGO ORIGINAL ===
-        // Constantes e configurações
-        const APP_VERSION = '2.1.0';
-        const LOADING_STEPS = [
-            { text: 'Carregando...', progress: 20, emoji: '💳' },
-            { text: 'Iniciando sistema...', progress: 40, emoji: '⚙️' },
-            { text: 'Configurando...', progress: 60, emoji: '🔧' },
-            { text: 'Quase pronto...', progress: 80, emoji: '⏳' },
-            { text: 'Pronto!', progress: 100, emoji: '✅' }
-        ];
-
-        // Elementos principais
-        const elements = {
-            pwaLoading: document.getElementById('pwa-loading'),
-            appFrame: document.getElementById('app-frame'),
-            installButton: document.getElementById('install-button'),
-            offlineMessage: document.getElementById('offline-message'),
-            nameModal: document.getElementById('name-modal'),
-            userNameInput: document.getElementById('user-name-input'),
-            saveNameButton: document.getElementById('save-name-button'),
-            loadingProgress: document.getElementById('loading-progress'),
-            loadingPercentage: document.getElementById('loading-percentage'),
-            loadingStatus: document.getElementById('loading-status'),
-            logoEmoji: document.getElementById('logo-emoji'),
-            mainLogo: document.getElementById('main-logo'),
-            toastNotification: document.getElementById('toast-notification'),
-            iframeError: document.getElementById('iframe-error'),
-            fallbackApp: document.getElementById('fallback-app'),
-            debugInfo: document.getElementById('debug-info'),
-            iframeStatus: document.getElementById('iframe-status'),
-            retryCountElement: document.getElementById('retry-count'),
-            loadTimeElement: document.getElementById('load-time'),
-            currentUrlElement: document.getElementById('current-url')
-        };
-
-        // Configurações de tema
-        const themes = {
-            professional: { color: '#667eea', emoji: '💼' }
-        };
-
-        // Estado da aplicação
-        let appState = {
-            deferredPrompt: null,
-            currentStep: 0,
-            isLoading: true,
-            loadingInterval: null,
-            iframeLoaded: false,
-            iframeError: false,
-            retryCount: 0,
-            maxRetries: 3,
-            loadStartTime: null,
-            debugMode: true // Ativar debug temporariamente
-        };
-
-        // Instância dos emojis flutuantes
-        let floatingEmojis;
-
-        // === FUNÇÕES PARA IFRAME COM DEBUG ===
-        function retryIframe() {
-            if (appState.retryCount < appState.maxRetries) {
-                appState.retryCount++;
-                elements.iframeError.classList.remove('show');
-                
-                updateDebugInfo(`Tentativa ${appState.retryCount}`, 'Reconectando...');
-                showToast(`Tentativa ${appState.retryCount} de ${appState.maxRetries}...`, 'info');
-                
-                // Recriar iframe com URL atualizada
-                const timestamp = Date.now();
-                const originalUrl = 'https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec';
-                const newUrl = `${originalUrl}?v=${timestamp}&retry=${appState.retryCount}`;
-                
-                const newIframe = document.createElement('iframe');
-                newIframe.id = 'app-frame';
-                newIframe.src = newUrl;
-                newIframe.allow = 'autoplay; camera; microphone; fullscreen; geolocation; payment';
-                newIframe.allowFullscreen = true;
-                newIframe.loading = 'eager';
-                newIframe.referrerPolicy = 'no-referrer-when-downgrade';
-                newIframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation allow-popups-to-escape-sandbox';
-                newIframe.title = 'Aplicativo de Controle Financeiro';
-                
-                // Eventos do novo iframe
-                newIframe.addEventListener('load', handleFrameLoad);
-                newIframe.addEventListener('error', handleFrameError);
-                
-                // Substituir iframe
-                elements.appFrame.parentNode.replaceChild(newIframe, elements.appFrame);
-                elements.appFrame = newIframe;
-                
-                // Reset timer
-                appState.loadStartTime = Date.now();
+            setupIframe() {
+                elements.mainIframe.addEventListener('load', this.handleIframeLoad);
+                elements.mainIframe.addEventListener('error', this.handleIframeError);
                 
                 // Timeout para detectar falha de carregamento
                 setTimeout(() => {
-                    if (!appState.iframeLoaded) {
-                        console.error('Timeout: Iframe não carregou em 15 segundos');
-                        handleFrameError();
+                    if (!state.iframeLoaded) {
+                        console.warn('Iframe timeout - não carregou em tempo hábil');
+                        this.handleIframeError();
                     }
-                }, 15000);
-            } else {
-                updateDebugInfo('Máximo de tentativas', 'Falharam');
-                showToast('Muitas tentativas. Use a versão simplificada.', 'error');
-            }
-        }
-
-        function showFallbackApp() {
-            elements.iframeError.classList.remove('show');
-            elements.fallbackApp.classList.add('show');
-            updateDebugInfo('Fallback', 'Ativo');
-            showToast('Versão simplificada carregada!', 'success');
-        }
-
-        function updateDebugInfo(status, extra = '') {
-            if (appState.debugMode && elements.iframeStatus) {
-                elements.iframeStatus.textContent = status;
-                elements.retryCountElement.textContent = appState.retryCount;
-                elements.currentUrlElement.textContent = elements.appFrame.src.substring(0, 50) + '...';
-                
-                if (appState.loadStartTime) {
-                    const elapsed = ((Date.now() - appState.loadStartTime) / 1000).toFixed(1);
-                    elements.loadTimeElement.textContent = elapsed + 's';
-                }
-                
-                console.log(`🔍 Debug: ${status} - ${extra} - Tentativa: ${appState.retryCount}`);
-            }
-        }
-
-        function enableDebugMode() {
-            if (elements.debugInfo) {
-                elements.debugInfo.style.display = 'block';
-                updateDebugInfo('Debug ativo', 'Monitorando');
-            }
-        }
-
-        // === FUNÇÃO PARA TESTAR ACESSO DIRETO ===
-        function testDirectAccess() {
-            const url = elements.appFrame.src;
-            console.log('🔗 Testando acesso direto à URL:', url);
-            updateDebugInfo('Teste direto', 'Abrindo nova aba');
-            
-            const newWindow = window.open(url, '_blank');
-            
-            if (newWindow) {
-                showToast('Abrindo em nova aba...', 'info');
-                // Verificar se a janela carregou após 3 segundos
-                setTimeout(() => {
-                    try {
-                        if (newWindow.closed) {
-                            showToast('Janela foi fechada', 'warning');
-                        } else {
-                            showToast('Se carregou na nova aba, o problema é com iframe', 'info');
-                        }
-                    } catch (e) {
-                        console.log('Não foi possível verificar status da nova janela:', e);
-                    }
-                }, 3000);
-            } else {
-                showToast('Popup bloqueado pelo navegador', 'error');
-                updateDebugInfo('Popup bloqueado', 'Verificar configurações');
-            }
-        }
-
-        // === FUNÇÃO PARA DIAGNOSTICAR PROBLEMAS ===
-        function runDiagnostics() {
-            console.group('🏥 Diagnóstico Completo');
-            
-            // Teste 1: Conectividade
-            console.log('1. Teste de Conectividade:', navigator.onLine ? '✅ Online' : '❌ Offline');
-            
-            // Teste 2: Suporte a iframe
-            console.log('2. Suporte a iframe:', document.createElement('iframe') ? '✅ Suportado' : '❌ Não suportado');
-            
-            // Teste 3: Cookies e localStorage
-            console.log('3. localStorage:', typeof localStorage !== 'undefined' ? '✅ Disponível' : '❌ Bloqueado');
-            
-            // Teste 4: JavaScript
-            console.log('4. JavaScript:', true ? '✅ Ativo' : '❌ Desabilitado');
-            
-            // Teste 5: Protocolo
-            console.log('5. Protocolo:', location.protocol === 'https:' ? '✅ HTTPS' : '⚠️ HTTP');
-            
-            // Teste 6: User Agent
-            console.log('6. Navegador:', navigator.userAgent);
-            
-            // Teste 7: Sandbox
-            const iframe = elements.appFrame;
-            console.log('7. Sandbox iframe:', iframe.sandbox.toString() || 'Não definido');
-            
-            console.groupEnd();
-            
-            updateDebugInfo('Diagnóstico', 'Concluído - Ver console');
-        }
-
-        // Classe principal da aplicação
-        class PWAController {
-            constructor() {
-                this.init();
+                }, CONFIG.IFRAME_TIMEOUT);
             }
 
-            async init() {
-                try {
-                    // Inicializar emojis flutuantes
-                    floatingEmojis = new FloatingEmojis();
-                    
-                    this.setupEventListeners();
-                    this.startLoadingSequence();
-                    this.checkUserPreferences();
-                    this.setupPWAFeatures();
-                    this.checkConnection();
-                } catch (error) {
-                    console.error('Erro na inicialização:', error);
-                    this.showToast('Erro na inicialização do aplicativo', 'error');
-                }
+            handleIframeLoad() {
+                console.log('✅ Iframe carregado com sucesso');
+                state.iframeLoaded = true;
+                showToast('Aplicativo carregado com sucesso!', 'success');
             }
 
-            setupEventListeners() {
-                // Eventos do modal de nome
-                elements.saveNameButton.addEventListener('click', () => this.saveUserPreferences());
-                elements.userNameInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.saveUserPreferences();
-                });
-
-                // Eventos de seleção de gênero removidos
-
-                // Eventos do iframe
-                elements.appFrame.addEventListener('load', handleFrameLoad);
-                elements.appFrame.addEventListener('error', handleFrameError);
-
-                // Timeout para detectar iframe que não carrega
-                setTimeout(() => {
-                    if (!appState.iframeLoaded && !appState.isLoading) {
-                        handleFrameError();
-                    }
-                }, 15000);
-
-                // Eventos de conexão
-                window.addEventListener('online', () => this.handleOnline());
-                window.addEventListener('offline', () => this.handleOffline());
-
-                // Eventos PWA
-                window.addEventListener('beforeinstallprompt', (e) => this.handleInstallPrompt(e));
-                window.addEventListener('appinstalled', () => this.handleAppInstalled());
-
-                // Botão de instalação
-                elements.installButton.addEventListener('click', () => this.installApp());
-
-                // Acessibilidade - navegação por teclado removida
-            }
-
-            startLoadingSequence() {
-                let currentStep = 0;
-                
-                const updateProgress = () => {
-                    if (currentStep < LOADING_STEPS.length) {
-                        const step = LOADING_STEPS[currentStep];
-                        
-                        // Atualizar progresso com animação
-                        elements.loadingProgress.style.width = step.progress + '%';
-                        elements.loadingPercentage.textContent = step.progress + '%';
-                        elements.loadingStatus.textContent = step.text;
-                        
-                        updateLoadingEmoji(step.progress, step.emoji);
-                        
-                        currentStep++;
-                        
-                        // Continuar se não chegou ao fim
-                        if (currentStep < LOADING_STEPS.length) {
-                            setTimeout(updateProgress, 800 + Math.random() * 400);
-                        } else {
-                            // Finalizar carregamento
-                            setTimeout(() => this.finishLoading(), 500);
-                        }
-                    }
-                };
-
-                // Iniciar sequência após pequeno delay
-                setTimeout(updateProgress, 500);
-            }
-
-            updateLoadingEmoji(progress, emoji) {
-                elements.logoEmoji.textContent = emoji;
-            }
-
-            checkUserPreferences() {
-                const storedName = localStorage.getItem('userName');
-                const isFirstRun = !localStorage.getItem('appLaunched');
-
-                if (storedName) {
-                    elements.logoEmoji.textContent = themes.professional.emoji;
-                } else if (isFirstRun || !storedName) {
-                    localStorage.setItem('appLaunched', 'true');
-                    // Modal será mostrado após o carregamento
-                }
-            }
-
-            saveUserPreferences() {
-                const name = elements.userNameInput.value.trim();
-                
-                if (!name) {
-                    this.highlightInput();
-                    this.showToast('Por favor, digite seu nome', 'warning');
-                    return;
-                }
-
-                // Salvar preferências
-                localStorage.setItem('userName', name);
-
-                // Fechar modal com animação
-                elements.nameModal.classList.remove('show');
-                
-                // Mostrar toast de boas-vindas
-                setTimeout(() => {
-                    this.showToast(`Bem-vindo, ${name}!`, 'success');
-                }, 300);
-            }
-
-            highlightInput() {
-                elements.userNameInput.style.borderColor = '#e53e3e';
-                elements.userNameInput.style.boxShadow = '0 0 0 3px rgba(229, 62, 62, 0.1)';
-                
-                setTimeout(() => {
-                    elements.userNameInput.style.borderColor = '#e2e8f0';
-                    elements.userNameInput.style.boxShadow = 'none';
-                }, 2000);
-            }
-
-            applyTheme(gender) {
-                const theme = themes[gender];
-                
-                // Salvar preferência
-                localStorage.setItem('userGender', gender);
-                appState.selectedGender = gender;
-            }
-
-            finishLoading() {
-                appState.isLoading = false;
-                
-                // Esconder tela de carregamento com animação
-                elements.pwaLoading.classList.add('hidden');
-                
-                // Mostrar modal se necessário
-                setTimeout(() => {
-                    const storedName = localStorage.getItem('userName');
-                    if (!storedName) {
-                        elements.nameModal.classList.add('show');
-                        elements.userNameInput.focus();
-                    }
-                }, 600);
-
-                // Remover elemento de loading após animação
-                setTimeout(() => {
-                    if (elements.pwaLoading.classList.contains('hidden')) {
-                        elements.pwaLoading.style.display = 'none';
-                    }
-                }, 1000);
-            }
-
-            handleOnline() {
-                elements.offlineMessage.style.display = 'none';
-                this.showToast('Conexão restaurada!', 'success');
-                setTimeout(() => window.location.reload(), 1000);
-            }
-
-            handleOffline() {
-                elements.offlineMessage.style.display = 'block';
-                this.showToast('Você está offline', 'warning');
-            }
-
-            checkConnection() {
-                if (!navigator.onLine) {
-                    this.handleOffline();
-                }
-            }
-
-            // PWA Features
-            setupPWAFeatures() {
-                // Verificar se já está instalado
-                if (window.matchMedia('(display-mode: standalone)').matches
-                    || window.navigator.standalone === true) {
-                    elements.installButton.style.display = 'none';
-                }
-            }
-
-            handleInstallPrompt(e) {
-                e.preventDefault();
-                appState.deferredPrompt = e;
-                elements.installButton.style.display = 'block';
-                elements.installButton.classList.add('show');
-            }
-
-            async installApp() {
-                if (!appState.deferredPrompt) {
-                    this.showToast('Instalação não disponível', 'warning');
-                    return;
-                }
-
-                try {
-                    const result = await appState.deferredPrompt.prompt();
-                    console.log('Resultado da instalação:', result);
-                    
-                    if (result.outcome === 'accepted') {
-                        this.showToast('App instalado com sucesso!', 'success');
-                    } else {
-                        this.showToast('Instalação cancelada', 'info');
-                    }
-                } catch (error) {
-                    console.error('Erro na instalação:', error);
-                    this.showToast('Erro na instalação', 'error');
-                }
-
-                appState.deferredPrompt = null;
-                elements.installButton.style.display = 'none';
-            }
-
-            handleAppInstalled() {
-                elements.installButton.style.display = 'none';
-                this.showToast('App instalado! Você pode acessá-lo pela tela inicial.', 'success');
-            }
-
-            showToast(message, type = 'info') {
-                elements.toastNotification.textContent = message;
-                elements.toastNotification.className = `toast-notification ${type}`;
-                elements.toastNotification.classList.add('show');
-
-                setTimeout(() => {
-                    elements.toastNotification.classList.remove('show');
-                }, 4000);
-            }
-
-            darkenColor(color, percent) {
-                const num = parseInt(color.replace("#", ""), 16);
-                const amt = Math.round(2.55 * percent);
-                const R = (num >> 16) - amt;
-                const G = (num >> 8 & 0x00FF) - amt;
-                const B = (num & 0x0000FF) - amt;
-                return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-                    (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-                    (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
-            }
-        }
-
-        // === HANDLERS GLOBAIS DO IFRAME ===
-        function handleFrameLoad() {
-            console.log('✅ Frame carregado com sucesso');
-            appState.iframeLoaded = true;
-            appState.iframeError = false;
-            
-            updateDebugInfo('Carregado', 'Sucesso');
-            
-            // Verificar se o conteúdo realmente carregou
-            try {
-                const iframe = elements.appFrame;
-                if (iframe.contentWindow) {
-                    updateDebugInfo('Conteúdo OK', 'Acessível');
-                } else {
-                    console.warn('⚠️ Iframe carregou mas conteúdo não acessível (possível CORS)');
-                    updateDebugInfo('CORS Bloqueado', 'Sem acesso');
-                }
-            } catch (error) {
-                console.warn('⚠️ Erro ao verificar conteúdo do iframe:', error);
-                updateDebugInfo('Verificação falhou', error.message);
-            }
-            
-            if (!appState.isLoading) {
-                showToast('Aplicativo carregado!', 'success');
-            }
-        }
-
-        function handleFrameError(event) {
-            console.error('❌ Erro ao carregar o iframe:', event);
-            appState.iframeError = true;
-            appState.iframeLoaded = false;
-            
-            // Diagnóstico detalhado
-            const iframe = elements.appFrame;
-            const url = iframe.src;
-            
-            console.group('🔍 Diagnóstico do Iframe');
-            console.log('URL:', url);
-            console.log('Sandbox:', iframe.sandbox);
-            console.log('Allow:', iframe.allow);
-            console.log('Conexão online:', navigator.onLine);
-            console.log('User Agent:', navigator.userAgent);
-            console.groupEnd();
-            
-            updateDebugInfo('Erro', 'Falha no carregamento');
-            
-            // Tentar detectar o tipo de erro
-            if (!navigator.onLine) {
-                updateDebugInfo('Offline', 'Sem internet');
-                elements.offlineMessage.style.display = 'block';
-                return;
-            }
-            
-            // Testar se a URL é acessível
-            fetch(url, { method: 'HEAD', mode: 'no-cors' })
-                .then(() => {
-                    console.log('🌐 URL acessível, mas iframe bloqueado (provavelmente X-Frame-Options)');
-                    updateDebugInfo('X-Frame-Options', 'Bloqueado');
-                })
-                .catch(error => {
-                    console.log('🚫 URL não acessível:', error);
-                    updateDebugInfo('URL Inacessível', error.message);
-                });
-            
-            if (!appState.isLoading) {
-                elements.iframeError.classList.add('show');
+            handleIframeError() {
+                console.error('❌ Erro ao carregar iframe');
+                state.iframeLoaded = false;
+                elements.errorScreen.classList.add('show');
                 showToast('Erro ao carregar aplicativo', 'error');
             }
         }
 
-        // === FUNÇÃO TOAST GLOBAL ===
+        // === UTILITY FUNCTIONS ===
         function showToast(message, type = 'info') {
-            elements.toastNotification.textContent = message;
-            elements.toastNotification.className = `toast-notification ${type}`;
-            elements.toastNotification.classList.add('show');
+            elements.toast.textContent = message;
+            elements.toast.className = `toast ${type}`;
+            elements.toast.classList.add('show');
 
             setTimeout(() => {
-                elements.toastNotification.classList.remove('show');
+                elements.toast.classList.remove('show');
             }, 4000);
         }
 
-        // === INICIALIZAÇÃO COM DEBUGGING ===
-        document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar aplicação
-            const app = new PWAController();
-            
-            // Ativar diagnóstico em caso de problemas
-            setTimeout(() => {
-                if (!appState.iframeLoaded && !appState.isLoading) {
-                    console.warn('⚠️ Iframe não carregou, executando diagnóstico...');
-                    runDiagnostics();
-                }
-            }, 10000);
-            
-            // Log de inicialização
-            console.log(`%c🚀 PWA Controle Financeiro v${APP_VERSION} iniciado!`, 
-                'color: #667eea; font-size: 16px; font-weight: bold;');
-            
-            // Log da URL do iframe
-            console.log('🔗 URL do iframe:', elements.appFrame.src);
-            
-            // Verificar se Service Worker está registrado
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(registrations => {
-                    console.log('🔧 Service Workers registrados:', registrations.length);
+        function retryConnection() {
+            if (state.currentRetry < CONFIG.RETRY_ATTEMPTS) {
+                state.currentRetry++;
+                elements.errorScreen.classList.remove('show');
+                
+                showToast(`Tentativa ${state.currentRetry} de ${CONFIG.RETRY_ATTEMPTS}...`, 'warning');
+                
+                // Recriar iframe
+                const newIframe = document.createElement('iframe');
+                newIframe.id = 'mainIframe';
+                newIframe.src = `${CONFIG.IFRAME_URL}?retry=${state.currentRetry}&t=${Date.now()}`;
+                newIframe.allow = elements.mainIframe.allow;
+                newIframe.allowFullscreen = true;
+                newIframe.loading = 'eager';
+                newIframe.referrerPolicy = 'no-referrer-when-downgrade';
+                newIframe.sandbox = elements.mainIframe.sandbox;
+                newIframe.title = elements.mainIframe.title;
+                
+                // Eventos
+                newIframe.addEventListener('load', () => {
+                    console.log('✅ Reconexão bem-sucedida');
+                    state.iframeLoaded = true;
+                    showToast('Reconectado com sucesso!', 'success');
                 });
+                
+                newIframe.addEventListener('error', () => {
+                    console.error('❌ Falha na reconexão');
+                    setTimeout(() => {
+                        elements.errorScreen.classList.add('show');
+                    }, 1000);
+                });
+                
+                // Substituir iframe
+                elements.mainIframe.parentNode.replaceChild(newIframe, elements.mainIframe);
+                elements.mainIframe = newIframe;
+                
+                // Timeout para nova tentativa
+                setTimeout(() => {
+                    if (!state.iframeLoaded) {
+                        elements.errorScreen.classList.add('show');
+                    }
+                }, CONFIG.IFRAME_TIMEOUT);
+            } else {
+                showToast('Limite de tentativas excedido', 'error');
             }
+        }
+
+        function openInNewTab() {
+            const url = CONFIG.IFRAME_URL;
+            const newWindow = window.open(url, '_blank');
+            
+            if (newWindow) {
+                showToast('Abrindo em nova aba...', 'success');
+            } else {
+                showToast('Popup foi bloqueado pelo navegador', 'error');
+            }
+        }
+
+        // === PWA FUNCTIONALITY ===
+        function setupPWA() {
+            // Service Worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registrado:', registration);
+                    })
+                    .catch(error => {
+                        console.log('SW falhou:', error);
+                    });
+            }
+
+            // Install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                state.deferredPrompt = e;
+                elements.installBtn.style.display = 'block';
+                elements.installBtn.classList.add('show');
+            });
+
+            // Install button
+            elements.installBtn.addEventListener('click', async () => {
+                if (!state.deferredPrompt) {
+                    showToast('Instalação não disponível', 'warning');
+                    return;
+                }
+
+                try {
+                    const result = await state.deferredPrompt.prompt();
+                    
+                    if (result.outcome === 'accepted') {
+                        showToast('App instalado com sucesso!', 'success');
+                        elements.installBtn.style.display = 'none';
+                    } else {
+                        showToast('Instalação cancelada', 'info');
+                    }
+                } catch (error) {
+                    console.error('Erro na instalação:', error);
+                    showToast('Erro na instalação', 'error');
+                }
+
+                state.deferredPrompt = null;
+            });
+
+            // App installed
+            window.addEventListener('appinstalled', () => {
+                elements.installBtn.style.display = 'none';
+                showToast('App instalado! Acesse pela tela inicial.', 'success');
+            });
+
+            // Check if already installed
+            if (window.matchMedia('(display-mode: standalone)').matches || 
+                window.navigator.standalone === true) {
+                elements.installBtn.style.display = 'none';
+            }
+        }
+
+        // === CONNECTIVITY ===
+        function setupConnectivity() {
+            window.addEventListener('online', () => {
+                showToast('Conexão restaurada!', 'success');
+                if (!state.iframeLoaded) {
+                    setTimeout(() => window.location.reload(), 1000);
+                }
+            });
+
+            window.addEventListener('offline', () => {
+                showToast('Você está offline', 'warning');
+            });
+
+            // Check initial connection
+            if (!navigator.onLine) {
+                showToast('Sem conexão com a internet', 'error');
+            }
+        }
+
+        // === MOBILE OPTIMIZATIONS ===
+        function setupMobile() {
+            // Prevent zoom on inputs
+            document.addEventListener('touchstart', () => {});
+            
+            // Prevent text selection
+            document.addEventListener('selectstart', (e) => {
+                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                }
+            });
+
+            // Prevent gesture zoom
+            document.addEventListener('gesturestart', (e) => {
+                e.preventDefault();
+            });
+
+            // Viewport height fix for mobile
+            function setViewportHeight() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+
+            setViewportHeight();
+            window.addEventListener('resize', setViewportHeight);
+        }
+
+        // === ACCESSIBILITY ===
+        function setupAccessibility() {
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (elements.errorScreen.classList.contains('show')) {
+                        elements.errorScreen.classList.remove('show');
+                    }
+                }
+            });
+
+            // Focus management
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+
+            document.addEventListener('mousedown', () => {
+                document.body.classList.remove('keyboard-navigation');
+            });
+        }
+
+        // === INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 C.F - Controle Financeiro iniciado');
+            
+            // Setup
+            setupPWA();
+            setupConnectivity();
+            setupMobile();
+            setupAccessibility();
+            
+            // Start loading
+            const loader = new LoadingController();
+            loader.start();
         });
 
-        // === TRATAMENTO DE ERROS GLOBAIS ===
+        // === ERROR HANDLING ===
         window.addEventListener('error', (event) => {
-            console.error('Erro global capturado:', event.error);
+            console.error('Erro global:', event.error);
         });
 
         window.addEventListener('unhandledrejection', (event) => {
             console.error('Promise rejeitada:', event.reason);
         });
-
-        // === PREVENÇÕES MOBILE ===
-        document.addEventListener('gesturestart', function (e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('selectstart', function(e) {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                e.preventDefault();
-            }
-        });
-
-        // === ACESSIBILIDADE ===
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (elements.nameModal.classList.contains('show')) {
-                    elements.nameModal.classList.remove('show');
-                }
-            }
-            
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-
-        document.addEventListener('mousedown', () => {
-            document.body.classList.remove('keyboard-navigation');
-        });
-
-        // === TEMA DO SISTEMA ===
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addListener((e) => {
-            if (e.matches) {
-                document.body.classList.add('dark-theme');
-            } else {
-                document.body.classList.remove('dark-theme');
-            }
-        });
-
-        if (mediaQuery.matches) {
-            document.body.classList.add('dark-theme');
-        }
     </script>
 </body>
 </html>
