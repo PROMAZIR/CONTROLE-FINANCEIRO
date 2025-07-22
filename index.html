@@ -23,8 +23,6 @@
     <meta property="og:title" content="C.F - Controle Financeiro">
     <meta property="og:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta property="og:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -32,12 +30,6 @@
     <meta name="twitter:title" content="C.F - Controle Financeiro">
     <meta name="twitter:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
     <meta name="twitter:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
-    
-    <!-- Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
     
     <style>
         /* Reset e Base */
@@ -55,8 +47,151 @@
             background-color: #f8fafc;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            position: relative;
         }
 
+        /* === EMOJIS FLUTUANTES DE FUNDO === */
+        .floating-emojis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.1;
+            animation: floatUp 15s infinite linear;
+            user-select: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-emoji:nth-child(odd) {
+            animation-duration: 18s;
+            font-size: 1.2rem;
+        }
+
+        .floating-emoji:nth-child(even) {
+            animation-duration: 12s;
+            font-size: 2rem;
+        }
+
+        .floating-emoji:nth-child(3n) {
+            animation-duration: 20s;
+            font-size: 1.8rem;
+        }
+
+        /* Variações de trajetória */
+        .floating-emoji.left {
+            left: 10%;
+            animation-name: floatUpLeft;
+        }
+
+        .floating-emoji.center {
+            left: 45%;
+            animation-name: floatUpCenter;
+        }
+
+        .floating-emoji.right {
+            left: 80%;
+            animation-name: floatUpRight;
+        }
+
+        @keyframes floatUpLeft {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            25% {
+                transform: translateY(75vh) translateX(20px) rotate(90deg);
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-10px) rotate(180deg);
+                opacity: 0.15;
+            }
+            75% {
+                transform: translateY(25vh) translateX(15px) rotate(270deg);
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(-5px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatUpCenter {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                transform: translateY(80vh) translateX(-15px) rotate(72deg) scale(1);
+                opacity: 0.1;
+            }
+            40% {
+                transform: translateY(60vh) translateX(10px) rotate(144deg) scale(1.1);
+                opacity: 0.15;
+            }
+            60% {
+                transform: translateY(40vh) translateX(-8px) rotate(216deg) scale(0.9);
+                opacity: 0.15;
+            }
+            80% {
+                transform: translateY(20vh) translateX(12px) rotate(288deg) scale(1);
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(0) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatUpRight {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            30% {
+                transform: translateY(70vh) translateX(-25px) rotate(108deg);
+                opacity: 0.1;
+            }
+            60% {
+                transform: translateY(40vh) translateX(20px) rotate(216deg);
+                opacity: 0.15;
+            }
+            90% {
+                transform: translateY(10vh) translateX(-10px) rotate(324deg);
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(5px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* === RESTO DO CSS ORIGINAL === */
         /* PWA Loading Screen - Versão Melhorada */
         .pwa-loading {
             position: fixed;
@@ -356,6 +491,178 @@
             background-color: #f8fafc;
         }
 
+        /* === IFRAME ERROR HANDLER === */
+        .iframe-error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 950;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .iframe-error.show {
+            display: flex;
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .error-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .error-message {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            max-width: 400px;
+        }
+
+        .error-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .retry-button, .fallback-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .fallback-button {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+        }
+
+        .retry-button:hover, .fallback-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .fallback-button:hover {
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        /* Fallback App */
+        .fallback-app {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8fafc;
+            display: none;
+            flex-direction: column;
+            z-index: 975;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .fallback-app.show {
+            display: flex;
+        }
+
+        .fallback-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .fallback-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .fallback-subtitle {
+            color: #4a5568;
+            font-size: 1rem;
+        }
+
+        .fallback-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .finance-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .finance-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .card-description {
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
         /* Botão de Instalação Melhorado */
         #install-button {
             position: fixed;
@@ -386,7 +693,7 @@
         #install-button:hover {
             transform: translateX(-50%) translateY(-2px);
             box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
-                    }
+        }
 
         #install-button:active {
             transform: translateX(-50%) translateY(0) scale(0.98);
@@ -594,24 +901,6 @@
             line-height: 1.5;
         }
 
-        .retry-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .retry-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
         /* Responsividade */
         @media (max-width: 480px) {
             .pwa-loading-title {
@@ -651,53 +940,22 @@
                 flex-direction: column;
                 gap: 10px;
             }
-        }
 
-        /* Animações de entrada */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+            .error-buttons {
+                flex-direction: column;
+                align-items: center;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .floating-emoji {
+                font-size: 1rem;
             }
-        }
 
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
+            .floating-emoji:nth-child(even) {
+                font-size: 1.5rem;
             }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
 
-        /* Estados de carregamento */
-        .loading-enter {
-            animation: fadeInScale 0.6s ease-out;
-        }
-
-        .loading-exit {
-            animation: fadeInUp 0.4s ease-out reverse;
-        }
-
-        /* Preloader para imagens */
-        .img-preloader {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-
-        /* Melhorias de acessibilidade */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .floating-emoji:nth-child(3n) {
+                font-size: 1.3rem;
             }
         }
 
@@ -715,18 +973,34 @@
                 background-color: #1a202c;
             }
 
-            #refresh-button {
-                background: rgba(45, 55, 72, 0.95);
+            .iframe-error {
+                background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
                 color: white;
             }
 
-            #refresh-button:hover {
-                background: rgba(45, 55, 72, 0.98);
+            .error-title {
+                color: white;
+            }
+
+            .error-message {
+                color: #cbd5e0;
+            }
+        }
+
+        /* Preloader para reduzir movimento para usuários sensíveis */
+        @media (prefers-reduced-motion: reduce) {
+            .floating-emoji {
+                animation: none;
+                opacity: 0.05;
+                position: relative;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Emojis Flutuantes de Fundo -->
+    <div class="floating-emojis" id="floating-emojis"></div>
+
     <div id="app-container">
         <!-- PWA Loading Screen Melhorada -->
         <div class="pwa-loading" id="pwa-loading">
@@ -792,16 +1066,105 @@
                 allow="autoplay; camera; microphone; fullscreen"
                 allowfullscreen
                 loading="eager"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation"
                 title="Aplicativo de Controle Financeiro">
             </iframe>
+        </div>
+
+        <!-- Tela de Erro do Iframe -->
+        <div class="iframe-error" id="iframe-error">
+            <div class="error-icon">🚫</div>
+            <h2 class="error-title">Ops! Algo deu errado</h2>
+            <p class="error-message">Não conseguimos carregar o aplicativo principal. Isso pode acontecer por problemas de conexão ou configuração do servidor.</p>
+            <div class="error-buttons">
+                <button class="retry-button" onclick="retryIframe()">
+                    🔄 Tentar Novamente
+                </button>
+                <button class="fallback-button" onclick="showFallbackApp()">
+                    📱 Usar Versão Simplificada
+                </button>
+            </div>
+        </div>
+
+        <!-- App Fallback -->
+        <div class="fallback-app" id="fallback-app">
+            <div class="fallback-header">
+                <h1 class="fallback-title">💰 Controle Financeiro</h1>
+                <p class="fallback-subtitle">Versão Simplificada</p>
+            </div>
+            
+            <div class="fallback-content">
+                <div class="finance-card">
+                    <div class="card-header">
+                        <div class="card-icon">💳</div>
+                        <div class="card-title">Adicionar Compra</div>
+                    </div>
+                    <div class="card-description">
+                        Registre suas compras e parcelas para manter o controle das suas finanças.
+                    </div>
+                </div>
+
+                <div class="finance-card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">Relatórios</div>
+                    </div>
+                    <div class="card-description">
+                        Visualize suas despesas mensais e acompanhe seus gastos em tempo real.
+                    </div>
+                </div>
+
+                <div class="finance-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">Metas</div>
+                    </div>
+                    <div class="card-description">
+                        Defina metas de economia e acompanhe seu progresso financeiro.
+                    </div>
+                </div>
+
+                <div class="finance-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔔</div>
+                        <div class="card-title">Lembretes</div>
+                    </div>
+                    <div class="card-description">
+                        Receba notificações sobre vencimentos e compromissos financeiros.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Nome -->
+        <div id="name-modal">
+            <div class="modal-content">
+                <h2 class="modal-title">👋 Bem-vindo ao seu Controle Financeiro!</h2>
+                
+                <input type="text" 
+                       id="user-name-input" 
+                       placeholder="Digite seu nome"
+                       maxlength="50">
+                
+                <div class="gender-selection">
+                    <div class="gender-option" id="male-option" tabindex="0">
+                        👨 Masculino
+                    </div>
+                    <div class="gender-option" id="female-option" tabindex="0">
+                        👩 Feminino
+                    </div>
+                </div>
+                
+                <button id="save-name-button">
+                    ✨ Começar
+                </button>
+            </div>
         </div>
 
         <!-- Mensagem offline -->
         <div id="offline-message">
             <h3>🔌 Sem conexão</h3>
             <p>Você está offline. Verifique sua conexão com a internet e tente novamente.</p>
-            <button class="retry-button" id="retry-button" onclick="window.location.reload()">
+            <button class="retry-button" onclick="window.location.reload()">
                 🔄 Tentar Novamente
             </button>
         </div>
@@ -816,8 +1179,107 @@
     </div>
 
     <script>
+        // === SISTEMA DE EMOJIS FLUTUANTES ===
+        class FloatingEmojis {
+            constructor() {
+                this.container = document.getElementById('floating-emojis');
+                this.emojis = ['💰', '💳', '💵', '💴', '💶', '💷', '📊', '📈', '💎', '🏦', '💸', '🪙', '💲', '📉', '💱', '🧾', '💼', '🎯'];
+                this.positions = ['left', 'center', 'right'];
+                this.isActive = true;
+                this.intervals = [];
+                
+                this.init();
+            }
+
+            init() {
+                // Verificar preferência de movimento reduzido
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReducedMotion) {
+                    this.createStaticEmojis();
+                    return;
+                }
+
+                this.startFloatingEmojis();
+            }
+
+            createStaticEmojis() {
+                // Para usuários que preferem movimento reduzido, criar emojis estáticos
+                for (let i = 0; i < 10; i++) {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'floating-emoji static';
+                    emoji.textContent = this.emojis[Math.floor(Math.random() * this.emojis.length)];
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = Math.random() * 100 + '%';
+                    emoji.style.position = 'absolute';
+                    emoji.style.opacity = '0.05';
+                    this.container.appendChild(emoji);
+                }
+            }
+
+            createFloatingEmoji() {
+                if (!this.isActive) return;
+
+                const emoji = document.createElement('div');
+                const randomEmoji = this.emojis[Math.floor(Math.random() * this.emojis.length)];
+                const randomPosition = this.positions[Math.floor(Math.random() * this.positions.length)];
+                
+                emoji.className = `floating-emoji ${randomPosition}`;
+                emoji.textContent = randomEmoji;
+                
+                // Pequena variação horizontal
+                const baseLeft = randomPosition === 'left' ? 10 : randomPosition === 'center' ? 45 : 80;
+                const leftOffset = (Math.random() - 0.5) * 20; // ±10% de variação
+                emoji.style.left = Math.max(0, Math.min(90, baseLeft + leftOffset)) + '%';
+                
+                this.container.appendChild(emoji);
+
+                // Remover emoji após a animação
+                setTimeout(() => {
+                    if (emoji.parentNode) {
+                        emoji.parentNode.removeChild(emoji);
+                    }
+                }, 20000);
+            }
+
+            startFloatingEmojis() {
+                // Criar emojis em intervalos aleatórios
+                const createEmojiInterval = () => {
+                    if (this.isActive) {
+                        this.createFloatingEmoji();
+                        
+                        // Próximo emoji em 1-4 segundos
+                        const nextInterval = setTimeout(createEmojiInterval, 1000 + Math.random() * 3000);
+                        this.intervals.push(nextInterval);
+                    }
+                };
+
+                // Começar após 2 segundos
+                setTimeout(createEmojiInterval, 2000);
+            }
+
+            stop() {
+                this.isActive = false;
+                this.intervals.forEach(interval => clearTimeout(interval));
+                this.intervals = [];
+            }
+
+            start() {
+                if (!this.isActive) {
+                    this.isActive = true;
+                    this.startFloatingEmojis();
+                }
+            }
+
+            clear() {
+                while (this.container.firstChild) {
+                    this.container.removeChild(this.container.firstChild);
+                }
+            }
+        }
+
+        // === RESTO DO CÓDIGO ORIGINAL ===
         // Constantes e configurações
-        const APP_VERSION = '2.0.0';
+        const APP_VERSION = '2.1.0';
         const LOADING_STEPS = [
             { text: 'Inicializando aplicativo...', progress: 10 },
             { text: 'Carregando recursos...', progress: 25 },
@@ -837,7 +1299,6 @@
             nameModal: document.getElementById('name-modal'),
             userNameInput: document.getElementById('user-name-input'),
             saveNameButton: document.getElementById('save-name-button'),
-            refreshButton: document.getElementById('refresh-button'),
             loadingProgress: document.getElementById('loading-progress'),
             loadingPercentage: document.getElementById('loading-percentage'),
             loadingStatus: document.getElementById('loading-status'),
@@ -846,7 +1307,9 @@
             logo2: document.getElementById('logo2'),
             maleOption: document.getElementById('male-option'),
             femaleOption: document.getElementById('female-option'),
-            toastNotification: document.getElementById('toast-notification')
+            toastNotification: document.getElementById('toast-notification'),
+            iframeError: document.getElementById('iframe-error'),
+            fallbackApp: document.getElementById('fallback-app')
         };
 
         // Configurações de tema
@@ -862,8 +1325,57 @@
             deferredPrompt: null,
             currentStep: 0,
             isLoading: true,
-            loadingInterval: null
+            loadingInterval: null,
+            iframeLoaded: false,
+            iframeError: false,
+            retryCount: 0,
+            maxRetries: 3
         };
+
+        // Instância dos emojis flutuantes
+        let floatingEmojis;
+
+        // === FUNÇÕES PARA IFRAME ===
+        function retryIframe() {
+            if (appState.retryCount < appState.maxRetries) {
+                appState.retryCount++;
+                elements.iframeError.classList.remove('show');
+                
+                showToast(`Tentativa ${appState.retryCount} de ${appState.maxRetries}...`, 'info');
+                
+                // Recriar iframe
+                const newIframe = document.createElement('iframe');
+                newIframe.id = 'app-frame';
+                newIframe.src = elements.appFrame.src + '?retry=' + appState.retryCount;
+                newIframe.allow = elements.appFrame.allow;
+                newIframe.allowFullscreen = true;
+                newIframe.loading = 'eager';
+                newIframe.title = elements.appFrame.title;
+                
+                // Eventos do novo iframe
+                newIframe.addEventListener('load', handleFrameLoad);
+                newIframe.addEventListener('error', handleFrameError);
+                
+                // Substituir iframe
+                elements.appFrame.parentNode.replaceChild(newIframe, elements.appFrame);
+                elements.appFrame = newIframe;
+                
+                // Timeout para detectar falha de carregamento
+                setTimeout(() => {
+                    if (!appState.iframeLoaded) {
+                        handleFrameError();
+                    }
+                }, 10000);
+            } else {
+                showToast('Muitas tentativas. Tente a versão simplificada.', 'error');
+            }
+        }
+
+        function showFallbackApp() {
+            elements.iframeError.classList.remove('show');
+            elements.fallbackApp.classList.add('show');
+            showToast('Versão simplificada carregada!', 'success');
+        }
 
         // Classe principal da aplicação
         class PWAController {
@@ -873,6 +1385,9 @@
 
             async init() {
                 try {
+                    // Inicializar emojis flutuantes
+                    floatingEmojis = new FloatingEmojis();
+                    
                     this.setupEventListeners();
                     this.startLoadingSequence();
                     this.setupLogoRotation();
@@ -897,8 +1412,15 @@
                 elements.femaleOption.addEventListener('click', () => this.selectGender('female'));
 
                 // Eventos do iframe
-                elements.appFrame.addEventListener('load', () => this.handleFrameLoad());
-                elements.appFrame.addEventListener('error', () => this.handleFrameError());
+                elements.appFrame.addEventListener('load', handleFrameLoad);
+                elements.appFrame.addEventListener('error', handleFrameError);
+
+                // Timeout para detectar iframe que não carrega
+                setTimeout(() => {
+                    if (!appState.iframeLoaded && !appState.isLoading) {
+                        handleFrameError();
+                    }
+                }, 15000);
 
                 // Eventos de conexão
                 window.addEventListener('online', () => this.handleOnline());
@@ -907,9 +1429,6 @@
                 // Eventos PWA
                 window.addEventListener('beforeinstallprompt', (e) => this.handleInstallPrompt(e));
                 window.addEventListener('appinstalled', () => this.handleAppInstalled());
-
-                // Botão de atualização
-                elements.refreshButton.addEventListener('click', () => this.refreshApp());
 
                 // Botão de instalação
                 elements.installButton.addEventListener('click', () => this.installApp());
@@ -1046,16 +1565,6 @@
             applyTheme(gender) {
                 const theme = themes[gender];
                 
-                // Aplicar cor aos elementos
-                const elementsToTheme = [
-                    elements.refreshButton.querySelector('svg'),
-                    elements.refreshButton.querySelector('.refresh-progress')
-                ];
-
-                elementsToTheme.forEach(el => {
-                    if (el) el.style.color = theme.color;
-                });
-
                 // Salvar preferência
                 localStorage.setItem('userGender', gender);
                 appState.selectedGender = gender;
@@ -1084,22 +1593,6 @@
                 }, 1000);
             }
 
-            handleFrameLoad() {
-                console.log('Frame carregado com sucesso');
-                if (!appState.isLoading) {
-                    this.showToast('Aplicativo atualizado!', 'success');
-                }
-            }
-
-            handleFrameError() {
-                console.error('Erro ao carregar o iframe');
-                if (navigator.onLine) {
-                    setTimeout(() => window.location.reload(), 3000);
-                } else {
-                    this.handleOffline();
-                }
-            }
-
             handleOnline() {
                 elements.offlineMessage.style.display = 'none';
                 this.showToast('Conexão restaurada!', 'success');
@@ -1119,22 +1612,9 @@
 
             // PWA Features
             setupPWAFeatures() {
-                // Registrar Service Worker
-                if ('serviceWorker' in navigator) {
-                    window.addEventListener('load', () => {
-                        navigator.serviceWorker.register('/sw.js')
-                            .then(registration => {
-                                console.log('SW registrado:', registration);
-                            })
-                            .catch(error => {
-                                console.error('Erro ao registrar SW:', error);
-                            });
-                    });
-                }
-
                 // Verificar se já está instalado
                 if (window.matchMedia('(display-mode: standalone)').matches
-                                        || window.navigator.standalone === true) {
+                    || window.navigator.standalone === true) {
                     elements.installButton.style.display = 'none';
                 }
             }
@@ -1143,6 +1623,7 @@
                 e.preventDefault();
                 appState.deferredPrompt = e;
                 elements.installButton.style.display = 'block';
+                elements.installButton.classList.add('show');
             }
 
             async installApp() {
@@ -1174,15 +1655,6 @@
                 this.showToast('App instalado! Você pode acessá-lo pela tela inicial.', 'success');
             }
 
-            refreshApp() {
-                elements.refreshButton.classList.add('refreshing');
-                
-                // Simular carregamento
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }
-
             showToast(message, type = 'info') {
                 elements.toastNotification.textContent = message;
                 elements.toastNotification.className = `toast-notification ${type}`;
@@ -1205,179 +1677,76 @@
             }
         }
 
-        // Utilitários adicionais
-        class Utils {
-            static formatDate(date) {
-                return new Intl.DateTimeFormat('pt-BR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                }).format(date);
-            }
-
-            static formatTime(date) {
-                return new Intl.DateTimeFormat('pt-BR', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }).format(date);
-            }
-
-            static debounce(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => {
-                        clearTimeout(timeout);
-                        func(...args);
-                    };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                };
-            }
-
-            static throttle(func, limit) {
-                let inThrottle;
-                return function() {
-                    const args = arguments;
-                    const context = this;
-                    if (!inThrottle) {
-                        func.apply(context, args);
-                        inThrottle = true;
-                        setTimeout(() => inThrottle = false, limit);
-                    }
-                }
+        // === HANDLERS GLOBAIS DO IFRAME ===
+        function handleFrameLoad() {
+            console.log('Frame carregado com sucesso');
+            appState.iframeLoaded = true;
+            appState.iframeError = false;
+            if (!appState.isLoading) {
+                showToast('Aplicativo carregado!', 'success');
             }
         }
 
-        // Analytics e Performance
-        class Analytics {
-            static trackEvent(eventName, properties = {}) {
-                console.log('Event:', eventName, properties);
-                // Aqui você pode integrar com Google Analytics, Firebase, etc.
-            }
-
-            static trackPageView(page) {
-                console.log('Page view:', page);
-            }
-
-            static trackError(error, context = '') {
-                console.error('Error tracked:', error, context);
-            }
-
-            static trackPerformance() {
-                if ('performance' in window) {
-                    const navigation = performance.getEntriesByType('navigation')[0];
-                    const loadTime = navigation.loadEventEnd - navigation.loadEventStart;
-                    console.log('Load time:', loadTime + 'ms');
-                }
+        function handleFrameError() {
+            console.error('Erro ao carregar o iframe');
+            appState.iframeError = true;
+            appState.iframeLoaded = false;
+            
+            if (!appState.isLoading) {
+                elements.iframeError.classList.add('show');
+                showToast('Erro ao carregar aplicativo', 'error');
             }
         }
 
-        // Cache Manager
-        class CacheManager {
-            static async cacheResources() {
-                if ('caches' in window) {
-                    try {
-                        const cache = await caches.open('pwa-cache-v1');
-                        const urlsToCache = [
-                            '/',
-                            '/manifest.json',
-                            'https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png',
-                            'https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png'
-                        ];
-                        await cache.addAll(urlsToCache);
-                        console.log('Recursos em cache salvos');
-                    } catch (error) {
-                        console.error('Erro ao salvar cache:', error);
-                    }
-                }
-            }
+        // === FUNÇÃO TOAST GLOBAL ===
+        function showToast(message, type = 'info') {
+            elements.toastNotification.textContent = message;
+            elements.toastNotification.className = `toast-notification ${type}`;
+            elements.toastNotification.classList.add('show');
 
-            static async getCachedResource(url) {
-                if ('caches' in window) {
-                    try {
-                        const cache = await caches.open('pwa-cache-v1');
-                        const response = await cache.match(url);
-                        return response;
-                    } catch (error) {
-                        console.error('Erro ao buscar cache:', error);
-                        return null;
-                    }
-                }
-                return null;
-            }
+            setTimeout(() => {
+                elements.toastNotification.classList.remove('show');
+            }, 4000);
         }
 
-        // Inicialização da aplicação
+        // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializar aplicação
             const app = new PWAController();
             
-            // Configurar analytics
-            Analytics.trackPageView('home');
-            Analytics.trackPerformance();
-            
-            // Configurar cache
-            CacheManager.cacheResources();
-            
             // Log de inicialização
             console.log(`%c🚀 PWA Controle Financeiro v${APP_VERSION} iniciado!`, 
                 'color: #667eea; font-size: 16px; font-weight: bold;');
-            
-            // Verificar atualizações
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.addEventListener('controllerchange', () => {
-                    window.location.reload();
-                });
-            }
         });
 
-        // Tratamento de erros globais
+        // === TRATAMENTO DE ERROS GLOBAIS ===
         window.addEventListener('error', (event) => {
-            Analytics.trackError(event.error, 'Global error handler');
             console.error('Erro global capturado:', event.error);
         });
 
         window.addEventListener('unhandledrejection', (event) => {
-            Analytics.trackError(event.reason, 'Unhandled promise rejection');
             console.error('Promise rejeitada:', event.reason);
         });
 
-        // Prevenção de zoom em dispositivos móveis
+        // === PREVENÇÕES MOBILE ===
         document.addEventListener('gesturestart', function (e) {
             e.preventDefault();
         });
 
-        // Prevenção de seleção de texto em elementos de interface
         document.addEventListener('selectstart', function(e) {
             if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
             }
         });
 
-        // Otimização de performance
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        });
-
-        // Observar elementos para animações
-        document.querySelectorAll('.feature-item').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Configurações de acessibilidade
+        // === ACESSIBILIDADE ===
         document.addEventListener('keydown', (e) => {
-            // ESC para fechar modais
             if (e.key === 'Escape') {
                 if (elements.nameModal.classList.contains('show')) {
                     elements.nameModal.classList.remove('show');
                 }
             }
             
-            // Tab navigation melhorada
             if (e.key === 'Tab') {
                 document.body.classList.add('keyboard-navigation');
             }
@@ -1387,7 +1756,7 @@
             document.body.classList.remove('keyboard-navigation');
         });
 
-        // Configurações de tema do sistema
+        // === TEMA DO SISTEMA ===
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         mediaQuery.addListener((e) => {
             if (e.matches) {
@@ -1397,39 +1766,9 @@
             }
         });
 
-        // Aplicar tema inicial
         if (mediaQuery.matches) {
             document.body.classList.add('dark-theme');
-        }
-
-        // Configurações de bateria (se suportado)
-        if ('getBattery' in navigator) {
-            navigator.getBattery().then(battery => {
-                if (battery.level < 0.2) {
-                    // Modo de economia de energia
-                    document.body.classList.add('power-save-mode');
-                }
-            });
-        }
-
-        // Configurações de rede
-        if ('connection' in navigator) {
-            const connection = navigator.connection;
-            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
-                // Modo de conexão lenta
-                document.body.classList.add('slow-connection');
-            }
-        }
-
-        // Configurações de memória
-        if ('memory' in performance) {
-            const memory = performance.memory;
-            if (memory.usedJSHeapSize / memory.jsHeapSizeLimit > 0.8) {
-                // Modo de baixa memória
-                document.body.classList.add('low-memory');
-            }
         }
     </script>
 </body>
 </html>
-            
