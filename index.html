@@ -337,10 +337,14 @@
 
         /* === APP CONTAINER === */
         .app-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
+            width: 100vw;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            position: fixed;
+            top: 0;
+            left: 0;
             background: #f8fafc;
+            overflow: hidden;
         }
 
         .iframe-container {
@@ -350,13 +354,18 @@
             top: 0;
             left: 0;
             background: #f8fafc;
+            overflow: hidden;
         }
 
-        #main-iframe {
+        #mainIframe {
             width: 100%;
             height: 100%;
             border: none;
             background: #f8fafc;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         /* === ERROR HANDLING === */
@@ -552,6 +561,27 @@
             .feature-label {
                 font-size: 0.8rem;
             }
+
+            /* Mobile iframe adjustments */
+            .app-container {
+                width: 100vw;
+                height: 100vh;
+                height: calc(var(--vh, 1vh) * 100);
+            }
+
+            .iframe-container {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            #mainIframe {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                min-height: calc(var(--vh, 1vh) * 100);
+            }
         }
 
         @media (max-width: 480px) {
@@ -591,6 +621,79 @@
 
             .btn {
                 width: 200px;
+            }
+
+            /* Ultra-mobile iframe */
+            .app-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100vw;
+                height: 100vh;
+                height: calc(var(--vh, 1vh) * 100);
+                overflow: hidden;
+            }
+
+            .iframe-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            #mainIframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                height: calc(var(--vh, 1vh) * 100);
+                border: 0;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-width: 896px) and (orientation: landscape) and (max-height: 414px) {
+            .app-container,
+            .iframe-container,
+            #mainIframe {
+                width: 100vw;
+                height: 100vh;
+                height: calc(var(--vh, 1vh) * 100);
+            }
+        }
+
+        /* Tablet adjustments */
+        @media (min-width: 481px) and (max-width: 1024px) {
+            .app-container {
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #mainIframe {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1025px) {
+            .app-container {
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #mainIframe {
+                width: 100%;
+                height: 100vh;
             }
         }
 
@@ -633,6 +736,65 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+        }
+
+        /* Mobile keyboard adjustments */
+        body.keyboard-open .app-container {
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+        }
+
+        body.keyboard-open #mainIframe {
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-overflow-scrolling: touch) {
+            .app-container {
+                height: 100vh;
+                height: var(--ios-vh, 100vh);
+            }
+            
+            #mainIframe {
+                height: 100vh;
+                height: var(--ios-vh, 100vh);
+            }
+        }
+
+        /* Prevent overscroll on mobile */
+        @media (max-width: 768px) {
+            body {
+                overscroll-behavior: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .app-container {
+                overscroll-behavior: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            #mainIframe {
+                overscroll-behavior: none;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Force hardware acceleration on mobile */
+        @media (max-width: 768px) {
+            .app-container,
+            .iframe-container,
+            #mainIframe {
+                -webkit-transform: translateZ(0);
+                -moz-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                -o-transform: translateZ(0);
+                transform: translateZ(0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                -webkit-perspective: 1000;
+                perspective: 1000;
+            }
         }
 
         /* === ANIMAÇÕES DE ENTRADA === */
@@ -736,15 +898,25 @@
             <div class="error-icon">⚠️</div>
             <h2 class="error-title">Serviço Temporariamente Indisponível</h2>
             <p class="error-message">
-                Nosso sistema está passando por manutenção ou pode haver um problema de conectividade. 
-                Tente novamente em alguns instantes.
+                O sistema financeiro está passando por manutenção ou há um problema de conectividade. 
+                Isso pode acontecer devido a:
             </p>
+            <ul style="text-align: left; margin: 20px 0; color: #6b7280; line-height: 1.6;">
+                <li>🌐 Problemas de conexão com a internet</li>
+                <li>🔒 Restrições de segurança do navegador (CORS/X-Frame-Options)</li>
+                <li>⚙️ Manutenção programada do Google Apps Script</li>
+                <li>🛡️ Configurações de firewall ou antivírus</li>
+                <li>📱 Bloqueios específicos do dispositivo móvel</li>
+            </ul>
             <div class="error-actions">
                 <button class="btn" onclick="retryConnection()">
-                    Tentar Novamente
+                    🔄 Tentar Novamente
                 </button>
                 <button class="btn secondary" onclick="openInNewTab()">
-                    Abrir em Nova Aba
+                    🚀 Abrir em Nova Aba
+                </button>
+                <button class="btn" onclick="runFullDiagnostic()" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);">
+                    🔍 Diagnóstico Completo
                 </button>
             </div>
         </div>
@@ -762,9 +934,10 @@
         // Configurações
         const CONFIG = {
             IFRAME_URL: 'https://script.google.com/macros/s/AKfycbyCTfJwf15QR4HBDQI05nWoqimuqNsK2dOs1BoxoFcJ15JQYLSz248SCdCI_zhbfoMGKg/exec',
-            LOADING_DURATION: 3000,
+            LOADING_DURATION: 6000,
             RETRY_ATTEMPTS: 3,
-            IFRAME_TIMEOUT: 15000
+            IFRAME_TIMEOUT: 20000,
+            STEP_DELAY: 1200
         };
 
         // Estados
@@ -791,16 +964,20 @@
         class LoadingController {
             constructor() {
                 this.steps = [
-                    { progress: 20, text: 'Conectando aos serviços...' },
-                    { progress: 40, text: 'Verificando segurança...' },
-                    { progress: 60, text: 'Carregando interface...' },
-                    { progress: 80, text: 'Sincronizando dados...' },
-                    { progress: 100, text: 'Finalizando...' }
+                    { progress: 15, text: 'Inicializando sistema bancário...', delay: 1000 },
+                    { progress: 30, text: 'Conectando aos serviços seguros...', delay: 1400 },
+                    { progress: 45, text: 'Verificando certificados de segurança...', delay: 1200 },
+                    { progress: 60, text: 'Carregando interface do usuário...', delay: 1300 },
+                    { progress: 75, text: 'Sincronizando dados financeiros...', delay: 1100 },
+                    { progress: 90, text: 'Aplicando configurações...', delay: 1000 },
+                    { progress: 100, text: 'Finalizando carregamento...', delay: 800 }
                 ];
                 this.currentStep = 0;
+                this.iframeSetup = false;
             }
 
             start() {
+                console.log('🔄 Iniciando sequência de loading bancário...');
                 this.animateProgress();
             }
 
@@ -808,57 +985,149 @@
                 if (this.currentStep < this.steps.length) {
                     const step = this.steps[this.currentStep];
                     
-                    // Animar progresso
+                    // Animar progresso com delay realista
                     setTimeout(() => {
                         elements.progressBar.style.width = step.progress + '%';
                         elements.progressText.textContent = step.progress + '%';
                         elements.statusText.textContent = step.text;
                         state.loadingProgress = step.progress;
-                    }, this.currentStep * 600);
+                        
+                        console.log(`📊 Loading: ${step.progress}% - ${step.text}`);
+                        
+                        // Setup iframe aos 60% para começar carregamento em paralelo
+                        if (step.progress === 60 && !this.iframeSetup) {
+                            this.setupIframeInBackground();
+                        }
+                    }, step.delay);
 
                     this.currentStep++;
-                    this.animateProgress();
+                    setTimeout(() => this.animateProgress(), step.delay);
                 } else {
-                    // Finalizar loading
+                    // Finalizar loading com delay extra
                     setTimeout(() => {
                         this.complete();
-                    }, 800);
+                    }, 1200);
                 }
             }
 
-            complete() {
-                elements.loadingScreen.classList.add('fade-out');
+            setupIframeInBackground() {
+                console.log('🔧 Configurando iframe em background...');
+                this.iframeSetup = true;
                 
-                setTimeout(() => {
-                    elements.loadingScreen.style.display = 'none';
-                    this.setupIframe();
-                }, 800);
-            }
+                // Verificar se iframe já existe
+                if (!elements.mainIframe) {
+                    console.error('❌ Elemento iframe não encontrado!');
+                    return;
+                }
 
-            setupIframe() {
-                elements.mainIframe.addEventListener('load', this.handleIframeLoad);
-                elements.mainIframe.addEventListener('error', this.handleIframeError);
+                // Configurar eventos antes de carregar
+                elements.mainIframe.addEventListener('load', () => this.handleIframeLoad());
+                elements.mainIframe.addEventListener('error', () => this.handleIframeError());
+                
+                // Diagnosticar problema potencial
+                this.diagnoseIframeIssues();
                 
                 // Timeout para detectar falha de carregamento
                 setTimeout(() => {
                     if (!state.iframeLoaded) {
-                        console.warn('Iframe timeout - não carregou em tempo hábil');
+                        console.warn('⚠️ Iframe timeout - não carregou em tempo hábil');
                         this.handleIframeError();
                     }
                 }, CONFIG.IFRAME_TIMEOUT);
             }
 
+            diagnoseIframeIssues() {
+                console.group('🔍 Diagnóstico de Iframe');
+                
+                // Verificar URL
+                console.log('🌐 URL do iframe:', elements.mainIframe.src);
+                
+                // Verificar atributos
+                console.log('🔒 Sandbox:', elements.mainIframe.sandbox.toString());
+                console.log('✅ Allow:', elements.mainIframe.allow);
+                
+                // Verificar conectividade
+                console.log('📡 Status online:', navigator.onLine);
+                
+                // Verificar protocolo
+                console.log('🔐 Protocolo:', window.location.protocol);
+                
+                // Teste de fetch
+                fetch(CONFIG.IFRAME_URL, { 
+                    method: 'HEAD', 
+                    mode: 'no-cors' 
+                })
+                .then(() => {
+                    console.log('✅ URL é acessível via fetch');
+                })
+                .catch(error => {
+                    console.log('❌ URL não acessível via fetch:', error.message);
+                });
+                
+                // Verificar se é possível criar iframe
+                const testIframe = document.createElement('iframe');
+                console.log('🆕 Suporte a iframe:', !!testIframe);
+                
+                console.groupEnd();
+            }
+
+            complete() {
+                console.log('✅ Loading completo, iniciando aplicação...');
+                elements.statusText.textContent = 'Aplicativo pronto!';
+                
+                elements.loadingScreen.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    elements.loadingScreen.style.display = 'none';
+                    
+                    // Se iframe ainda não foi configurado, fazer agora
+                    if (!this.iframeSetup) {
+                        this.setupIframeInBackground();
+                    }
+                    
+                    // Verificar se carregou
+                    setTimeout(() => {
+                        if (!state.iframeLoaded) {
+                            console.warn('⚠️ Iframe não carregou após finalizar loading');
+                        }
+                    }, 2000);
+                }, 1000);
+            }
+
             handleIframeLoad() {
-                console.log('✅ Iframe carregado com sucesso');
+                console.log('✅ Iframe carregado com sucesso!');
                 state.iframeLoaded = true;
-                showToast('Aplicativo carregado com sucesso!', 'success');
+                
+                // Verificar se realmente tem conteúdo
+                try {
+                    const iframeDoc = elements.mainIframe.contentDocument || elements.mainIframe.contentWindow.document;
+                    if (iframeDoc && iframeDoc.body) {
+                        console.log('📄 Conteúdo do iframe acessível');
+                        showToast('Aplicativo carregado com sucesso! 🎉', 'success');
+                    } else {
+                        console.log('⚠️ Iframe carregou mas conteúdo não acessível (CORS)');
+                        showToast('Sistema carregado (modo seguro)', 'success');
+                    }
+                } catch (error) {
+                    console.log('🔒 Iframe carregado, mas conteúdo protegido por CORS');
+                    showToast('Sistema financeiro carregado!', 'success');
+                }
             }
 
             handleIframeError() {
-                console.error('❌ Erro ao carregar iframe');
+                console.error('❌ Erro crítico ao carregar iframe');
                 state.iframeLoaded = false;
+                
+                // Análise detalhada do erro
+                console.group('🔍 Análise de Erro do Iframe');
+                console.log('🌐 URL atual:', elements.mainIframe.src);
+                console.log('📡 Status de rede:', navigator.onLine ? 'Online' : 'Offline');
+                console.log('🔄 Tentativas anteriores:', state.currentRetry);
+                console.log('⏱️ Timeout configurado:', CONFIG.IFRAME_TIMEOUT + 'ms');
+                console.groupEnd();
+                
                 elements.errorScreen.classList.add('show');
-                showToast('Erro ao carregar aplicativo', 'error');
+                showToast('Erro ao carregar aplicativo financeiro', 'error');
             }
         }
 
@@ -878,56 +1147,137 @@
                 state.currentRetry++;
                 elements.errorScreen.classList.remove('show');
                 
-                showToast(`Tentativa ${state.currentRetry} de ${CONFIG.RETRY_ATTEMPTS}...`, 'warning');
+                console.log(`🔄 Tentativa de reconexão ${state.currentRetry}/${CONFIG.RETRY_ATTEMPTS}`);
+                showToast(`Tentando reconectar... (${state.currentRetry}/${CONFIG.RETRY_ATTEMPTS})`, 'warning');
                 
-                // Recriar iframe
-                const newIframe = document.createElement('iframe');
-                newIframe.id = 'mainIframe';
-                newIframe.src = `${CONFIG.IFRAME_URL}?retry=${state.currentRetry}&t=${Date.now()}`;
-                newIframe.allow = elements.mainIframe.allow;
-                newIframe.allowFullscreen = true;
-                newIframe.loading = 'eager';
-                newIframe.referrerPolicy = 'no-referrer-when-downgrade';
-                newIframe.sandbox = elements.mainIframe.sandbox;
-                newIframe.title = elements.mainIframe.title;
+                // Criar nova URL com parâmetros para evitar cache
+                const timestamp = Date.now();
+                const randomParam = Math.random().toString(36).substring(7);
+                const newUrl = `${CONFIG.IFRAME_URL}?retry=${state.currentRetry}&t=${timestamp}&r=${randomParam}`;
                 
-                // Eventos
-                newIframe.addEventListener('load', () => {
-                    console.log('✅ Reconexão bem-sucedida');
+                console.log('🌐 Nova URL:', newUrl);
+                
+                // Criar novo iframe completamente
+                const iframe = document.createElement('iframe');
+                iframe.id = 'mainIframe';
+                iframe.src = newUrl;
+                iframe.allow = 'autoplay; camera; microphone; fullscreen; geolocation; payment';
+                iframe.allowFullscreen = true;
+                iframe.loading = 'eager';
+                iframe.referrerPolicy = 'no-referrer-when-downgrade';
+                iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation allow-popups-to-escape-sandbox';
+                iframe.title = 'Controle Financeiro';
+                
+                // Estilos responsivos do iframe
+                iframe.style.cssText = `
+                    width: 100%;
+                    height: 100%;
+                    min-height: 100vh;
+                    min-height: calc(var(--vh, 1vh) * 100);
+                    border: none;
+                    background: #f8fafc;
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                `;
+                
+                // Eventos detalhados
+                iframe.addEventListener('load', () => {
+                    console.log('✅ Reconexão bem-sucedida!');
                     state.iframeLoaded = true;
-                    showToast('Reconectado com sucesso!', 'success');
-                });
-                
-                newIframe.addEventListener('error', () => {
-                    console.error('❌ Falha na reconexão');
+                    showToast('Reconectado com sucesso! 🎉', 'success');
+                    
+                    // Verificar conteúdo
                     setTimeout(() => {
-                        elements.errorScreen.classList.add('show');
+                        try {
+                            const doc = iframe.contentDocument || iframe.contentWindow.document;
+                            if (doc && doc.body && doc.body.innerHTML.trim()) {
+                                console.log('📄 Conteúdo verificado no iframe');
+                            } else {
+                                console.log('⚠️ Iframe sem conteúdo visível');
+                            }
+                        } catch (e) {
+                            console.log('🔒 Conteúdo protegido por CORS (normal para Google Apps Script)');
+                        }
                     }, 1000);
                 });
                 
-                // Substituir iframe
-                elements.mainIframe.parentNode.replaceChild(newIframe, elements.mainIframe);
-                elements.mainIframe = newIframe;
+                iframe.addEventListener('error', () => {
+                    console.error(`❌ Falha na tentativa ${state.currentRetry}`);
+                    setTimeout(() => {
+                        if (state.currentRetry >= CONFIG.RETRY_ATTEMPTS) {
+                            showToast('Todas as tentativas falharam. Tente abrir em nova aba.', 'error');
+                        }
+                        elements.errorScreen.classList.add('show');
+                    }, 1500);
+                });
                 
-                // Timeout para nova tentativa
-                setTimeout(() => {
+                // Timeout específico para esta tentativa
+                const timeoutId = setTimeout(() => {
                     if (!state.iframeLoaded) {
+                        console.warn(`⏱️ Timeout na tentativa ${state.currentRetry}`);
+                        if (state.currentRetry < CONFIG.RETRY_ATTEMPTS) {
+                            showToast(`Tentativa ${state.currentRetry} expirou, tentando novamente...`, 'warning');
+                        } else {
+                            showToast('Timeout. Verifique sua conexão.', 'error');
+                        }
                         elements.errorScreen.classList.add('show');
                     }
                 }, CONFIG.IFRAME_TIMEOUT);
+                
+                // Limpar timeout se carregar com sucesso
+                iframe.addEventListener('load', () => {
+                    clearTimeout(timeoutId);
+                });
+                
+                // Substituir iframe
+                const container = elements.mainIframe.parentNode;
+                container.removeChild(elements.mainIframe);
+                container.appendChild(iframe);
+                elements.mainIframe = iframe;
+                
+                // Reset estado
+                state.iframeLoaded = false;
+                
             } else {
-                showToast('Limite de tentativas excedido', 'error');
+                console.error('🚫 Limite de tentativas excedido');
+                showToast('Limite de tentativas excedido. Use "Abrir em Nova Aba".', 'error');
             }
         }
 
         function openInNewTab() {
-            const url = CONFIG.IFRAME_URL;
-            const newWindow = window.open(url, '_blank');
+            const timestamp = Date.now();
+            const url = `${CONFIG.IFRAME_URL}?direct=true&t=${timestamp}`;
+            
+            console.log('🔗 Abrindo em nova aba:', url);
+            
+            const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
             
             if (newWindow) {
-                showToast('Abrindo em nova aba...', 'success');
+                showToast('Abrindo sistema em nova aba... 🚀', 'success');
+                
+                // Verificar se a janela foi fechada (popup bloqueado)
+                setTimeout(() => {
+                    if (newWindow.closed) {
+                        showToast('A nova aba foi fechada', 'warning');
+                    } else {
+                        showToast('Se o sistema carregar na nova aba, o problema é específico do iframe', 'info');
+                    }
+                }, 3000);
             } else {
-                showToast('Popup foi bloqueado pelo navegador', 'error');
+                console.error('❌ Popup foi bloqueado');
+                showToast('Popup bloqueado. Permita popups para este site nas configurações do navegador.', 'error');
+                
+                // Fallback: tentar com window.location
+                setTimeout(() => {
+                    if (confirm('Popup bloqueado. Deseja tentar abrir na mesma aba?')) {
+                        window.location.href = url;
+                    }
+                }, 1000);
             }
         }
 
@@ -1010,10 +1360,41 @@
 
         // === MOBILE OPTIMIZATIONS ===
         function setupMobile() {
+            // Viewport height fix for mobile - Critical for iframe responsiveness
+            function setViewportHeight() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+                
+                // Log for debugging
+                console.log(`📱 Viewport height set: ${window.innerHeight}px (--vh: ${vh}px)`);
+                
+                // Force iframe recalculation on mobile
+                const iframe = elements.mainIframe;
+                if (iframe && window.innerWidth <= 768) {
+                    iframe.style.height = `${window.innerHeight}px`;
+                    iframe.style.minHeight = `calc(var(--vh, 1vh) * 100)`;
+                }
+            }
+
+            // Set initial viewport height
+            setViewportHeight();
+            
+            // Update on resize and orientation change
+            window.addEventListener('resize', () => {
+                setTimeout(setViewportHeight, 100);
+            });
+            
+            window.addEventListener('orientationchange', () => {
+                setTimeout(setViewportHeight, 300);
+            });
+            
+            // Additional mobile-specific events
+            window.addEventListener('load', setViewportHeight);
+            
             // Prevent zoom on inputs
             document.addEventListener('touchstart', () => {});
             
-            // Prevent text selection
+            // Prevent text selection (except inputs)
             document.addEventListener('selectstart', (e) => {
                 if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                     e.preventDefault();
@@ -1025,14 +1406,81 @@
                 e.preventDefault();
             });
 
-            // Viewport height fix for mobile
-            function setViewportHeight() {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            // Prevent double-tap zoom
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', (e) => {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // iOS specific fixes
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                console.log('🍎 iOS device detected - applying specific fixes');
+                
+                // Prevent iOS safari bounce
+                document.body.addEventListener('touchmove', (e) => {
+                    if (e.target === document.body || e.target === document.documentElement) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                // Fix for iOS viewport units
+                document.documentElement.style.setProperty('--ios-vh', `${window.innerHeight}px`);
             }
 
-            setViewportHeight();
-            window.addEventListener('resize', setViewportHeight);
+            // Android specific fixes
+            if (/Android/.test(navigator.userAgent)) {
+                console.log('🤖 Android device detected - applying specific fixes');
+                
+                // Handle keyboard opening/closing
+                let initialViewportHeight = window.innerHeight;
+                window.addEventListener('resize', () => {
+                    const currentHeight = window.innerHeight;
+                    const heightDifference = initialViewportHeight - currentHeight;
+                    
+                    if (heightDifference > 150) {
+                        // Keyboard likely opened
+                        console.log('⌨️ Keyboard opened');
+                        document.body.classList.add('keyboard-open');
+                    } else {
+                        // Keyboard likely closed
+                        console.log('⌨️ Keyboard closed');
+                        document.body.classList.remove('keyboard-open');
+                        setViewportHeight();
+                    }
+                });
+            }
+
+            // Monitor iframe loading on mobile
+            if (window.innerWidth <= 768) {
+                console.log('📱 Mobile device detected - monitoring iframe responsiveness');
+                
+                const checkIframeResponsiveness = () => {
+                    const iframe = elements.mainIframe;
+                    if (iframe) {
+                        const rect = iframe.getBoundingClientRect();
+                        console.log(`📐 Iframe dimensions: ${rect.width}x${rect.height}`);
+                        console.log(`📐 Window dimensions: ${window.innerWidth}x${window.innerHeight}`);
+                        
+                        // Ensure iframe fills screen on mobile
+                        if (rect.width < window.innerWidth * 0.9 || rect.height < window.innerHeight * 0.9) {
+                            console.warn('⚠️ Iframe not filling screen properly, adjusting...');
+                            iframe.style.width = '100vw';
+                            iframe.style.height = '100vh';
+                            iframe.style.position = 'fixed';
+                            iframe.style.top = '0';
+                            iframe.style.left = '0';
+                        }
+                    }
+                };
+                
+                // Check responsiveness after iframe loads
+                setTimeout(checkIframeResponsiveness, 2000);
+                setTimeout(checkIframeResponsiveness, 5000);
+            }
         }
 
         // === ACCESSIBILITY ===
@@ -1060,7 +1508,34 @@
 
         // === INITIALIZATION ===
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🚀 C.F - Controle Financeiro iniciado');
+            console.clear();
+            console.log('%c🏦 C.F - Controle Financeiro v2.0', 'background: linear-gradient(90deg, #1e3a8a, #3730a3); color: white; padding: 10px 20px; border-radius: 8px; font-size: 16px; font-weight: bold;');
+            console.log('🚀 Sistema bancário profissional iniciando...');
+            
+            // Debug inicial
+            console.group('🔍 Informações do Sistema');
+            console.log('🌐 URL do iframe:', CONFIG.IFRAME_URL);
+            console.log('📱 User Agent:', navigator.userAgent);
+            console.log('🔗 URL atual:', window.location.href);
+            console.log('🔐 Protocolo:', window.location.protocol);
+            console.log('📡 Status online:', navigator.onLine);
+            console.log('🍪 Cookies habilitados:', navigator.cookieEnabled);
+            console.log('📺 Resolução:', window.screen.width + 'x' + window.screen.height);
+            console.log('🖼️ Viewport:', window.innerWidth + 'x' + window.innerHeight);
+            console.groupEnd();
+            
+            // Verificações de compatibilidade
+            console.group('🔧 Verificações de Compatibilidade');
+            console.log('iframe support:', document.createElement('iframe') ? '✅' : '❌');
+            console.log('localStorage:', typeof localStorage !== 'undefined' ? '✅' : '❌');
+            console.log('sessionStorage:', typeof sessionStorage !== 'undefined' ? '✅' : '❌');
+            console.log('Service Worker:', 'serviceWorker' in navigator ? '✅' : '❌');
+            console.log('Fetch API:', 'fetch' in window ? '✅' : '❌');
+            console.log('ES6 Support:', (() => { try { new Function('() => {}'); return '✅'; } catch { return '❌'; } })());
+            console.groupEnd();
+            
+            // Teste inicial de conectividade
+            testInitialConnectivity();
             
             // Setup
             setupPWA();
@@ -1068,10 +1543,104 @@
             setupMobile();
             setupAccessibility();
             
-            // Start loading
-            const loader = new LoadingController();
-            loader.start();
+            // Start loading com delay para visualizar
+            setTimeout(() => {
+                const loader = new LoadingController();
+                loader.start();
+                
+                // Ensure iframe responsiveness from start
+                ensureIframeResponsiveness();
+            }, 500);
         });
+
+        // Função para garantir responsividade do iframe
+        function ensureIframeResponsiveness() {
+            const iframe = elements.mainIframe;
+            if (!iframe) {
+                console.warn('⚠️ Iframe não encontrado para configuração responsiva');
+                return;
+            }
+            
+            console.log('📱 Configurando responsividade do iframe...');
+            
+            // Forçar estilos responsivos
+            iframe.style.cssText = `
+                width: 100vw !important;
+                height: 100vh !important;
+                min-height: calc(var(--vh, 1vh) * 100) !important;
+                max-width: 100vw !important;
+                max-height: 100vh !important;
+                border: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                background: #f8fafc !important;
+                display: block !important;
+                overflow: hidden !important;
+                -webkit-transform: translateZ(0) !important;
+                transform: translateZ(0) !important;
+            `;
+            
+            // Configurar container também
+            const container = iframe.parentElement;
+            if (container) {
+                container.style.cssText = `
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    position: fixed !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    overflow: hidden !important;
+                `;
+            }
+            
+            console.log('✅ Iframe configurado para responsividade total');
+        }
+        });
+
+        // Teste de conectividade inicial
+        async function testInitialConnectivity() {
+            console.group('🌐 Teste de Conectividade Inicial');
+            
+            try {
+                // Teste 1: Google (básico)
+                const googleTest = await fetch('https://www.google.com/favicon.ico', { 
+                    method: 'HEAD', 
+                    mode: 'no-cors',
+                    cache: 'no-cache'
+                });
+                console.log('Google.com:', '✅ Acessível');
+            } catch (error) {
+                console.log('Google.com:', '❌ Inacessível -', error.message);
+            }
+            
+            try {
+                // Teste 2: Script do Google Apps
+                const scriptTest = await fetch(CONFIG.IFRAME_URL, { 
+                    method: 'HEAD', 
+                    mode: 'no-cors',
+                    cache: 'no-cache'
+                });
+                console.log('Google Apps Script:', '✅ Servidor responde');
+            } catch (error) {
+                console.log('Google Apps Script:', '❌ Servidor não responde -', error.message);
+            }
+            
+            // Teste 3: DNS
+            try {
+                const dnsTest = await fetch('https://script.google.com/favicon.ico', { 
+                    method: 'HEAD', 
+                    mode: 'no-cors' 
+                });
+                console.log('DNS script.google.com:', '✅ Resolvido');
+            } catch (error) {
+                console.log('DNS script.google.com:', '❌ Não resolvido -', error.message);
+            }
+            
+            console.groupEnd();
+        }
 
         // === ERROR HANDLING ===
         window.addEventListener('error', (event) => {
@@ -1081,6 +1650,164 @@
         window.addEventListener('unhandledrejection', (event) => {
             console.error('Promise rejeitada:', event.reason);
         });
+
+        // === DIAGNÓSTICO COMPLETO ===
+        async function runFullDiagnostic() {
+            console.clear();
+            console.log('%c🔍 DIAGNÓSTICO COMPLETO DO SISTEMA', 'background: #7c3aed; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold;');
+            
+            showToast('Executando diagnóstico completo...', 'info');
+            
+            const results = {
+                browser: {},
+                network: {},
+                iframe: {},
+                security: {}
+            };
+            
+            // 1. Informações do Navegador
+            console.group('🌐 Análise do Navegador');
+            results.browser = {
+                userAgent: navigator.userAgent,
+                cookiesEnabled: navigator.cookieEnabled,
+                onLine: navigator.onLine,
+                language: navigator.language,
+                platform: navigator.platform,
+                protocol: window.location.protocol,
+                viewport: `${window.innerWidth}x${window.innerHeight}`,
+                screen: `${window.screen.width}x${window.screen.height}`
+            };
+            
+            Object.entries(results.browser).forEach(([key, value]) => {
+                console.log(`${key}:`, value);
+            });
+            console.groupEnd();
+            
+            // 2. Testes de Rede
+            console.group('📡 Testes de Conectividade');
+            const networkTests = [
+                { name: 'Google DNS', url: 'https://dns.google', expected: 'Acessível' },
+                { name: 'Google Main', url: 'https://www.google.com/favicon.ico', expected: 'Acessível' },
+                { name: 'Google Apps Script Domain', url: 'https://script.google.com/favicon.ico', expected: 'Acessível' },
+                { name: 'Target URL', url: CONFIG.IFRAME_URL, expected: 'Responde' }
+            ];
+            
+            for (const test of networkTests) {
+                try {
+                    const start = performance.now();
+                    await fetch(test.url, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache' });
+                    const time = Math.round(performance.now() - start);
+                    console.log(`✅ ${test.name}: ${test.expected} (${time}ms)`);
+                    results.network[test.name] = { status: 'success', time };
+                } catch (error) {
+                    console.log(`❌ ${test.name}: ${error.message}`);
+                    results.network[test.name] = { status: 'error', error: error.message };
+                }
+            }
+            console.groupEnd();
+            
+            // 3. Teste de Iframe
+            console.group('🖼️ Análise de Iframe');
+            const iframe = elements.mainIframe;
+            results.iframe = {
+                exists: !!iframe,
+                src: iframe?.src || 'N/A',
+                sandbox: iframe?.sandbox?.toString() || 'N/A',
+                allow: iframe?.allow || 'N/A',
+                loaded: state.iframeLoaded,
+                retries: state.currentRetry
+            };
+            
+            Object.entries(results.iframe).forEach(([key, value]) => {
+                console.log(`${key}:`, value);
+            });
+            
+            // Teste de criação de iframe
+            try {
+                const testIframe = document.createElement('iframe');
+                testIframe.src = 'data:text/html,<h1>Test</h1>';
+                console.log('✅ Criação de iframe: Suportada');
+                results.iframe.creationSupported = true;
+            } catch (error) {
+                console.log('❌ Criação de iframe:', error.message);
+                results.iframe.creationSupported = false;
+            }
+            console.groupEnd();
+            
+            // 4. Verificações de Segurança
+            console.group('🔒 Verificações de Segurança');
+            results.security = {
+                https: window.location.protocol === 'https:',
+                mixedContent: window.location.protocol === 'https:' && CONFIG.IFRAME_URL.startsWith('http:'),
+                thirdPartyCookies: 'Não testado', // Complexo de testar
+                corsEnabled: 'Testando...'
+            };
+            
+            // Teste de CORS
+            try {
+                await fetch(CONFIG.IFRAME_URL, { method: 'GET', mode: 'cors' });
+                results.security.corsEnabled = 'Permitido';
+                console.log('✅ CORS: Permitido');
+            } catch (error) {
+                results.security.corsEnabled = 'Bloqueado: ' + error.message;
+                console.log('❌ CORS: Bloqueado -', error.message);
+            }
+            
+            Object.entries(results.security).forEach(([key, value]) => {
+                console.log(`${key}:`, value);
+            });
+            console.groupEnd();
+            
+            // 5. Relatório Final
+            console.group('📋 Relatório e Recomendações');
+            
+            // Analisar problemas prováveis
+            const issues = [];
+            const solutions = [];
+            
+            if (!results.browser.onLine) {
+                issues.push('❌ Sem conexão com internet');
+                solutions.push('Verificar conexão de rede');
+            }
+            
+            if (results.browser.protocol === 'http:') {
+                issues.push('⚠️ Página carregada via HTTP (não seguro)');
+                solutions.push('Usar HTTPS sempre que possível');
+            }
+            
+            if (results.security.corsEnabled.includes('Bloqueado')) {
+                issues.push('❌ CORS bloqueado pelo servidor');
+                solutions.push('Normal para Google Apps Script - usar iframe é a solução correta');
+            }
+            
+            if (!results.iframe.loaded && state.currentRetry > 0) {
+                issues.push('❌ Iframe falhou em múltiplas tentativas');
+                solutions.push('Problema provavelmente no servidor Google Apps Script');
+            }
+            
+            if (results.browser.userAgent.includes('Mobile')) {
+                issues.push('📱 Dispositivo móvel detectado');
+                solutions.push('Alguns provedores móveis bloqueiam Google Apps Script');
+            }
+            
+            console.log('🔍 Problemas identificados:', issues.length > 0 ? issues : ['✅ Nenhum problema óbvio detectado']);
+            console.log('💡 Soluções sugeridas:', solutions.length > 0 ? solutions : ['Sistema parece estar funcionando']);
+            
+            // Recomendação final
+            if (!navigator.onLine) {
+                console.log('🎯 RECOMENDAÇÃO: Verificar conexão de internet');
+            } else if (results.security.corsEnabled.includes('Bloqueado') && !state.iframeLoaded) {
+                console.log('🎯 RECOMENDAÇÃO: Tentar abrir em nova aba - pode ser X-Frame-Options');
+            } else if (state.currentRetry >= CONFIG.RETRY_ATTEMPTS) {
+                console.log('🎯 RECOMENDAÇÃO: Servidor Google Apps Script pode estar indisponível');
+            } else {
+                console.log('🎯 RECOMENDAÇÃO: Tentar novamente - problemas temporários');
+            }
+            
+            console.groupEnd();
+            
+            showToast('Diagnóstico completo finalizado. Veja o console (F12) para detalhes.', 'success');
+        }
     </script>
 </body>
 </html>
