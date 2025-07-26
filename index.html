@@ -2,1825 +2,1235 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Festa da Adriane - Confirmação</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>C.F - Controle Financeiro</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="C.F">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="title" content="C.F - Controle Financeiro">
+    <meta name="description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
+    <meta name="keywords" content="controle financeiro, parcelas, compras, gestão">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="C.F - Controle Financeiro">
+    <meta property="og:description" content="Gerencie suas compras e parcelas de forma simples e eficiente">
+    <meta property="og:image" content="https://i.ibb.co/kj8jVkq/Logotipo-Faustino-Representa-es-e-Vendas-Moderno-Preto-Branco-2.png">
+    
     <style>
-       /* ===== RESET E BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ===== MODAL ===== */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content h2 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-.event-info {
-    text-align: left;
-    margin: 20px 0;
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.event-info p {
-    margin: 10px 0;
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.event-info i {
-    color: #667eea;
-    width: 20px;
-}
-
-/* ===== TELAS ===== */
-.screen {
-    width: 100%;
-    max-width: 400px;
-    height: 600px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    display: none;
-}
-
-#welcomeScreen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#chatScreen {
-    display: flex;
-    flex-direction: column;
-}
-
-/* ===== WELCOME SCREEN ===== */
-.welcome-content {
-    text-align: center;
-    padding: 40px;
-}
-
-.avatar {
-    margin-bottom: 20px;
-}
-
-.avatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 4px solid #667eea;
-}
-
-.welcome-content h1 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 28px;
-}
-
-.welcome-content p {
-    color: #666;
-    margin-bottom: 30px;
-    font-size: 16px;
-}
-
-/* ===== BOTÕES ===== */
-.start-btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 0 auto;
-}
-
-.start-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-}
-
-/* ===== CHAT HEADER ===== */
-.chat-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.contact-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.avatar-small img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.contact-details h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    opacity: 0.9;
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.status-dot.online {
-    background: #4CAF50;
-    animation: pulse 2s infinite;
-}
-
-.status-dot.away {
-    background: #FF9800;
-}
-
-.status-dot.typing {
-    background: #2196F3;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
-
-/* ===== MENSAGENS ===== */
-.chat-messages {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background: #f8f9fa;
-}
-
-.message {
-    margin-bottom: 15px;
-    display: flex;
-}
-
-.message.user {
-    justify-content: flex-end;
-}
-
-.message.adriane {
-    justify-content: flex-start;
-}
-
-.message.system {
-    justify-content: center;
-}
-
-.message-bubble {
-    max-width: 80%;
-    padding: 12px 16px;
-    border-radius: 18px;
-    position: relative;
-    word-wrap: break-word;
-}
-
-.message.user .message-bubble {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border-bottom-right-radius: 4px;
-}
-
-.message.adriane .message-bubble {
-    background: white;
-    color: #333;
-    border: 1px solid #e0e0e0;
-    border-bottom-left-radius: 4px;
-}
-
-.message.system .message-bubble {
-    background: #e3f2fd;
-    color: #1976d2;
-    text-align: center;
-    border-radius: 10px;
-    max-width: 90%;
-}
-
-.message-time {
-    font-size: 11px;
-    opacity: 0.7;
-    margin-top: 5px;
-    text-align: right;
-}
-
-.message.adriane .message-time {
-    text-align: left;
-}
-
-/* ===== INDICADOR DE DIGITAÇÃO ===== */
-.typing-indicator {
-    padding: 10px 20px;
-    display: none;
-}
-
-.typing-bubble {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 18px;
-    border-bottom-left-radius: 4px;
-    padding: 12px 16px;
-    max-width: 60px;
-}
-
-.typing-dots {
-    display: flex;
-    gap: 4px;
-}
-
-.typing-dots span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #999;
-    animation: typing 1.4s infinite ease-in-out;
-}
-
-.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
-
-@keyframes typing {
-    0%, 80%, 100% {
-        transform: scale(0);
-        opacity: 0.5;
-    }
-    40% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* ===== INPUT ===== */
-.input-container {
-    padding: 15px 20px;
-    background: white;
-    border-top: 1px solid #e0e0e0;
-    display: none;
-}
-
-.input-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-#messageInput {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-#messageInput:focus {
-    border-color: #667eea;
-}
-
-.send-btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.send-btn:hover {
-    transform: scale(1.1);
-}
-
-/* ===== OPÇÕES ===== */
-.options-container {
-    padding: 15px 20px;
-    background: white;
-    border-top: 1px solid #e0e0e0;
-    display: none;
-}
-
-.option-btn {
-    width: 100%;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    background: white;
-    border: 2px solid #667eea;
-    border-radius: 25px;
-    color: #667eea;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.option-btn:hover {
-    background: #667eea;
-    color: white;
-    transform: translateY(-1px);
-}
-
-.option-btn:last-child {
-    margin-bottom: 0;
-}
-
-/* ===== CONFIRMAÇÃO ===== */
-.confirmation-preview .message-bubble {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    max-width: 95%;
-    padding: 0;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.confirmation-bubble {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.confirmation-header {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.confirmation-header h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.confirmation-section {
-    padding: 20px;
-}
-
-.confirmation-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 15px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-}
-
-.confirmation-item:last-child {
-    margin-bottom: 0;
-}
-
-.item-icon {
-    font-size: 18px;
-    min-width: 25px;
-    text-align: center;
-}
-
-.item-content {
-    flex: 1;
-}
-
-.item-content strong {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-.item-value {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.item-value.confirmed {
-    color: #4CAF50;
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.event-details {
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0 20px 20px 20px;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.event-details h4 {
-    margin: 0 0 10px 0;
-    font-size: 16px;
-    text-align: center;
-}
-
-.event-info {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.event-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-}
-
-.event-icon {
-    font-size: 16px;
-    min-width: 20px;
-}
-
-.location-details {
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0 20px 20px 20px;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.location-details h4 {
-    margin: 0 0 10px 0;
-    font-size: 16px;
-    text-align: center;
-}
-
-.location-info {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.location-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-}
-
-.location-icon {
-    font-size: 16px;
-    min-width: 20px;
-}
-
-.confirmation-footer {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.confirmation-footer p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-/* ===== OPÇÕES FINAIS ===== */
-.final-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.whatsapp-btn {
-    background: linear-gradient(135deg, #25D366, #128C7E) !important;
-    color: white !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none !important;
-    transition: all 0.3s ease;
-    border: none !important;
-}
-
-.whatsapp-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
-    background: linear-gradient(135deg, #128C7E, #25D366) !important;
-}
-
-.maps-btn {
-    background: linear-gradient(135deg, #4285F4, #34A853) !important;
-    color: white !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none !important;
-    transition: all 0.3s ease;
-    border: none !important;
-}
-
-.maps-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.4);
-    background: linear-gradient(135deg, #34A853, #4285F4) !important;
-}
-
-.info-btn {
-    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
-    color: white !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    border: none !important;
-}
-
-.info-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
-    background: linear-gradient(135deg, #f5576c, #f093fb) !important;
-}
-
-/* ===== STATUS MESSAGES ===== */
-.status-message {
-    padding: 15px;
-    text-align: center;
-    margin: 10px 20px;
-    border-radius: 10px;
-    font-weight: 500;
-    display: none;
-}
-
-.status-message.loading {
-    background: #e3f2fd;
-    color: #1976d2;
-    border: 1px solid #bbdefb;
-}
-
-.status-message.success {
-    background: #e8f5e8;
-    color: #2e7d32;
-    border: 1px solid #c8e6c9;
-}
-
-.status-message.error {
-    background: #ffebee;
-    color: #c62828;
-    border: 1px solid #ffcdd2;
-}
-
-.status-message i {
-    margin-right: 8px;
-}
-
-/* ===== SCROLLBAR ===== */
-.chat-messages::-webkit-scrollbar {
-    width: 6px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 3px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-}
-
-/* ===== RESPONSIVO ===== */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-        align-items: flex-start;
-        padding-top: 20px;
-    }
-    
-    .screen {
-        max-width: 100%;
-        height: calc(100vh - 40px);
-        border-radius: 15px;
-    }
-    
-    .modal-content {
-        padding: 20px;
-        border-radius: 15px;
-    }
-    
-    .modal-content h2 {
-        font-size: 20px;
-    }
-    
-    .event-info {
-        padding: 15px;
-    }
-    
-    .welcome-content {
-        padding: 30px 20px;
-    }
-    
-    .welcome-content h1 {
-        font-size: 24px;
-    }
-    
-    .avatar img {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .chat-header {
-        padding: 12px 15px;
-    }
-    
-    .chat-messages {
-        padding: 15px;
-    }
-    
-    .message-bubble {
-        max-width: 85%;
-        padding: 10px 14px;
-    }
-    
-    .confirmation-header {
-        padding: 15px;
-    }
-    
-    .confirmation-header h3 {
-        font-size: 16px;
-    }
-    
-    .confirmation-section {
-        padding: 15px;
-    }
-    
-    .confirmation-item {
-        padding: 10px;
-        margin-bottom: 12px;
-    }
-    
-    .item-icon {
-        font-size: 16px;
-        min-width: 20px;
-    }
-    
-    .item-content strong {
-        font-size: 13px;
-    }
-    
-    .item-value {
-        font-size: 14px;
-    }
-    
-    .event-details,
-    .location-details {
-        margin: 0 15px 15px 15px;
-        padding: 12px;
-    }
-    
-    .confirmation-footer {
-        padding: 15px;
-    }
-    
-    .final-options {
-        gap: 8px;
-    }
-    
-    .whatsapp-btn span,
-    .maps-btn span,
-    .info-btn span {
-        font-size: 14px;
-    }
-    
-    .input-container {
-        padding: 12px 15px;
-    }
-    
-    .options-container {
-        padding: 12px 15px;
-    }
-    
-    .option-btn {
-        padding: 10px 14px;
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 480px) {
-    .screen {
-        height: calc(100vh - 20px);
-        border-radius: 10px;
-    }
-    
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-    }
-    
-    .welcome-content {
-        padding: 20px 15px;
-    }
-    
-    .welcome-content h1 {
-        font-size: 22px;
-    }
-    
-    .start-btn {
-        padding: 12px 25px;
-        font-size: 14px;
-    }
-    
-    .chat-messages {
-        padding: 12px;
-    }
-    
-    .message-bubble {
-        max-width: 90%;
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    
-    .confirmation-item {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-    }
-    
-    .item-icon {
-        font-size: 20px;
-    }
-    
-    .event-item,
-    .location-item {
-        justify-content: center;
-        text-align: center;
-    }
-}
-
-/* ===== ANIMAÇÕES ===== */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.message.adriane {
-    animation: slideIn 0.3s ease-out;
-}
-
-.message.user {
-    animation: slideInRight 0.3s ease-out;
-}
-
-.option-btn {
-    animation: fadeIn 0.3s ease-out;
-}
-
-.confirmation-preview {
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* ===== ESTADOS DE HOVER PARA DESKTOP ===== */
-@media (hover: hover) {
-    .option-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    }
-    
-    .send-btn:hover {
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-    }
-    
-    .start-btn:hover {
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-}
-
-/* ===== ACESSIBILIDADE ===== */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-    
-    .typing-dots span {
-        animation: none;
-    }
-    
-    .status-dot.online {
-        animation: none;
-    }
-}
-
-/* ===== MODO ESCURO (OPCIONAL) ===== */
-@media (prefers-color-scheme: dark) {
-    .modal-content {
-        background: #2d2d2d;
-        color: white;
-    }
-    
-    .event-info {
-        background: #3d3d3d;
-    }
-    
-    .event-info p {
-        color: #ccc;
-    }
-    
-    .screen {
-        background: #1e1e1e;
-    }
-    
-    .chat-messages {
-        background: #2d2d2d;
-    }
-    
-    .message.adriane .message-bubble {
-        background: #3d3d3d;
-        color: white;
-        border-color: #555;
-    }
-    
-    .input-container,
-    .options-container {
-        background: #2d2d2d;
-        border-top-color: #555;
-    }
-    
-    #messageInput {
-        background: #3d3d3d;
-        color: white;
-        border-color: #555;
-    }
-    
-    #messageInput:focus {
-        border-color: #667eea;
-    }
-}
-
-/* ===== PRINT STYLES ===== */
-@media print {
-    body {
-        background: white;
-    }
-    
-    .screen {
-        box-shadow: none;
-        border: 1px solid #ccc;
-    }
-    
-    .chat-header {
-        background: #f5f5f5 !important;
-        color: black !important;
-    }
-    
-    .message.user .message-bubble {
-        background: #e3f2fd !important;
-        color: black !important;
-    }
-    
-    .confirmation-bubble {
-        background: #f5f5f5 !important;
-        color: black !important;
-    }
-
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        /* Variáveis CSS para responsividade */
+        :root {
+            --vh: 1vh;
+            --vw: 1vw;
+            --safe-area-inset-top: env(safe-area-inset-top);
+            --safe-area-inset-right: env(safe-area-inset-right);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom);
+            --safe-area-inset-left: env(safe-area-inset-left);
+        }
+
+        /* === LOADING SCREEN BANCÁRIO PREMIUM === */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+        }
+
+        .loading-container.fade-out {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        /* Padrão geométrico de fundo */
+        .loading-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            background-size: 100px 100px;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(10px, -10px) rotate(1deg); }
+            66% { transform: translate(-5px, 5px) rotate(-1deg); }
+        }
+
+        /* Logo Container */
+        .logo-container {
+            position: relative;
+            margin-bottom: clamp(20px, 5vw, 40px);
+            animation: logoEntrance 1.5s ease-out;
+        }
+
+        @keyframes logoEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-10deg);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .logo-wrapper {
+            width: clamp(80px, 20vw, 120px);
+            height: clamp(80px, 20vw, 120px);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: clamp(16px, 4vw, 24px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 2px 8px rgba(255, 255, 255, 0.1) inset;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: logoShine 3s ease-in-out infinite;
+        }
+
+        @keyframes logoShine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .logo-img {
+            width: clamp(50px, 15vw, 80px);
+            height: clamp(50px, 15vw, 80px);
+            object-fit: contain;
+            border-radius: clamp(12px, 3vw, 16px);
+            filter: brightness(1.1) contrast(1.1);
+        }
+
+        /* Badge de Status */
+        .status-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: clamp(24px, 6vw, 32px);
+            height: clamp(24px, 6vw, 32px);
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(12px, 3vw, 16px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Título e Subtítulo */
+        .app-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .app-subtitle {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            opacity: 0.9;
+            margin-bottom: clamp(30px, 8vw, 50px);
+            font-weight: 300;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        /* Progress Bar Bancário */
+        .progress-container {
+            width: 100%;
+            max-width: clamp(280px, 80vw, 320px);
+            margin-bottom: clamp(20px, 6vw, 30px);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(255,255,255,0.6),
+                transparent
+            );
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 12px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        /* Status Loading */
+        .loading-status {
+            text-align: center;
+            margin-bottom: clamp(30px, 8vw, 40px);
+        }
+
+        .status-text {
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            margin-bottom: 16px;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: dotBounce 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        .dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes dotBounce {
+            0%, 80%, 100% { 
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Features Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: clamp(12px, 4vw, 20px);
+            max-width: clamp(240px, 80vw, 360px);
+            width: 100%;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: clamp(12px, 3vw, 16px);
+            padding: clamp(12px, 4vw, 20px);
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: featureFloat 6s ease-in-out infinite;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0s; }
+        .feature-card:nth-child(2) { animation-delay: 1s; }
+        .feature-card:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes featureFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .feature-label {
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* === APP CONTAINER === */
+        .app-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            background: #f8fafc;
+            overflow: hidden;
+            z-index: 1;
+            padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+                    }
+
+        .iframe-container {
+            position: absolute;
+            top: var(--safe-area-inset-top, 0);
+            left: var(--safe-area-inset-left, 0);
+            right: var(--safe-area-inset-right, 0);
+            bottom: var(--safe-area-inset-bottom, 0);
+            width: calc(100% - var(--safe-area-inset-left, 0) - var(--safe-area-inset-right, 0));
+            height: calc(100% - var(--safe-area-inset-top, 0) - var(--safe-area-inset-bottom, 0));
+            background: #f8fafc;
+            overflow: hidden;
+        }
+
+        #mainIframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #f8fafc;
+            display: block;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* === OFFLINE SCREEN === */
+        .offline-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(20px, 5vw, 40px);
+            text-align: center;
+            z-index: 1001;
+        }
+
+        .offline-screen.show {
+            display: flex;
+        }
+
+        .offline-icon {
+            font-size: clamp(3rem, 10vw, 4rem);
+            margin-bottom: clamp(16px, 4vw, 24px);
+            animation: offlineFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes offlineFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .offline-title {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .offline-message {
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            color: #6b7280;
+            margin-bottom: clamp(24px, 6vw, 32px);
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        /* === ERROR HANDLING === */
+        .error-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(20px, 5vw, 40px);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .error-screen.show {
+            display: flex;
+        }
+
+        .error-icon {
+            font-size: clamp(3rem, 10vw, 4rem);
+            margin-bottom: clamp(16px, 4vw, 24px);
+            animation: errorFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes errorFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .error-title {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .error-message {
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            color: #6b7280;
+            margin-bottom: clamp(24px, 6vw, 32px);
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: clamp(12px, 3vw, 16px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            color: white;
+            border: none;
+            padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 24px);
+            border-radius: clamp(8px, 2vw, 12px);
+            cursor: pointer;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            min-width: clamp(120px, 30vw, 160px);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        .btn.diagnostic {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn.diagnostic:hover {
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        /* === INSTALL PROMPT === */
+        .install-prompt {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 58, 138, 0.95);
+            color: white;
+            padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 24px);
+            border-radius: clamp(12px, 3vw, 16px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            z-index: 2001;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .install-prompt.show {
+            bottom: clamp(20px, 5vw, 30px);
+            opacity: 1;
+        }
+
+        .install-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(8px, 2vw, 12px);
+        }
+
+        .install-text {
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            font-weight: 500;
+            margin-bottom: clamp(8px, 2vw, 12px);
+        }
+
+        .install-actions {
+            display: flex;
+            gap: clamp(8px, 2vw, 12px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .install-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px);
+            border-radius: clamp(6px, 2vw, 8px);
+            cursor: pointer;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .install-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .install-btn.primary {
+            background: rgba(16, 185, 129, 0.9);
+            border-color: rgba(16, 185, 129, 1);
+        }
+
+        .install-btn.primary:hover {
+            background: rgba(16, 185, 129, 1);
+        }
+
+        /* === TOAST NOTIFICATIONS === */
+        .toast {
+            position: fixed;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 24, 39, 0.95);
+            color: white;
+            padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 24px);
+            border-radius: clamp(8px, 2vw, 12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 2000;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show {
+            bottom: clamp(20px, 5vw, 30px);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: rgba(5, 150, 105, 0.95);
+        }
+
+        .toast.error {
+            background: rgba(239, 68, 68, 0.95);
+        }
+
+        .toast.warning {
+            background: rgba(245, 158, 11, 0.95);
+        }
+
+        /* === RESPONSIVIDADE ESPECÍFICA === */
+        
+        /* Mobile Portrait */
+        @media (max-width: 480px) and (orientation: portrait) {
+            .loading-container {
+                padding: 20px 16px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 280px;
+            }
+            
+            .error-actions,
+            .install-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn,
+            .install-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        /* Mobile Landscape */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .loading-container {
+                padding: 10px 20px;
+                justify-content: flex-start;
+                padding-top: 20px;
+            }
+            
+            .logo-container {
+                margin-bottom: 15px;
+            }
+            
+            .app-subtitle {
+                margin-bottom: 20px;
+            }
+            
+            .progress-container {
+                margin-bottom: 15px;
+            }
+            
+            .loading-status {
+                margin-bottom: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 240px;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .loading-container {
+                padding: 40px;
+            }
+            
+            .features-grid {
+                max-width: 400px;
+                gap: 24px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1025px) {
+            .loading-container {
+                padding: 60px;
+            }
+        }
+
+        /* === PREVENÇÕES MOBILE === */
+        .loading-container,
+        .app-container {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Prevent overscroll */
+        body {
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .app-container {
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #mainIframe {
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* === ACESSIBILIDADE === */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .app-container,
+            .iframe-container,
+            #mainIframe {
+                background: #111827;
+            }
+            
+            .error-screen,
+            .offline-screen {
+                background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+                color: white;
+            }
+            
+            .error-title,
+            .offline-title {
+                color: white;
+            }
+            
+            .error-message,
+            .offline-message {
+                color: #d1d5db;
+            }
+        }
+
+        /* === ANIMAÇÕES DE ENTRADA === */
+        .loading-container > * {
+            animation-fill-mode: both;
+        }
+
+        .progress-container {
+            animation: slideUp 0.8s ease-out 0.5s both;
+        }
+
+        .loading-status {
+            animation: slideUp 0.8s ease-out 0.7s both;
+        }
+
+        .features-grid {
+            animation: slideUp 0.8s ease-out 0.9s both;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === PWA SPECIFIC STYLES === */
+                @media (display-mode: standalone) {
+            .app-container {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+        }
+
+        /* === FINAL OPTIMIZATIONS === */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-focus-ring-color: transparent;
+            outline: none;
+        }
+
+        button:focus,
+        .btn:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+
+        /* === LOADING STATES === */
+        .loading-fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .iframe-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <!-- Modal de Localização -->
-    <div id="locationModal" class="modal">
-        <div class="modal-content">
-            <h2>🎉 Festa da Adriane</h2>
-            <div class="event-info">
-                <p><i class="fas fa-calendar"></i> <strong>Data:</strong> 29 de Junho de 2025</p>
-                <p><i class="fas fa-clock"></i> <strong>Horário:</strong> 11:00 da manhã</p>
-                <p><i class="fas fa-map-marker-alt"></i> <strong>Local:</strong> Casa da Adriane</p>
-                <p><i class="fas fa-utensils"></i> <strong>Tipo:</strong> Churrasco de Aniversário</p>
+    <!-- Loading Screen -->
+    <div class="loading-container" id="loadingScreen">
+        <div class="logo-container">
+            <div class="logo">🎯</div>
+            <h1 class="app-title">StarkTech-App</h1>
+            <p class="app-subtitle">Sua experiência digital completa</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
-            <button id="startChatBtn" class="start-btn">
-                <i class="fas fa-comments"></i>
-                Confirmar Presença
-            </button>
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+
+        <div class="loading-status" id="loadingStatus">Inicializando...</div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">Rápido</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-text">Seguro</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">Mobile</div>
+            </div>
         </div>
     </div>
 
-    <!-- Tela de Boas-vindas -->
-    <div id="welcomeScreen" class="screen">
-        <div class="welcome-content">
-            <div class="avatar">
-                <img src="https://media-gru2-2.cdn.whatsapp.net/v/t61.24694-24/491883852_1393418705301138_7718926290771448814_n.jpg?ccb=11-4&oh=01_Q5Aa1wHBUtWW21R9NPnQ0AItU70gdVkD3Z05CENdZY0oNlc6rw&oe=68654350&_nc_sid=5e03e0&_nc_cat=109" alt="Adriane">
-            </div>
-            <h1>🎂 Festa da Adriane</h1>
-            <p>Confirme sua presença no meu aniversário!</p>
-            <button id="startChatBtn" class="start-btn">
-                <i class="fas fa-comments"></i>
-                Começar Conversa
-            </button>
+    <!-- Main App Container -->
+    <div class="app-container" id="appContainer">
+        <div class="iframe-container">
+            <iframe 
+                id="mainIframe" 
+                src="https://script.google.com/macros/s/AKfycbxc1JUutkG-BHQMdAgYieTj_h3-ll3wsI3URKv76UWzJkmRaA_MMYQgPiy0YeB4I1Ik_A/exec" 
+                title="StarkTech"
+                loading="lazy"
+                allow="geolocation; microphone; camera; midi; encrypted-media; autoplay; clipboard-read; clipboard-write"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-downloads"
+            ></iframe>
         </div>
     </div>
 
-    <!-- Tela do Chat -->
-    <div id="chatScreen" class="screen">
-        <!-- Header do Chat -->
-        <div class="chat-header">
-            <div class="contact-info">
-                <div class="avatar-small">
-                    <img src="https://via.placeholder.com/40x40/ff6b9d/ffffff?text=A" alt="Adriane">
-                </div>
-                <div class="contact-details">
-                    <h3>Adriane</h3>
-                    <div id="adrianeStatus" class="status online">
-                        <span class="status-dot online"></span> Online
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Área de Mensagens -->
-        <div id="chatMessages" class="chat-messages">
-            <!-- Mensagens serão inseridas aqui dinamicamente -->
-        </div>
-
-        <!-- Indicador de Digitação -->
-        <div id="typingIndicator" class="typing-indicator">
-            <div class="typing-bubble">
-                <div class="typing-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Container de Input -->
-        <div id="inputContainer" class="input-container">
-            <div class="input-group">
-                <input type="text" id="messageInput" placeholder="Digite sua mensagem...">
-                <button id="sendBtn" class="send-btn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Container de Opções -->
-        <div id="optionsContainer" class="options-container">
-            <!-- Opções serão inseridas aqui dinamicamente -->
-        </div>
-
-        <!-- Estados de Loading/Success/Error -->
-        <div id="loading" class="status-message loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            Processando...
-        </div>
-
-        <div id="successMessage" class="status-message success">
-            <i class="fas fa-check-circle"></i>
-            Confirmação enviada com sucesso!
-        </div>
-
-        <div id="errorMessage" class="status-message error">
-            <i class="fas fa-exclamation-triangle"></i>
-            Erro ao processar. Tente novamente.
+    <!-- Offline Screen -->
+    <div class="offline-screen" id="offlineScreen">
+        <div class="offline-icon">📡</div>
+        <h2 class="offline-title">Sem Conexão</h2>
+        <p class="offline-message">
+            Verifique sua conexão com a internet e tente novamente.
+        </p>
+        <div class="error-actions">
+            <button class="btn" onclick="retryConnection()">Tentar Novamente</button>
+            <button class="btn secondary" onclick="checkDiagnostics()">Diagnóstico</button>
         </div>
     </div>
-</body>
-</html>
+
+    <!-- Error Screen -->
+    <div class="error-screen" id="errorScreen">
+        <div class="error-icon">⚠️</div>
+        <h2 class="error-title">Erro de Carregamento</h2>
+        <p class="error-message" id="errorMessage">
+            Ocorreu um erro ao carregar o aplicativo. Tente novamente.
+        </p>
+        <div class="error-actions">
+            <button class="btn" onclick="reloadApp()">Recarregar</button>
+            <button class="btn secondary" onclick="retryConnection()">Tentar Novamente</button>
+            <button class="btn diagnostic" onclick="showDiagnostics()">Diagnóstico</button>
+        </div>
+    </div>
+
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-content">
+            <div class="install-text">📱 Instalar SimApp no seu dispositivo?</div>
+            <div class="install-actions">
+                <button class="install-btn primary" onclick="installApp()">Instalar</button>
+                <button class="install-btn" onclick="dismissInstall()">Agora Não</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <script>
-      // ===== VARIÁVEIS GLOBAIS =====
-var currentStep = 0;
-var userResponses = {};
-var activityMonitor = null;
+        // === GLOBAL VARIABLES ===
+        let deferredPrompt;
+        let loadingProgress = 0;
+        let loadingInterval;
+        let connectionRetries = 0;
+        const maxRetries = 3;
+        let isOnline = navigator.onLine;
+        let appLoaded = false;
 
-// ===== CONFIGURAÇÃO DOS PASSOS =====
-var chatSteps = [
-    {
-        message: "Oi! Que bom te ver aqui! 😊\n\nEu sou a Adriane e estou super animada com minha festa de aniversário!\n\nVamos confirmar sua presença?",
-        type: "options",
-        options: [
-            { text: "Sim, vamos lá! 🎉", value: "sim" },
-            { text: "Talvez outra hora", value: "nao" }
-        ],
-        field: "attendance"
-    },
-    {
-        message: "Que maravilha! 🥳\n\nPrimeiro, me conta seu nome para eu te conhecer melhor:",
-        type: "input",
-        field: "name"
-    },
-    {
-        message: "Prazer em te conhecer, {name}! 😄\n\nAgora vamos organizar as bebidas da festa. Você pode contribuir com:",
-        type: "options",
-        options: [
-            { text: "2 Litros de refrigerante 🥤", value: "2l_refri" },
-            { text: "1 Caixa de cerveja (12 unidades) 🍺", value: "1cx_cerveja" },
-            { text: "Água e sucos naturais 💧", value: "agua_sucos" },
-            { text: "Não posso contribuir com bebidas", value: "nao_bebida" }
-        ],
-        field: "drinkQuantity"
-    },
-    {
-        message: "Perfeito! E para o churrasco, que tal contribuir com:",
-        type: "options",
-        options: [
-            { text: "1kg de carne (bovina) 🥩", value: "1kg_bovina" },
-            { text: "1kg de frango 🍗", value: "1kg_frango" },
-            { text: "Linguiça e bacon 🥓", value: "linguica_bacon" },
-            { text: "Não posso contribuir com carne", value: "nao_carne" }
-        ],
-        field: "meatQuantity"
-    },
-    {
-        message: "Quase terminando! 😊\n\nTem alguma observação especial? (alergias, restrições alimentares, etc.)\n\nSe não tiver, pode escrever 'não':",
-        type: "input",
-        field: "additionalInfo"
-    }
-];
-
-// ===== FORMATAÇÃO DE RESPOSTAS =====
-var responseFormats = {
-    drinkQuantity: {
-        "2l_refri": "2 Litros de refrigerante 🥤",
-        "1cx_cerveja": "1 Caixa de cerveja (12 unidades) 🍺", 
-        "agua_sucos": "Água e sucos naturais 💧",
-        "nao_bebida": "Não irá contribuir com bebidas"
-    },
-    meatQuantity: {
-        "1kg_bovina": "1kg de carne bovina 🥩",
-        "1kg_frango": "1kg de frango 🍗",
-        "linguica_bacon": "Linguiça e bacon 🥓", 
-        "nao_carne": "Não irá contribuir com carne"
-    }
-};
-
-// ===== MONITOR DE ATIVIDADE =====
-function ActivityMonitor() {
-    this.isActive = true;
-    this.lastActivity = Date.now();
-    this.inactivityTimeout = 30000; // 30 segundos
-    this.checkInterval = 5000; // 5 segundos
-    this.intervalId = null;
-    
-    this.init();
-}
-
-ActivityMonitor.prototype.init = function() {
-    var self = this;
-    
-    // Eventos de atividade
-    var events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
-    
-    events.forEach(function(event) {
-        document.addEventListener(event, function() {
-            self.updateActivity();
-        }, true);
-    });
-    
-    // Verificar periodicamente
-    this.intervalId = setInterval(function() {
-        self.checkActivity();
-    }, this.checkInterval);
-    
-    this.updateStatus();
-};
-
-ActivityMonitor.prototype.updateActivity = function() {
-    this.lastActivity = Date.now();
-    if (!this.isActive) {
-        this.isActive = true;
-        this.updateStatus();
-    }
-};
-
-ActivityMonitor.prototype.checkActivity = function() {
-    var now = Date.now();
-    var timeSinceLastActivity = now - this.lastActivity;
-    
-    if (timeSinceLastActivity > this.inactivityTimeout && this.isActive) {
-        this.isActive = false;
-        this.updateStatus();
-    }
-};
-
-ActivityMonitor.prototype.updateStatus = function() {
-    var statusElement = document.getElementById('adrianeStatus');
-    if (statusElement) {
-        if (this.isActive) {
-            statusElement.innerHTML = '<span class="status-dot online"></span> Online';
-            statusElement.className = 'status online';
-        } else {
-            statusElement.innerHTML = '<span class="status-dot away"></span> Ausente';
-            statusElement.className = 'status away';
-        }
-    }
-};
-
-ActivityMonitor.prototype.forceOnline = function() {
-    this.updateActivity();
-};
-
-ActivityMonitor.prototype.destroy = function() {
-    if (this.intervalId) {
-        clearInterval(this.intervalId);
-    }
-};
-
-// ===== FUNÇÕES PRINCIPAIS =====
-function startChat() {
-    var welcomeScreen = document.getElementById('welcomeScreen');
-    var chatScreen = document.getElementById('chatScreen');
-    
-    if (welcomeScreen) welcomeScreen.style.display = 'none';
-    if (chatScreen) chatScreen.style.display = 'flex';
-    
-    // Inicializar monitor se não existir
-    if (!activityMonitor) {
-        activityMonitor = new ActivityMonitor();
-    }
-    
-    // Começar conversa
-    setTimeout(function() {
-        processStep();
-    }, 1000);
-}
-
-function processStep() {
-    if (currentStep >= chatSteps.length) {
-        showFinalMessage();
-        return;
-    }
-    
-    var step = chatSteps[currentStep];
-    var message = step.message;
-    
-    // Substituir placeholders
-    if (userResponses.name) {
-        message = message.replace('{name}', userResponses.name);
-    }
-    
-    showTypingIndicator();
-    
-    setTimeout(function() {
-        hideTypingIndicator();
-        addMessage(message, 'adriane');
-        
-        setTimeout(function() {
-            if (step.type === 'input') {
-                showInput();
-            } else if (step.type === 'options') {
-                showOptions(step.options);
-            }
-        }, 500);
-    }, 1500);
-}
-
-function sendMessage() {
-    var messageInput = document.getElementById('messageInput');
-    if (!messageInput) return;
-    
-    var message = messageInput.value.trim();
-    if (!message) return;
-    
-    // Forçar status online
-    if (activityMonitor) {
-        activityMonitor.forceOnline();
-    }
-    
-    addMessage(message, 'user');
-    messageInput.value = '';
-    
-    // Salvar resposta
-    var currentField = chatSteps[currentStep].field;
-    userResponses[currentField] = message;
-    
-    hideAllContainers();
-    currentStep++;
-    
-    setTimeout(function() {
-        processStep();
-    }, 1000);
-}
-
-function selectOption(value, text) {
-    // Forçar status online
-    if (activityMonitor) {
-        activityMonitor.forceOnline();
-    }
-    
-    addMessage(text, 'user');
-    
-    // Salvar resposta
-    var currentField = chatSteps[currentStep].field;
-    userResponses[currentField] = value;
-    
-    // Verificar se escolheu "não" na primeira pergunta
-    if (currentField === 'attendance' && value === 'nao') {
-        hideAllContainers();
-        setTimeout(function() {
-            addMessage("Tudo bem! Fica para a próxima então! 😊\n\nSe mudar de ideia, é só voltar aqui. A festa vai ser incrível! 🎉", 'adriane');
-        }, 1500);
-        return;
-    }
-    
-    hideAllContainers();
-    currentStep++;
-    
-    setTimeout(function() {
-        processStep();
-    }, 1000);
-}
-
-function formatResponse(field, value) {
-    if (responseFormats[field] && responseFormats[field][value]) {
-        return responseFormats[field][value];
-    }
-    return value;
-}
-
-function showStatusMessageInChat(type, message) {
-    var messagesContainer = document.getElementById('chatMessages');
-    if (!messagesContainer) return;
-
-    var statusDiv = document.createElement('div');
-    statusDiv.className = 'message system';
-
-    var iconClass = '';
-    var bgColor = '';
-
-    if (type === 'loading') {
-        iconClass = 'fas fa-spinner fa-spin';
-        bgColor = '#f8f9fa';
-        message = 'Enviando confirmação...';
-    } else if (type === 'success') {
-        iconClass = 'fas fa-check-circle';
-        bgColor = '#d4edda';
-        message = 'Confirmação enviada com sucesso!';
-    } else if (type === 'error') {
-        iconClass = 'fas fa-exclamation-triangle';
-        bgColor = '#f8d7da';
-        message = 'Erro ao enviar confirmação. Tente novamente.';
-    }
-
-    statusDiv.innerHTML = '<div class="message-bubble" style="background: ' + bgColor + '; text-align: center; color: #333; font-weight: 500;">' +
-         '<i class="' + iconClass + '"></i> ' + message +
-         '</div>';
-
-    messagesContainer.appendChild(statusDiv);
-    scrollToBottom();
-
-    return statusDiv;
-}
-
-function hideAllContainers() {
-    var containers = ['inputContainer', 'optionsContainer', 'loading', 'successMessage', 'errorMessage'];
-    for (var i = 0; i < containers.length; i++) {
-        var element = document.getElementById(containers[i]);
-        if (element) {
-            element.style.display = 'none';
-        }
-    }
-}
-
-function showTypingIndicator() {
-    var indicator = document.getElementById('typingIndicator');
-    if (indicator) {
-        indicator.style.display = 'flex';
-        scrollToBottom();
-    }
-    
-    // Atualizar status para "digitando"
-    var statusElement = document.getElementById('adrianeStatus');
-    if (statusElement) {
-        statusElement.innerHTML = '<span class="status-dot typing"></span> Digitando...';
-        statusElement.className = 'status typing';
-    }
-}
-
-function hideTypingIndicator() {
-    var indicator = document.getElementById('typingIndicator');
-    if (indicator) {
-        indicator.style.display = 'none';
-    }
-    
-    // Voltar status para online
-    if (activityMonitor) {
-        activityMonitor.updateStatus();
-    }
-}
-
-function addMessage(text, sender) {
-    var messagesContainer = document.getElementById('chatMessages');
-    if (!messagesContainer) return;
-
-    var messageDiv = document.createElement('div');
-    messageDiv.className = 'message ' + sender;
-
-    var now = new Date();
-    var hours = now.getHours().toString();
-    var minutes = now.getMinutes().toString();
-    if (hours.length === 1) hours = '0' + hours;
-    if (minutes.length === 1) minutes = '0' + minutes;
-    var time = hours + ':' + minutes;
-
-    messageDiv.innerHTML = '<div class="message-bubble">' +
-         text.replace(/\n/g, '<br>') +
-         '<div class="message-time">' + time + '</div>' +
-        '</div>';
-
-    messagesContainer.appendChild(messageDiv);
-    scrollToBottom();
-}
-
-function showInput() {
-    hideAllContainers();
-    var inputContainer = document.getElementById('inputContainer');
-    if (inputContainer) {
-        inputContainer.style.display = 'block';
-        var messageInput = document.getElementById('messageInput');
-        if (messageInput) {
-            messageInput.focus();
-        }
-    }
-}
-
-function showOptions(options) {
-    hideAllContainers();
-    var optionsContainer = document.getElementById('optionsContainer');
-    if (!optionsContainer) return;
-
-    optionsContainer.style.display = 'block';
-    optionsContainer.innerHTML = '';
-
-    for (var i = 0; i < options.length; i++) {
-        var option = options[i];
-        var button = document.createElement('button');
-        button.className = 'option-btn';
-        button.textContent = option.text;
-        button.setAttribute('data-value', option.value);
-        button.setAttribute('data-text', option.text);
-        button.onclick = function() {
-            selectOption(this.getAttribute('data-value'), this.getAttribute('data-text'));
-        };
-        optionsContainer.appendChild(button);
-    }
-}
-
-function showConfirmationPreview() {
-    var messagesContainer = document.getElementById('chatMessages');
-    if (!messagesContainer) return;
-
-    var previewDiv = document.createElement('div');
-    previewDiv.className = 'message adriane confirmation-preview';
-    
-    var previewContent = '<div class="message-bubble confirmation-bubble">' +
-        '<div class="confirmation-header">' +
-            '<h3>🎂 Resumo da sua Confirmação 🎂</h3>' +
-        '</div>' +
-        
-        '<div class="confirmation-section">' +
-            '<div class="confirmation-item">' +
-                '<span class="item-icon">👤</span>' +
-                '<div class="item-content">' +
-                    '<strong>Nome:</strong><br>' +
-                    '<span class="item-value">' + userResponses.name + '</span>' +
-                '</div>' +
-            '</div>' +
+        // === LOADING SIMULATION ===
+        function simulateLoading() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const loadingStatus = document.getElementById('loadingStatus');
             
-            '<div class="confirmation-item">' +
-                '<span class="item-icon">✅</span>' +
-                '<div class="item-content">' +
-                    '<strong>Presença:</strong><br>' +
-                    '<span class="item-value confirmed">CONFIRMADA</span>' +
-                '</div>' +
-            '</div>' +
+            const steps = [
+                { progress: 20, status: 'Conectando...' },
+                { progress: 40, status: 'Carregando recursos...' },
+                { progress: 60, status: 'Inicializando interface...' },
+                { progress: 80, status: 'Finalizando...' },
+                { progress: 100, status: 'Pronto!' }
+            ];
             
-            '<div class="confirmation-item">' +
-                '<span class="item-icon">🍻</span>' +
-                '<div class="item-content">' +
-                    '<strong>Bebidas:</strong><br>' +
-                    '<span class="item-value">' + formatResponse('drinkQuantity', userResponses.drinkQuantity) + '</span>' +
-                '</div>' +
-            '</div>' +
+            let currentStep = 0;
             
-            '<div class="confirmation-item">' +
-                '<span class="item-icon">🥩</span>'
-                '<div class="item-content">' +
-                    '<strong>Churrasco:</strong><br>' +
-                    '<span class="item-value">' + formatResponse('meatQuantity', userResponses.meatQuantity) + '</span>' +
-                '</div>' +
-            '</div>';
-            
-    if (userResponses.additionalInfo && userResponses.additionalInfo.toLowerCase() !== 'não') {
-        previewContent += '<div class="confirmation-item">' +
-                '<span class="item-icon">📝</span>' +
-                '<div class="item-content">' +
-                    '<strong>Observações:</strong><br>' +
-                    '<span class="item-value">' + userResponses.additionalInfo + '</span>' +
-                '</div>' +
-            '</div>';
-    }
-    
-    previewContent += '</div>' +
-        
-        '<div class="event-details">' +
-            '<h4>📅 Detalhes do Evento</h4>' +
-            '<div class="event-info">' +
-                '<div class="event-item">' +
-                    '<span class="event-icon">📆</span>' +
-                    '<span>29 de Junho de 2025</span>' +
-                '</div>' +
-                '<div class="event-item">' +
-                    '<span class="event-icon">🕐</span>' +
-                    '<span>11:00 da manhã</span>' +
-                '</div>' +
-                '<div class="event-item">' +
-                    '<span class="event-icon">📍</span>' +
-                    '<span>Casa da Adriane</span>' +
-                '</div>' +
-            '</div>' +
-        '</div>' +
-        
-        '<div class="location-details">' +
-            '<h4>🗺️ Localização</h4>' +
-            '<div class="location-info">' +
-                '<div class="location-item">' +
-                    '<span class="location-icon">📌</span>' +
-                    '<span>Rua das Flores, 123</span>' +
-                '</div>' +
-                '<div class="location-item">' +
-                    '<span class="location-icon">🏘️</span>' +
-                    '<span>Jardim Primavera</span>' +
-                '</div>' +
-                '<div class="location-item">' +
-                    '<span class="location-icon">🏙️</span>' +
-                    '<span>Goiânia - GO</span>' +
-                '</div>' +
-            '</div>' +
-        '</div>' +
-        
-        '<div class="confirmation-footer">' +
-            '<p>💕 Muito obrigada pela confirmação!</p>' +
-            '<p>🎉 Vai ser uma festa incrível!</p>' +
-        '</div>' +
-        
-        '<div class="message-time">' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) + '</div>' +
-    '</div>';
-    
-    previewDiv.innerHTML = previewContent;
-    messagesContainer.appendChild(previewDiv);
-    scrollToBottom();
-}
-
-function formatConfirmationMessage() {
-    var message = '🎂✨ *CONFIRMAÇÃO DE PRESENÇA* ✨🎂\n';
-    message += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
-    
-    message += '🎉 *FESTA DE ANIVERSÁRIO DA ADRIANE* 🎉\n\n';
-    
-    message += '👤 *DADOS DO CONVIDADO:*\n';
-    message += '┌─────────────────────────────────\n';
-    message += '│ 📛 Nome: *' + userResponses.name + '*\n';
-    message += '│ ✅ Status: *PRESENÇA CONFIRMADA*\n';
-    message += '└─────────────────────────────────\n\n';
-    
-    message += '🍻 *CONTRIBUIÇÃO - BEBIDAS:*\n';
-    message += '┌─────────────────────────────────\n';
-    message += '│ 🥤 ' + formatResponse('drinkQuantity', userResponses.drinkQuantity) + '\n';
-    message += '└─────────────────────────────────\n\n';
-    
-    message += '🥩 *CONTRIBUIÇÃO - CHURRASCO:*\n';
-    message += '┌─────────────────────────────────\n';
-    message += '│ 🍖 ' + formatResponse('meatQuantity', userResponses.meatQuantity) + '\n';
-    message += '└─────────────────────────────────\n\n';
-    
-    if (userResponses.additionalInfo && userResponses.additionalInfo.toLowerCase() !== 'não') {
-        message += '📝 *OBSERVAÇÕES ESPECIAIS:*\n';
-        message += '┌─────────────────────────────────\n';
-        message += '│ 💬 ' + userResponses.additionalInfo + '\n';
-        message += '└─────────────────────────────────\n\n';
-    }
-    
-    message += '📅 *INFORMAÇÕES DO EVENTO:*\n';
-    message += '┌─────────────────────────────────\n';
-    message += '│ 📆 Data: *29 de Junho de 2025*\n';
-    message += '│ 🕐 Horário: *11:00 da manhã*\n';
-    message += '│ 📍 Local: *Casa da Adriane*\n';
-    message += '│ 🎪 Tipo: *Churrasco de Aniversário*\n';
-    message += '└─────────────────────────────────\n\n';
-    
-    message += '🗺️ *LOCALIZAÇÃO:*\n';
-    message += '┌─────────────────────────────────\n';
-    message += '│ 📌 Endereço: *Rua das Flores, 123*\n';
-    message += '│ 🏘️ Bairro: *Jardim Primavera*\n';
-    message += '│ 🏙️ Cidade: *Goiânia - GO*\n';
-    message += '│ 🗺️ Google Maps: https://maps.google.com/?q=-16.6869,-49.2648\n';
-    message += '└─────────────────────────────────\n\n';
-    
-    message += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
-    message += '💕 *Confirmação enviada pelo site oficial*\n';
-    message += '🎈 *Mal posso esperar para te ver lá!* 🎈\n';
-    message += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
-    
-    return message;
-}
-
-function showWhatsAppOption() {
-    var confirmation = formatConfirmationMessage();
-    var whatsappUrl = 'https://wa.me/5562996373091?text=' + encodeURIComponent(confirmation);
-    
-    // Coordenadas da festa (substitua pelas coordenadas reais)
-    var latitude = -16.6869;
-    var longitude = -49.2648;
-    var mapsUrl = 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
-    
-    var optionsContainer = document.getElementById('optionsContainer');
-    if (optionsContainer) {
-        optionsContainer.style.display = 'block';
-        optionsContainer.innerHTML = '<div class="final-options">' +
-                '<a href="' + whatsappUrl + '" target="_blank" class="option-btn whatsapp-btn">' +
-                    '<i class="fab fa-whatsapp"></i> ' +
-                    '<span>Enviar confirmação via WhatsApp</span>' +
-                '</a>' +
-                
-                '<a href="' + mapsUrl + '" target="_blank" class="option-btn maps-btn">' +
-                    '<i class="fas fa-map-marker-alt"></i> ' +
-                    '<span>Ver localização no Google Maps</span>' +
-                '</a>' +
-                
-                '<button class="option-btn info-btn" onclick="showEventInfo()">' +
-                    '<i class="fas fa-info-circle"></i> ' +
-                    '<span>Mais informações do evento</span>' +
-                '</button>' +
-            '</div>';
-    }
-}
-
-function showEventInfo() {
-    var messagesContainer = document.getElementById('chatMessages');
-    if (!messagesContainer) return;
-
-    var infoDiv = document.createElement('div');
-    infoDiv.className = 'message adriane';
-    
-    var infoContent = '<div class="message-bubble" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">' +
-            '<div style="padding: 20px;">' +
-                '<h3 style="margin: 0 0 15px 0; text-align: center;">ℹ️ Informações Importantes</h3>' +
-                
-                '<div style="margin-bottom: 15px;">' +
-                    '<strong>🎯 O que levar:</strong><br>' +
-                    '• Sua contribuição confirmada<br>' +
-                    '• Roupas confortáveis<br>' +
-                    '• Muito bom humor! 😄' +
-                '</div>' +
-                
-                '<div style="margin-bottom: 15px;">' +
-                    '<strong>🚗 Estacionamento:</strong><br>' +
-                    '• Disponível na rua<br>' +
-                    '• Chegue cedo para garantir vaga' +
-                '</div>' +
-                
-                '<div style="margin-bottom: 15px;">' +
-                    '<strong>📞 Contato de emergência:</strong><br>' +
-                    '• WhatsApp: (62) 99637-3091<br>' +
-                    '• Adriane está sempre disponível' +
-                '</div>' +
-                
-                '<div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">' +
-                    '<strong>🎉 Mal posso esperar para te ver! 🎉</strong>' +
-                '</div>' +
-            '</div>' +
-            '<div class="message-time">' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) + '</div>' +
-        '</div>';
-    
-    infoDiv.innerHTML = infoContent;
-    messagesContainer.appendChild(infoDiv);
-    scrollToBottom();
-}
-
-function showFinalMessage() {
-    // Mostrar preview bonito da confirmação
-    setTimeout(function() {
-        showConfirmationPreview();
-        
-        // Mostrar loading
-        setTimeout(function() {
-            var loadingMsg = showStatusMessageInChat('loading');
-            
-            setTimeout(function() {
-                // Remover loading
-                if (loadingMsg) {
-                    loadingMsg.remove();
-                }
-                
-                if (userResponses.attendance === 'sim') {
-                    showStatusMessageInChat('success');
-                    console.log('Dados da confirmação:', userResponses);
+            loadingInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    loadingProgress = step.progress;
                     
-                    setTimeout(function() {
-                        showWhatsAppOption();
-                    }, 2000);
+                    progressFill.style.width = loadingProgress + '%';
+                    progressText.textContent = loadingProgress + '%';
+                    loadingStatus.textContent = step.status;
+                    
+                    currentStep++;
+                } else {
+                    clearInterval(loadingInterval);
+                    setTimeout(showMainApp, 500);
                 }
-            }, 2000);
-        }, 1000);
-    }, 500);
-}
-
-function scrollToBottom() {
-    var messagesContainer = document.getElementById('chatMessages');
-    if (messagesContainer) {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-}
-
-// ===== INICIALIZAÇÃO =====
-function initializeApp() {
-    console.log('Inicializando aplicação...');
-
-    // Inicializar monitor de atividade
-    activityMonitor = new ActivityMonitor();
-    console.log('ActivityMonitor inicializado');
-
-    // Configurar event listeners
-    var startChatBtn = document.getElementById('startChatBtn');
-    if (startChatBtn) {
-        startChatBtn.onclick = startChat;
-        console.log('Event listener configurado para startChatBtn');
-    }
-
-    var sendBtn = document.getElementById('sendBtn');
-    if (sendBtn) {
-        sendBtn.onclick = sendMessage;
-    }
-
-    var messageInput = document.getElementById('messageInput');
-    if (messageInput) {
-        messageInput.onkeypress = function(e) {
-            if (e.key === 'Enter' || e.keyCode === 13) {
-                sendMessage();
-            }
-        };
-        
-        // Detectar quando usuário está digitando
-        messageInput.addEventListener('input', function() {
-            if (activityMonitor) {
-                activityMonitor.forceOnline();
-            }
-        });
-        
-        // Detectar foco no input
-        messageInput.addEventListener('focus', function() {
-            if (activityMonitor) {
-                activityMonitor.forceOnline();
-            }
-        });
-    }
-
-    // Event listeners adicionais para detectar atividade
-    document.addEventListener('click', function(e) {
-        console.log('Click detectado em:', e.target.tagName);
-        if (activityMonitor) {
-            activityMonitor.forceOnline();
+            }, 800);
         }
-    });
 
-    // Detectar scroll no chat
-    var chatMessages = document.getElementById('chatMessages');
-    if (chatMessages) {
-        chatMessages.addEventListener('scroll', function() {
-            console.log('Scroll detectado no chat');
-            if (activityMonitor) {
-                activityMonitor.forceOnline();
+        // === APP INITIALIZATION ===
+        function showMainApp() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const appContainer = document.getElementById('appContainer');
+            const iframe = document.getElementById('mainIframe');
+            
+            loadingScreen.classList.add('loading-fade-out');
+            
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                appContainer.style.display = 'block';
+                iframe.classList.add('iframe-fade-in');
+                appLoaded = true;
+                
+                // Check for install prompt after app loads
+                setTimeout(checkInstallPrompt, 3000);
+            }, 500);
+        }
+
+        // === ERROR HANDLING ===
+        function showError(message = 'Erro desconhecido') {
+            const errorScreen = document.getElementById('errorScreen');
+            const errorMessage = document.getElementById('errorMessage');
+            const appContainer = document.getElementById('appContainer');
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            errorMessage.textContent = message;
+            loadingScreen.style.display = 'none';
+            appContainer.style.display = 'none';
+            errorScreen.classList.add('show');
+        }
+
+        function hideError() {
+            const errorScreen = document.getElementById('errorScreen');
+            errorScreen.classList.remove('show');
+        }
+
+        // === OFFLINE HANDLING ===
+        function showOffline() {
+            const offlineScreen = document.getElementById('offlineScreen');
+            const appContainer = document.getElementById('appContainer');
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            loadingScreen.style.display = 'none';
+            appContainer.style.display = 'none';
+            offlineScreen.classList.add('show');
+        }
+
+        function hideOffline() {
+            const offlineScreen = document.getElementById('offlineScreen');
+            offlineScreen.classList.remove('show');
+        }
+
+        // === CONNECTION MANAGEMENT ===
+        function retryConnection() {
+            if (connectionRetries >= maxRetries) {
+                showToast('Muitas tentativas. Tente novamente mais tarde.', 'error');
+                return;
+            }
+            
+            connectionRetries++;
+            hideError();
+            hideOffline();
+            
+            showToast('Tentando reconectar...', 'warning');
+            
+            // Reset loading
+            loadingProgress = 0;
+            document.getElementById('loadingScreen').style.display = 'flex';
+            
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    simulateLoading();
+                } else {
+                    showOffline();
+                }
+            }, 1000);
+        }
+
+        function reloadApp() {
+            showToast('Recarregando aplicativo...', 'warning');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+
+        // === DIAGNOSTICS ===
+        function checkDiagnostics() {
+            const diagnostics = {
+                online: navigator.onLine,
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                cookieEnabled: navigator.cookieEnabled,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Diagnósticos:', diagnostics);
+            showToast('Diagnósticos salvos no console', 'success');
+        }
+
+        function showDiagnostics() {
+            checkDiagnostics();
+            
+            const info = `
+                Status: ${navigator.onLine ? 'Online' : 'Offline'}
+                Navegador: ${navigator.userAgent.split(' ').pop()}
+                Idioma: ${navigator.language}
+                Cookies: ${navigator.cookieEnabled ? 'Habilitados' : 'Desabilitados'}
+            `;
+            
+            alert('Informações de Diagnóstico:\n' + info);
+        }
+
+        // === PWA INSTALL ===
+        function checkInstallPrompt() {
+            // Only show if not already installed and prompt is available
+            if (deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
+                const installPrompt = document.getElementById('installPrompt');
+                installPrompt.classList.add('show');
+            }
+        }
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('Aplicativo instalado com sucesso!', 'success');
+                    }
+                    deferredPrompt = null;
+                    dismissInstall();
+                });
+            }
+        }
+
+        function dismissInstall() {
+            const installPrompt = document.getElementById('installPrompt');
+            installPrompt.classList.remove('show');
+        }
+
+        // === TOAST NOTIFICATIONS ===
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // === EVENT LISTENERS ===
+        
+        // PWA Install Event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // Online/Offline Events
+        window.addEventListener('online', () => {
+            isOnline = true;
+            if (!appLoaded) {
+                hideOffline();
+                showToast('Conexão restaurada!', 'success');
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'flex';
+                    simulateLoading();
+                }, 1000);
             }
         });
-    }
 
-    // Mostrar modal inicial
-    var locationModal = document.getElementById('locationModal');
-    if (locationModal) {
-        locationModal.style.display = 'flex';
-    }
+        window.addEventListener('offline', () => {
+            isOnline = false;
+            if (!appLoaded) {
+                showOffline();
+            } else {
+                showToast('Conexão perdida', 'error');
+            }
+        });
 
-    // Tornar funções globalmente disponíveis
-    window.startChat = startChat;
-    window.sendMessage = sendMessage;
-    window.selectOption = selectOption;
-    window.showEventInfo = showEventInfo;
-    window.activityMonitor = activityMonitor;
+        // Iframe Load Events
+        document.getElementById('mainIframe').addEventListener('load', () => {
+            connectionRetries = 0; // Reset retries on successful load
+        });
 
-    console.log('Aplicação inicializada com sucesso!');
-}
+        document.getElementById('mainIframe').addEventListener('error', () => {
+            if (navigator.onLine) {
+                showError('Erro ao carregar o conteúdo. Verifique sua conexão.');
+            } else {
+                showOffline();
+            }
+        });
 
-// ===== AGUARDAR DOM PRONTO =====
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
-} else {
-    initializeApp();
-}
+        // Prevent context menu on mobile
+        document.addEventListener('contextmenu', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+            }
+        });
 
-// ===== DEBUG =====
-console.log('Script carregado. Funções disponíveis:', {
-    startChat: typeof startChat,
-    sendMessage: typeof sendMessage,
-    initializeApp: typeof initializeApp,
-    ActivityMonitor: typeof ActivityMonitor
-});
+        // Handle back button
+        window.addEventListener('popstate', (e) => {
+            // Prevent going back if app is loaded
+            if (appLoaded) {
+                history.pushState(null, null, window.location.href);
+            }
+        });
 
+        // === INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add initial history state
+            history.pushState(null, null, window.location.href);
+            
+            // Check initial connection
+            if (!navigator.onLine) {
+                showOffline();
+                return;
+            }
+            
+            // Start loading simulation
+            simulateLoading();
+            
+            // Service Worker Registration
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('SW registered'))
+                    .catch(() => console.log('SW registration failed'));
+            }
+        });
 
-</script>
+        // === PERFORMANCE MONITORING ===
+        window.addEventListener('load', () => {
+            // Log performance metrics
+            if (window.performance) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('App Load Time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+            }
+        });
+    </script>
 </body>
 </html>
