@@ -43,7 +43,7 @@
             height: 100%;
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             position: fixed;
@@ -63,88 +63,62 @@
             --safe-area-inset-left: env(safe-area-inset-left);
         }
 
-        /* === LOADING SCREEN BANCÁRIO PREMIUM === */
-        .loading-container {
+        /* === SPLASH SCREEN MINIMALISTA === */
+        .splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             height: calc(var(--vh, 1vh) * 100);
-            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             color: white;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
         }
 
-        .loading-container.fade-out {
+        .splash-screen.fade-out {
             opacity: 0;
-            transform: scale(1.05);
+            transform: scale(0.95);
             pointer-events: none;
         }
 
-        /* Padrão geométrico de fundo */
-        .loading-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
-            background-size: 100px 100px;
-            animation: backgroundFloat 20s ease-in-out infinite;
-        }
-
-        @keyframes backgroundFloat {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(10px, -10px) rotate(1deg); }
-            66% { transform: translate(-5px, 5px) rotate(-1deg); }
-        }
-
-        /* Logo Container */
+        /* Logo Container Simplificado */
         .logo-container {
             position: relative;
-            margin-bottom: clamp(20px, 5vw, 40px);
-            animation: logoEntrance 1.5s ease-out;
+            animation: logoEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         @keyframes logoEntrance {
             0% {
                 opacity: 0;
-                transform: scale(0.3) rotate(-10deg);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(1.1) rotate(2deg);
+                transform: scale(0.5);
             }
             100% {
                 opacity: 1;
-                transform: scale(1) rotate(0deg);
+                transform: scale(1);
             }
         }
 
         .logo-wrapper {
-            width: clamp(80px, 20vw, 120px);
-            height: clamp(80px, 20vw, 120px);
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: clamp(16px, 4vw, 24px);
+            width: clamp(100px, 25vw, 140px);
+            height: clamp(100px, 25vw, 140px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: clamp(20px, 5vw, 28px);
             display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                0 2px 8px rgba(255, 255, 255, 0.1) inset;
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 4px 20px rgba(255, 255, 255, 0.1) inset;
             position: relative;
             overflow: hidden;
         }
@@ -152,211 +126,110 @@
         .logo-wrapper::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: logoShine 3s ease-in-out infinite;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: logoShine 4s ease-in-out infinite;
         }
 
         @keyframes logoShine {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .logo-img {
-            width: clamp(50px, 15vw, 80px);
-            height: clamp(50px, 15vw, 80px);
+            width: clamp(60px, 18vw, 90px);
+            height: clamp(60px, 18vw, 90px);
             object-fit: contain;
-            border-radius: clamp(12px, 3vw, 16px);
+            border-radius: clamp(15px, 4vw, 20px);
             filter: brightness(1.1) contrast(1.1);
+            z-index: 1;
+            position: relative;
         }
 
-        /* Badge de Status */
-        .status-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: clamp(24px, 6vw, 32px);
-            height: clamp(24px, 6vw, 32px);
-            background: linear-gradient(135deg, #10b981, #059669);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(12px, 3vw, 16px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            animation: badgePulse 2s ease-in-out infinite;
+        /* Logo como emoji/texto se não houver imagem */
+        .logo-emoji {
+            font-size: clamp(3rem, 12vw, 5rem);
+            z-index: 1;
+            position: relative;
         }
 
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Título e Subtítulo */
+        /* Título discreto */
         .app-title {
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            font-weight: 600;
+            margin-top: clamp(20px, 5vw, 30px);
             background: linear-gradient(45deg, #ffffff, #e0e7ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-align: center;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            animation: titleFadeIn 0.8s ease-out 0.5s forwards;
         }
 
-        .app-subtitle {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            opacity: 0.9;
-            margin-bottom: clamp(30px, 8vw, 50px);
-            font-weight: 300;
-            text-align: center;
-            letter-spacing: 0.5px;
+        @keyframes titleFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Progress Bar Bancário */
-        .progress-container {
-            width: 100%;
-            max-width: clamp(280px, 80vw, 320px);
-            margin-bottom: clamp(20px, 6vw, 30px);
-        }
-
-        .progress-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981, #059669);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .progress-bar::after {
-            content: '';
+        /* Loading indicator minimalista */
+        .loading-indicator {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, 
-                transparent,
-                rgba(255,255,255,0.6),
-                transparent
-            );
-            animation: progressShine 2s infinite;
+            bottom: clamp(60px, 15vh, 100px);
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: indicatorFadeIn 0.6s ease-out 1s forwards;
         }
 
-        @keyframes progressShine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-        }
-
-        .progress-text {
-            text-align: center;
-            margin-top: 12px;
-            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-            font-weight: 500;
-            opacity: 0.8;
-        }
-
-        /* Status Loading */
-        .loading-status {
-            text-align: center;
-            margin-bottom: clamp(30px, 8vw, 40px);
-        }
-
-        .status-text {
-            font-size: clamp(0.9rem, 3vw, 1rem);
-            margin-bottom: 16px;
-            opacity: 0.9;
-            transition: all 0.3s ease;
+        @keyframes indicatorFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
 
         .loading-dots {
             display: flex;
-            justify-content: center;
             gap: 8px;
+            align-items: center;
         }
 
         .dot {
             width: 8px;
             height: 8px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
-            animation: dotBounce 1.4s infinite ease-in-out;
+            animation: dotPulse 1.4s infinite ease-in-out;
         }
 
         .dot:nth-child(1) { animation-delay: -0.32s; }
         .dot:nth-child(2) { animation-delay: -0.16s; }
         .dot:nth-child(3) { animation-delay: 0s; }
 
-        @keyframes dotBounce {
+        @keyframes dotPulse {
             0%, 80%, 100% { 
-                transform: scale(0.8);
+                transform: scale(1);
                 opacity: 0.5;
             }
             40% { 
-                transform: scale(1.2);
+                transform: scale(1.3);
                 opacity: 1;
             }
-        }
-
-        /* Features Cards */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: clamp(12px, 4vw, 20px);
-            max-width: clamp(240px, 80vw, 360px);
-            width: 100%;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: clamp(12px, 3vw, 16px);
-            padding: clamp(12px, 4vw, 20px);
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: featureFloat 6s ease-in-out infinite;
-        }
-
-        .feature-card:nth-child(1) { animation-delay: 0s; }
-        .feature-card:nth-child(2) { animation-delay: 1s; }
-        .feature-card:nth-child(3) { animation-delay: 2s; }
-
-        @keyframes featureFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px) scale(1.05);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .feature-icon {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .feature-label {
-            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
-            font-weight: 500;
-            opacity: 0.9;
         }
 
         /* === APP CONTAINER === */
@@ -373,7 +246,15 @@
             overflow: hidden;
             z-index: 1;
             padding: var(--safe-area-inset-top) var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
-                    }
+            opacity: 0;
+            transform: scale(1.05);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-container.show {
+            opacity: 1;
+            transform: scale(1);
+        }
 
         .iframe-container {
             position: absolute;
@@ -534,15 +415,6 @@
             box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
         }
 
-        .btn.diagnostic {
-            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-        }
-
-        .btn.diagnostic:hover {
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-        }
-
         /* === INSTALL PROMPT === */
         .install-prompt {
             position: fixed;
@@ -658,13 +530,8 @@
         
         /* Mobile Portrait */
         @media (max-width: 480px) and (orientation: portrait) {
-            .loading-container {
+            .splash-screen {
                 padding: 20px 16px;
-            }
-            
-            .features-grid {
-                grid-template-columns: repeat(3, 1fr);
-                max-width: 280px;
             }
             
             .error-actions,
@@ -682,55 +549,17 @@
 
         /* Mobile Landscape */
         @media (max-height: 500px) and (orientation: landscape) {
-            .loading-container {
+            .splash-screen {
                 padding: 10px 20px;
-                justify-content: flex-start;
-                padding-top: 20px;
             }
             
-            .logo-container {
-                margin-bottom: 15px;
-            }
-            
-            .app-subtitle {
-                margin-bottom: 20px;
-            }
-            
-            .progress-container {
-                margin-bottom: 15px;
-            }
-            
-            .loading-status {
-                margin-bottom: 20px;
-            }
-            
-            .features-grid {
-                grid-template-columns: repeat(3, 1fr);
-                max-width: 240px;
-            }
-        }
-
-        /* Tablet */
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .loading-container {
-                padding: 40px;
-            }
-            
-            .features-grid {
-                max-width: 400px;
-                gap: 24px;
-            }
-        }
-
-        /* Desktop */
-        @media (min-width: 1025px) {
-            .loading-container {
-                padding: 60px;
+            .loading-indicator {
+                bottom: 40px;
             }
         }
 
         /* === PREVENÇÕES MOBILE === */
-        .loading-container,
+        .splash-screen,
         .app-container {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -789,36 +618,8 @@
             }
         }
 
-        /* === ANIMAÇÕES DE ENTRADA === */
-        .loading-container > * {
-            animation-fill-mode: both;
-        }
-
-        .progress-container {
-            animation: slideUp 0.8s ease-out 0.5s both;
-        }
-
-        .loading-status {
-            animation: slideUp 0.8s ease-out 0.7s both;
-        }
-
-        .features-grid {
-            animation: slideUp 0.8s ease-out 0.9s both;
-        }
-
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* === PWA SPECIFIC STYLES === */
-                @media (display-mode: standalone) {
+        @media (display-mode: standalone) {
             .app-container {
                 padding-top: env(safe-area-inset-top);
                 padding-bottom: env(safe-area-inset-bottom);
@@ -838,57 +639,25 @@
         .btn:focus {
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
         }
-
-        /* === LOADING STATES === */
-        .loading-fade-out {
-            animation: fadeOut 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        .iframe-fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-container" id="loadingScreen">
+    <!-- Splash Screen Minimalista -->
+    <div class="splash-screen" id="splashScreen">
         <div class="logo-container">
-            <div class="logo">🎯</div>
-            <h1 class="app-title">StarkTech-App</h1>
-            <p class="app-subtitle">Sua experiência digital completa</p>
+            <div class="logo-wrapper">
+                <!-- Use uma imagem real aqui ou mantenha o emoji -->
+                <div class="logo-emoji">🎯</div>
+                <!-- <img class="logo-img" src="https://i.ibb.co/vx4BtbSv/Sem-t-tulo-1.png" alt="Logo"> -->
+            </div>
+            <h1 class="app-title">StarkTech</h1>
         </div>
 
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text" id="progressText">0%</div>
-        </div>
-
-        <div class="loading-status" id="loadingStatus">Inicializando...</div>
-
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-text">Rápido</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🔒</div>
-                <div class="feature-text">Seguro</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">📱</div>
-                <div class="feature-text">Mobile</div>
+        <div class="loading-indicator">
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
         </div>
     </div>
@@ -898,7 +667,7 @@
         <div class="iframe-container">
             <iframe 
                 id="mainIframe" 
-                src="https://script.google.com/macros/s/AKfycbxc1JUutkG-BHQMdAgYieTj_h3-ll3wsI3URKv76UWzJkmRaA_MMYQgPiy0YeB4I1Ik_A/exec" 
+                src="https://script.google.com/macros/s/AKfycbzVBMIj3XWSwlCEJxfBcBVtz6Q5UybZclIt1rcHsUqj2-8_DJciZQJm0yKcm-jn2ba8_Q/exec" 
                 title="StarkTech"
                 loading="lazy"
                 allow="geolocation; microphone; camera; midi; encrypted-media; autoplay; clipboard-read; clipboard-write"
@@ -916,7 +685,7 @@
         </p>
         <div class="error-actions">
             <button class="btn" onclick="retryConnection()">Tentar Novamente</button>
-            <button class="btn secondary" onclick="checkDiagnostics()">Diagnóstico</button>
+            <button class="btn secondary" onclick="reloadApp()">Recarregar</button>
         </div>
     </div>
 
@@ -930,14 +699,13 @@
         <div class="error-actions">
             <button class="btn" onclick="reloadApp()">Recarregar</button>
             <button class="btn secondary" onclick="retryConnection()">Tentar Novamente</button>
-            <button class="btn diagnostic" onclick="showDiagnostics()">Diagnóstico</button>
         </div>
     </div>
 
     <!-- Install Prompt -->
     <div class="install-prompt" id="installPrompt">
         <div class="install-content">
-            <div class="install-text">📱 Instalar SimApp no seu dispositivo?</div>
+            <div class="install-text">📱 Instalar App no seu dispositivo?</div>
             <div class="install-actions">
                 <button class="install-btn primary" onclick="installApp()">Instalar</button>
                 <button class="install-btn" onclick="dismissInstall()">Agora Não</button>
@@ -951,63 +719,27 @@
     <script>
         // === GLOBAL VARIABLES ===
         let deferredPrompt;
-        let loadingProgress = 0;
-        let loadingInterval;
         let connectionRetries = 0;
         const maxRetries = 3;
         let isOnline = navigator.onLine;
         let appLoaded = false;
 
-        // === LOADING SIMULATION ===
-        function simulateLoading() {
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-            const loadingStatus = document.getElementById('loadingStatus');
-            
-            const steps = [
-                { progress: 20, status: 'Conectando...' },
-                { progress: 40, status: 'Carregando recursos...' },
-                { progress: 60, status: 'Inicializando interface...' },
-                { progress: 80, status: 'Finalizando...' },
-                { progress: 100, status: 'Pronto!' }
-            ];
-            
-            let currentStep = 0;
-            
-            loadingInterval = setInterval(() => {
-                if (currentStep < steps.length) {
-                    const step = steps[currentStep];
-                    loadingProgress = step.progress;
-                    
-                    progressFill.style.width = loadingProgress + '%';
-                    progressText.textContent = loadingProgress + '%';
-                    loadingStatus.textContent = step.status;
-                    
-                    currentStep++;
-                } else {
-                    clearInterval(loadingInterval);
-                    setTimeout(showMainApp, 500);
-                }
-            }, 800);
-        }
-
-        // === APP INITIALIZATION ===
+        // === SPLASH SCREEN TIMING ===
         function showMainApp() {
-            const loadingScreen = document.getElementById('loadingScreen');
+            const splashScreen = document.getElementById('splashScreen');
             const appContainer = document.getElementById('appContainer');
-            const iframe = document.getElementById('mainIframe');
             
-            loadingScreen.classList.add('loading-fade-out');
+            // Fade out splash
+            splashScreen.classList.add('fade-out');
             
             setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                appContainer.style.display = 'block';
-                iframe.classList.add('iframe-fade-in');
+                splashScreen.style.display = 'none';
+                appContainer.classList.add('show');
                 appLoaded = true;
                 
                 // Check for install prompt after app loads
-                setTimeout(checkInstallPrompt, 3000);
-            }, 500);
+                setTimeout(checkInstallPrompt, 2000);
+            }, 600);
         }
 
         // === ERROR HANDLING ===
@@ -1015,11 +747,11 @@
             const errorScreen = document.getElementById('errorScreen');
             const errorMessage = document.getElementById('errorMessage');
             const appContainer = document.getElementById('appContainer');
-            const loadingScreen = document.getElementById('loadingScreen');
+            const splashScreen = document.getElementById('splashScreen');
             
             errorMessage.textContent = message;
-            loadingScreen.style.display = 'none';
-            appContainer.style.display = 'none';
+            splashScreen.style.display = 'none';
+            appContainer.classList.remove('show');
             errorScreen.classList.add('show');
         }
 
@@ -1032,10 +764,10 @@
         function showOffline() {
             const offlineScreen = document.getElementById('offlineScreen');
             const appContainer = document.getElementById('appContainer');
-            const loadingScreen = document.getElementById('loadingScreen');
+            const splashScreen = document.getElementById('splashScreen');
             
-            loadingScreen.style.display = 'none';
-            appContainer.style.display = 'none';
+            splashScreen.style.display = 'none';
+            appContainer.classList.remove('show');
             offlineScreen.classList.add('show');
         }
 
@@ -1057,17 +789,17 @@
             
             showToast('Tentando reconectar...', 'warning');
             
-            // Reset loading
-            loadingProgress = 0;
-            document.getElementById('loadingScreen').style.display = 'flex';
+            // Show splash again
+            document.getElementById('splashScreen').style.display = 'flex';
+            document.getElementById('splashScreen').classList.remove('fade-out');
             
             setTimeout(() => {
                 if (navigator.onLine) {
-                    simulateLoading();
+                    showMainApp();
                 } else {
                     showOffline();
                 }
-            }, 1000);
+            }, 1500);
         }
 
         function reloadApp() {
@@ -1075,33 +807,6 @@
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
-        }
-
-        // === DIAGNOSTICS ===
-        function checkDiagnostics() {
-            const diagnostics = {
-                online: navigator.onLine,
-                userAgent: navigator.userAgent,
-                language: navigator.language,
-                cookieEnabled: navigator.cookieEnabled,
-                timestamp: new Date().toISOString()
-            };
-            
-            console.log('Diagnósticos:', diagnostics);
-            showToast('Diagnósticos salvos no console', 'success');
-        }
-
-        function showDiagnostics() {
-            checkDiagnostics();
-            
-            const info = `
-                Status: ${navigator.onLine ? 'Online' : 'Offline'}
-                Navegador: ${navigator.userAgent.split(' ').pop()}
-                Idioma: ${navigator.language}
-                Cookies: ${navigator.cookieEnabled ? 'Habilitados' : 'Desabilitados'}
-            `;
-            
-            alert('Informações de Diagnóstico:\n' + info);
         }
 
         // === PWA INSTALL ===
@@ -1158,8 +863,8 @@
                 hideOffline();
                 showToast('Conexão restaurada!', 'success');
                 setTimeout(() => {
-                    document.getElementById('loadingScreen').style.display = 'flex';
-                    simulateLoading();
+                    document.getElementById('splashScreen').style.display = 'flex';
+                    setTimeout(showMainApp, 1500);
                 }, 1000);
             }
         });
@@ -1212,8 +917,8 @@
                 return;
             }
             
-            // Start loading simulation
-            simulateLoading();
+            // Auto transition to main app after splash time
+            setTimeout(showMainApp, 2500); // 2.5 segundos como Inter/Nubank
             
             // Service Worker Registration
             if ('serviceWorker' in navigator) {
