@@ -817,4 +817,216 @@
             const panel = document.getElementById('diagnosticPanel');
             panel.classList.toggle('show');
             
-            if (panel.classList.contains('show'))
+            if (panel.classList.contains('show')) {
+                runDiagnostics();
+            }
+        }
+
+        function openDirectly() {
+            showToast('Abrindo em nova aba...', 'warning');
+            window.open(iframeUrl, '_blank');
+        }
+
+        // === TOAST NOTIFICATIONS ===
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // === CONNECTION MONITORING ===
+        function checkConnection() {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => {
+                    resolve(false);
+                }, 5000);
+                
+                img.onload = img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(img.complete);
+                };
+                
+                img.src = 'https://www.google.com/favicon.ico?' + Date.now();
+            });
+        }
+
+        // === PERFORMANCE MONITORING ===
+        function logPerformanceMetrics() {
+            if (window.performance && window.performance.navigation) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                if (perfData) {
+                    console.log('📊 Performance Metrics:');
+                    console.log(`DNS Lookup: ${perfData.domainLookupEnd - perfData.domainLookupStart}ms`);
+                    console.log(`TCP Connect: ${perfData.connectEnd - perfData.connectStart}ms`);
+                    console.log(`Request: ${perfData.responseStart - perfData.requestStart}ms`);
+                    console.log(`Response: ${perfData.responseEnd - perfData.responseStart}ms`);
+                    console.log(`Total Load: ${perfData.loadEventEnd - perfData.fetchStart}ms`);
+                }
+            }
+        }
+
+        // === PRELOAD OPTIMIZATION ===
+        function preloadResources() {
+            // Preload critical resources
+            const preloadLink = document.createElement('link');
+            preloadLink.rel = 'preload';
+            preloadLink.href = iframeUrl;
+            preloadLink.as = 'document';
+            document.head.appendChild(preloadLink);
+            
+            // DNS prefetch for Google Scripts
+            const dnsPrefetch = document.createElement('link');
+            dnsPrefetch.rel = 'dns-prefetch';
+            dnsPrefetch.href = 'https://script.google.com';
+            document.head.appendChild(dnsPrefetch);
+        }
+
+        // === RETRY LOGIC ===
+        async function smartRetry() {
+            if (connectionRetries >= maxRetries) {
+                showError('Muitas tentativas falharam. Verifique sua conexão e tente novamente.');
+                return;
+            }
+
+            showToast(`Tentativa ${connectionRetries + 1} de ${maxRetries}...`, 'warning');
+            
+            // Check connection first
+            const isConnected = await checkConnection();
+            if (!isConnected) {
+                showError('Sem conexão com a internet. Verifique sua rede.');
+                return;
+            }
+
+            reloadApp();
+        }
+
+        // === EVENT LISTENERS ===
+        
+        // Online/Offline monitoring
+        window.addEventListener('online', () => {
+            showToast('Conexão restaurada!', 'success');
+            if (document.getElementById('errorScreen').classList.contains('show')) {
+                setTimeout(reloadApp, 1000);
+            }
+        });
+
+        window.addEventListener('offline', () => {
+            showToast('Conexão perdida', 'error');
+        });
+
+        // Visibility change (tab switching)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && connectionRetries > 0) {
+                // User returned to tab, check if iframe is still loading
+                const iframe = document.getElementById('mainIframe');
+                if (!iframe.classList.contains('loaded')) {
+                    console.log('🔄 Detectado retorno à aba, verificando carregamento...');
+                }
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // F5 or Ctrl+R = Reload
+            if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                e.preventDefault();
+                reloadApp();
+            }
+            
+            // Ctrl+Shift+D = Toggle diagnostic
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                e.preventDefault();
+                toggleDiagnostic();
+            }
+        });
+
+        // === INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Inicializando aplicativo...');
+            
+            // Log performance
+            logPerformanceMetrics();
+            
+            // Preload resources
+            preloadResources();
+            
+            // Check initial connection
+            const isConnected = await checkConnection();
+            if (!isConnected) {
+                showError('Sem conexão com a internet. Verifique sua rede e tente novamente.');
+                return;
+            }
+            
+            // Start loading sequence
+            simulateProgress();
+            
+            // Load iframe after splash animation
+            setTimeout(() => {
+                loadIframe();
+            }, 2500);
+            
+            // Initialize diagnostic data
+            diagnosticData = {
+                startTime: Date.now(),
+                retries: 0,
+                success: false
+            };
+        });
+
+        // === ADVANCED DEBUGGING ===
+        window.addEventListener('load', () => {
+            // Console helper for debugging
+            console.log(`
+🔧 DEBUG COMMANDS:
+• reloadApp() - Force reload
+• toggleDiagnostic() - Show/hide diagnostic panel  
+• runDiagnostics() - Test connection
+• openDirectly() - Open iframe URL directly
+• showToast(message, type) - Show notification
+
+📊 Performance: Iframe load timeout = 15s
+🌐 Target URL: ${iframeUrl}
+            `);
+            
+            // Expose debugging functions globally
+            window.debugApp = {
+                reload: reloadApp,
+                diagnostic: toggleDiagnostic,
+                test: runDiagnostics,
+                open: openDirectly,
+                toast: showToast,
+                clearRetries: () => { connectionRetries = 0; showToast('Tentativas resetadas'); }
+            };
+        });
+
+        // === ERROR BOUNDARY ===
+        window.addEventListener('error', (event) => {
+            console.error('💥 Global Error:', event.error);
+            diagnosticData.globalError = event.error?.message || 'Unknown error';
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('💥 Unhandled Promise Rejection:', event.reason);
+            diagnosticData.promiseError = event.reason;
+        });
+
+        // === NETWORK CHANGE DETECTION ===
+        if ('connection' in navigator) {
+            navigator.connection.addEventListener('change', () => {
+                const connection = navigator.connection;
+                console.log(`🌐 Network changed: ${connection.effectiveType} (${connection.downlink}Mbps)`);
+                
+                if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+                    showToast('Conexão lenta detectada', 'warning');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
